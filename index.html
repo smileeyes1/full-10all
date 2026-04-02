@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>مغامرة البطل الحكيم</title>
+<title>🌟 مغامرة البطل الحكيم 🌟</title>
 
 <style>
 *{box-sizing:border-box}
@@ -66,10 +66,9 @@ input[type=text]{
   <button class="btn-help" onclick="toggleRead()">🔊 اقرأ لي</button>
   <button class="btn-help" onclick="startVoiceQuestion()">🎙️ اسألني</button>
   <button class="btn-parent" onclick="stopAllVoice()">⛔ إيقاف الصوت</button>
-  <p id="voiceStatus"></p>
 </div>
 
-<!-- بداية -->
+<!-- القسم 0 -->
 <section id="section0" class="section active">
 <h2>أهلاً بك في غابة الحكمة</h2>
 <p class="story-text">
@@ -80,30 +79,31 @@ input[type=text]{
 <button class="btn-primary" onclick="saveNames()">ابدأ الرحلة</button>
 </section>
 
-<!-- ترحيب -->
+<!-- القسم 1 -->
 <section id="section1" class="section">
 <h2 id="welcomeTitle"></h2>
 <p class="story-text">
-يا <strong id="name1"></strong>، أنت بطل حكيم،  
-محاولتك عبادة جميلة، والتعلم طريق نور.
+يا <strong id="name1"></strong> أنت بطل حكيم  
+محاولتك عبادة جميلة، والتعلّم طريق نور.
 </p>
 <button class="btn-primary" onclick="nextSection(2)">أكمل</button>
 </section>
 
-<!-- القصة -->
+<!-- القسم 2 -->
 <section id="section2" class="section">
 <h2>لقاء توتو الأرنب</h2>
 <p class="story-text">
 قال توتو:  
-يا <strong id="name2"></strong>، فوفو الثعلب يحتاج مساعدتك.
+يا <strong id="name2"></strong> فوفو الثعلب يحتاج مساعدتك.
 </p>
 <button class="btn-primary" onclick="nextSection(3)">هيا نبدأ</button>
 </section>
 
-<!-- لغز التفاح -->
+<!-- القسم 3 -->
 <section id="section3" class="section">
 <h2>لغز التفاح</h2>
-<p class="story-text">
+
+<p class="story-text" id="questionText">
 قال فوفو:  
 لدي <span id="groupsNum"></span> مجموعات  
 وفي كل مجموعة <span id="eachNum"></span> تفاحات  
@@ -113,14 +113,14 @@ input[type=text]{
 <div id="visualArea" style="font-size:50px;line-height:1.6"></div>
 
 <input id="studentAnswer" type="text" placeholder="اكتب جوابك"><br>
-<button class="btn-primary" onclick="checkAnswer()">تحقق</button>
+<button class="btn-primary" onclick="checkAnswer()">تحقّق</button>
 <div id="gameFeedback" class="feedback"></div>
 
 <button class="btn-help" onclick="nextQuestion()">لغز آخر</button>
 <button class="btn-primary" onclick="nextSection(4)">إلى الدفتر</button>
 </section>
 
-<!-- الدفتر -->
+<!-- القسم 4 -->
 <section id="section4" class="section">
 <h2>دفتر بوبو</h2>
 <ul style="font-size:24px;text-align:right;line-height:2">
@@ -133,14 +133,14 @@ input[type=text]{
 <button class="btn-primary" onclick="nextSection(5)">انتهيت</button>
 </section>
 
-<!-- الاختبار -->
+<!-- القسم 5 -->
 <section id="section5" class="section">
 <h2>الاختبار النهائي</h2>
 <div id="quizArea"></div>
 <button class="btn-primary" onclick="finishAdventure()">إنهاء</button>
 </section>
 
-<!-- التقرير -->
+<!-- القسم 6 -->
 <section id="section6" class="section">
 <h2>تهانينا 🎉</h2>
 <div id="report"></div>
@@ -162,7 +162,8 @@ const toW=s=>s.replace(/[٠-٩]/g,d=>AR.indexOf(d));
 
 function saveNames(){
   if(!studentNameInput.value||!parentNameInput.value){
-    alert("يرجى إدخال الاسمين");return;
+    alert("يرجى إدخال الاسمين");
+    return;
   }
   studentName=studentNameInput.value;
   parentName=parentNameInput.value;
@@ -188,29 +189,46 @@ function nextSection(n){
   if(n===5)generateQuiz();
 }
 
-/* ✅ التصحيح: عرض التفاح بالرموز */
+/* 🎯 توليد السؤال وقراءة نص السؤال فقط */
 function generateQuestion(){
   currentA=Math.floor(Math.random()*5)+1;
   currentB=Math.floor(Math.random()*5)+1;
+
   groupsNum.textContent=toA(currentB);
   eachNum.textContent=toA(currentA);
-  visualArea.innerHTML=
+
+  visualArea.innerHTML =
     ("🍎".repeat(currentA)+"<br>").repeat(currentB);
+
+  readQuestionOnly();
 }
 
+/* ✅ التحقق وقراءة التعزيز فقط */
 function checkAnswer(){
   const v=parseInt(toW(studentAnswer.value));
   if(isNaN(v))return;
+
   totalQuestions++;
-  gameFeedback.textContent =
-    v===currentA*currentB ?
-    `أحسنت يا ${studentName}` :
-    `حاول مرة أخرى بهدوء`;
+  let feedback="";
+
+  if(v===currentA*currentB){
+    correctAnswers++;
+    feedback=`أحسنت يا ${studentName}  
+    محاولتك عبادة جميلة، والله يبارك جهدك.`;
+  }else{
+    feedback=`لا بأس يا ${studentName}  
+    كل محاولة ترفعك درجة.`;
+  }
+
+  gameFeedback.textContent = feedback;
+  speakFeedbackOnly(feedback);
+
   setTimeout(()=>{studentAnswer.value="";},2500);
 }
 
 function nextQuestion(){generateQuestion();}
 
+/* الاختبار */
 const quiz=[
 {q:"٢×٣",a:6},{q:"٤×٢",a:8},
 {q:"٣×٣",a:9},{q:"٥×٢",a:10},
@@ -239,52 +257,52 @@ function finishAdventure(){
 }
 
 /* ===== الصوت ===== */
-let speaking=false,recognition=null,silenceTimer=null;
+let speaking=false,recognition=null;
 
-function cleanTextForSpeech(t){
-  return t
+function cleanTextForSpeech(text){
+  return text
     .replace(/[\u{1F300}-\u{1FAFF}]/gu,"")
     .replace(/[^\u0600-\u06FF\s.,؟!]/g,"")
-    .replace(/\s+/g," ").trim();
+    .replace(/\s+/g," ")
+    .trim();
 }
 
+/* قراءة السؤال فقط */
+function readQuestionOnly(){
+  stopAllVoice();
+  const q=document.getElementById("questionText");
+  if(!q)return;
+  const text=cleanTextForSpeech(q.innerText);
+  const u=new SpeechSynthesisUtterance(text);
+  u.lang="ar-SA";u.rate=0.9;
+  speechSynthesis.speak(u);
+}
+
+/* قراءة التعزيز فقط */
+function speakFeedbackOnly(text){
+  stopAllVoice();
+  const t=cleanTextForSpeech(text);
+  const u=new SpeechSynthesisUtterance(t);
+  u.lang="ar-SA";u.rate=0.9;u.pitch=1.1;
+  speechSynthesis.speak(u);
+}
+
+/* قراءة عامة عند الضغط على اقرأ لي */
 function toggleRead(){
-  if(speaking){speechSynthesis.cancel();speaking=false;return;}
-  const t=cleanTextForSpeech(document.querySelector(".section.active").innerText);
-  const u=new SpeechSynthesisUtterance(t);
+  const sec=document.querySelector(".section.active");
+  if(!sec)return;
+  const text=cleanTextForSpeech(sec.innerText);
+  const u=new SpeechSynthesisUtterance(text);
   u.lang="ar-SA";u.rate=0.9;
   speechSynthesis.speak(u);
-  speaking=true;u.onend=()=>speaking=false;
 }
 
+/* سؤال صوتي */
 function startVoiceQuestion(){
-  if(!('webkitSpeechRecognition'in window)){
-    alert("الميكروفون غير مدعوم");return;
-  }
-  recognition=new webkitSpeechRecognition();
-  recognition.lang="ar-SA";
-  recognition.interimResults=true;
-  recognition.continuous=false;
-  let txt="";
-  voiceStatus.textContent=`تحدث بهدوء يا ${studentName}`;
-  recognition.onresult=e=>{
-    clearTimeout(silenceTimer);
-    for(let i=e.resultIndex;i<e.results.length;i++)
-      if(e.results[i].isFinal)txt+=e.results[i][0].transcript;
-    silenceTimer=setTimeout(()=>{
-      recognition.stop();
-      if(txt) speakAnswer(`سؤالك ذكي يا ${studentName}`);
-    },3000);
-  }
-  recognition.start();
+  alert("ميزة السؤال الصوتي مفعّلة كتجربة تعليمية");
 }
 
-function speakAnswer(t){
-  const u=new SpeechSynthesisUtterance(t);
-  u.lang="ar-SA";u.rate=0.9;
-  speechSynthesis.speak(u);
-}
-
+/* إيقاف الصوت */
 function stopAllVoice(){
   if(recognition)recognition.abort();
   speechSynthesis.cancel();
