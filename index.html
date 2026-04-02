@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>حصة الضرب ضمن 10</title>
+  <title>حصة الضرب ضمن ١٠</title>
 
   <style>
     body {
@@ -11,15 +11,15 @@
       background: linear-gradient(135deg, #e0f7fa, #f3e5f5);
       margin: 0;
       padding: 0;
-      text-align: center;
       color: #333;
+      text-align: center;
     }
 
     .container {
       max-width: 900px;
       margin: 20px auto;
       padding: 20px;
-      background: #fff;
+      background: white;
       border-radius: 25px;
       box-shadow: 0 10px 30px rgba(0,0,0,0.1);
     }
@@ -31,7 +31,6 @@
       font-size: 28px;
       color: #d32f2f;
       font-weight: bold;
-      margin: 10px 0;
     }
 
     .section {
@@ -46,8 +45,8 @@
 
     button {
       padding: 15px 30px;
-      font-size: 20px;
       margin: 10px;
+      font-size: 20px;
       border: none;
       border-radius: 15px;
       cursor: pointer;
@@ -58,16 +57,12 @@
       color: white;
     }
 
-    .btn-primary:hover {
-      background: #388e3c;
-    }
-
     .btn-help {
       background: #ff9800;
       color: white;
     }
 
-    input[type="number"] {
+    input[type="number"], input[type="text"] {
       font-size: 26px;
       width: 150px;
       text-align: center;
@@ -82,83 +77,73 @@
     }
 
     .feedback {
-      font-size: 24px;
       min-height: 40px;
-      margin-top: 10px;
+      font-size: 24px;
     }
   </style>
 </head>
 
 <body>
-
 <div class="container">
 
-  <h1>🌟 حصة الضرب ضمن العدد 10 🌟</h1>
+  <h1>🌟 حصة الضرب ضمن العدد ١٠ 🌟</h1>
   <p style="font-size:24px;">مرحبًا يا <span id="studentNameDisplay">بطل</span></p>
-  <div id="timer" class="timer">60:00</div>
+  <div class="timer" id="timer">٦٠:٠٠</div>
 
-  <!-- القسم 1 -->
   <div id="section1" class="section active">
     <h2>السلام عليكم ❤️</h2>
     <p>اليوم سنتعلم الضرب بطريقة ممتعة جدًا</p>
-
-    <button class="btn-primary" onclick="startLesson()">ابدأ الحصة</button><br>
+    <button class="btn-primary" onclick="startLesson()">ابدأ الحصة</button>
+    <br>
     <button class="btn-help" onclick="showHelp('nur')">🧠 الحكيم نور</button>
     <button class="btn-help" onclick="showHelp('teacher')">👨‍🏫 المعلم محمد</button>
   </div>
 
-  <!-- القسم 2 -->
   <div id="section2" class="section">
     <h2>الضرب = جمع متكرر</h2>
-    <p>2 × 3 يعني: ثلاث مجموعات، كل مجموعة فيها تفاحتان</p>
-    <div id="exampleVisual" style="font-size:40px;">🍎🍎 🍎🍎 🍎🍎</div>
-    <p>2 + 2 + 2 = 6 → 2 × 3 = 6</p>
+    <p>٢ × ٣ يعني: ثلاث مجموعات، كل مجموعة فيها تفاحتان</p>
+    <div style="font-size:40px;">🍎🍎 🍎🍎 🍎🍎</div>
+    <p>٢ + ٢ + ٢ = ٦ → ٢ × ٣ = ٦</p>
     <button class="btn-primary" onclick="nextSection(3)">فهمت ✅</button>
   </div>
 
-  <!-- القسم 3 -->
   <div id="section3" class="section">
     <h2>🍎 لعبة المجموعات السعيدة</h2>
     <p>
       كم تفاحة في
-      <span id="groupsNum">3</span>
+      <span id="groupsNum"></span>
       مجموعات، كل مجموعة
-      <span id="eachNum">2</span>
-      ؟
+      <span id="eachNum"></span>؟
     </p>
 
     <div id="visualArea" style="min-height:150px;"></div>
 
-    <input type="number" id="studentAnswer" placeholder="اكتب الجواب">
+    <input type="text" id="studentAnswer" placeholder="اكتب الجواب">
     <br>
     <button class="btn-primary" onclick="checkAnswer()">تحقق</button>
-
     <div id="gameFeedback" class="feedback"></div>
 
     <button onclick="nextQuestion()">سؤال جديد 🔄</button>
     <button onclick="nextSection(4)">التالي ➡️</button>
   </div>
 
-  <!-- القسم 4 -->
   <div id="section4" class="section">
     <h2>✏️ العمل في الدفتر</h2>
-    <ol style="text-align:right; font-size:22px;">
-      <li>2 × 4 = ؟</li>
-      <li>3 × 3 = ؟</li>
-      <li>5 × 2 = ؟</li>
-      <li>4 × 2 = ؟</li>
+    <ol style="font-size:22px; text-align:right;">
+      <li>٢ × ٤ = ؟</li>
+      <li>٣ × ٣ = ؟</li>
+      <li>٥ × ٢ = ؟</li>
+      <li>٤ × ٢ = ؟</li>
     </ol>
     <button class="btn-primary" onclick="nextSection(5)">انتهيت ✅</button>
   </div>
 
-  <!-- القسم 5 -->
   <div id="section5" class="section">
     <h2>📝 اختبار سريع</h2>
     <div id="quizArea"></div>
     <button class="btn-primary" onclick="finishLesson()">إنهاء الحصة</button>
   </div>
 
-  <!-- القسم 6 -->
   <div id="section6" class="section">
     <h2>🎉 مبارك لك!</h2>
     <div id="report"></div>
@@ -168,7 +153,17 @@
 </div>
 
 <script>
-/* ====== البيانات ====== */
+/* ===== تحويل الأرقام ===== */
+function toArabicDigits(num) {
+  const e = '٠١٢٣٤٥٦٧٨٩';
+  return num.toString().replace(/\d/g, d => e[d]);
+}
+function toWesternDigits(str) {
+  const e = '٠١٢٣٤٥٦٧٨٩';
+  return str.replace(/[٠-٩]/g, d => e.indexOf(d));
+}
+
+/* ===== البيانات ===== */
 let studentName = localStorage.getItem("studentName") || "بطل";
 let timeLeft = 3600;
 let correctAnswers = 0;
@@ -176,57 +171,51 @@ let totalQuestions = 0;
 
 document.getElementById("studentNameDisplay").textContent = studentName;
 
-/* ====== المؤقت ====== */
+/* ===== المؤقت ===== */
 function startTimer() {
-  const timerEl = document.getElementById("timer");
+  const timer = document.getElementById("timer");
   setInterval(() => {
     timeLeft--;
     const m = Math.floor(timeLeft / 60);
     const s = timeLeft % 60;
-    timerEl.textContent = `${m}:${s < 10 ? "0" : ""}${s}`;
+    timer.textContent = `${toArabicDigits(m)}:${toArabicDigits(s < 10 ? "0"+s : s)}`;
   }, 1000);
 }
 
-/* ====== المساعدة ====== */
-function showHelp(type) {
-  if (type === "nur") {
-    alert("اطمئن ❤️ أنت قادر والله معك");
-  } else {
-    alert("سنحل بهدوء خطوة خطوة 👌");
-  }
+/* ===== المساعدة ===== */
+function showHelp(t) {
+  alert(t === "nur" ? "اطمئن ❤️ أنت قادر" : "سنحل خطوة خطوة 👌");
 }
 
-/* ====== التنقل ====== */
+/* ===== التنقل ===== */
 function nextSection(n) {
   document.querySelectorAll(".section").forEach(s => s.classList.remove("active"));
-  document.getElementById("section" + n).classList.add("active");
+  document.getElementById("section"+n).classList.add("active");
   if (n === 3) generateQuestion();
   if (n === 5) generateQuiz();
 }
 
-/* ====== بدء الحصة ====== */
+/* ===== بدء ===== */
 function startLesson() {
   nextSection(2);
   startTimer();
 }
 
-/* ====== اللعبة ====== */
+/* ===== اللعبة ===== */
 let a = 2, b = 3;
 
 function generateQuestion() {
-  a = Math.floor(Math.random() * 5) + 1;
-  b = Math.floor(Math.random() * 5) + 1;
-  if (a * b > 10) b = Math.max(1, Math.floor(10 / a));
+  a = Math.floor(Math.random()*5)+1;
+  b = Math.floor(Math.random()*5)+1;
+  if (a*b > 10) b = Math.max(1, Math.floor(10/a));
 
-  document.getElementById("groupsNum").textContent = b;
-  document.getElementById("eachNum").textContent = a;
+  document.getElementById("groupsNum").textContent = toArabicDigits(b);
+  document.getElementById("eachNum").textContent = toArabicDigits(a);
 
   let v = "";
-  for (let i = 0; i < b; i++) {
+  for (let i=0;i<b;i++){
     v += "<div>";
-    for (let j = 0; j < a; j++) {
-      v += '<span class="apple">🍎</span>';
-    }
+    for (let j=0;j<a;j++) v += "🍎";
     v += "</div>";
   }
   document.getElementById("visualArea").innerHTML = v;
@@ -235,14 +224,15 @@ function generateQuestion() {
 }
 
 function checkAnswer() {
-  const ans = parseInt(document.getElementById("studentAnswer").value);
+  const raw = document.getElementById("studentAnswer").value;
+  const ans = parseInt(toWesternDigits(raw));
   totalQuestions++;
-  if (ans === a * b) {
+  if (ans === a*b) {
     correctAnswers++;
     document.getElementById("gameFeedback").textContent = "✅ ممتاز!";
   } else {
     document.getElementById("gameFeedback").textContent =
-      "🙂 حاول مرة أخرى: " + (a * b);
+      "🙂 الجواب الصحيح هو " + toArabicDigits(a*b);
   }
 }
 
@@ -250,42 +240,38 @@ function nextQuestion() {
   generateQuestion();
 }
 
-/* ====== الاختبار ====== */
+/* ===== الاختبار ===== */
 const quiz = [
-  { q: "2 × 4", a: 8 },
-  { q: "3 × 3", a: 9 },
-  { q: "5 × 2", a: 10 }
+  {q:"٢ × ٤", a:8},
+  {q:"٣ × ٣", a:9},
+  {q:"٥ × ٢", a:10}
 ];
 
 function generateQuiz() {
-  let html = "";
-  quiz.forEach((item, i) => {
-    html += `<p>${item.q} =
-      <input type="number" id="quiz${i}" style="width:80px">
-    </p>`;
+  let h="";
+  quiz.forEach((it,i)=>{
+    h+=`${it.q} = <input type="text" id="quiz${i}"><br>`;
   });
-  document.getElementById("quizArea").innerHTML = html;
+  document.getElementById("quizArea").innerHTML = h;
 }
 
 function finishLesson() {
-  quiz.forEach((q, i) => {
-    const v = parseInt(document.getElementById("quiz" + i).value);
+  quiz.forEach((q,i)=>{
+    const v = parseInt(toWesternDigits(document.getElementById("quiz"+i).value));
     totalQuestions++;
     if (v === q.a) correctAnswers++;
   });
-
   nextSection(6);
-  const score = Math.round((correctAnswers / totalQuestions) * 100);
+  const score = Math.round((correctAnswers/totalQuestions)*100);
   document.getElementById("report").innerHTML =
-    `<p style="font-size:26px;">نتيجتك: ${score}% 🌟<br>
-     أحسنت يا ${studentName}</p>`;
+    `نتيجتك: ${toArabicDigits(score)}٪ 🌟`;
 }
 
-/* ====== الاسم ====== */
-window.onload = () => {
-  if (!localStorage.getItem("studentName")) {
-    studentName = prompt("أدخل اسم الطالب:") || "بطل";
-    localStorage.setItem("studentName", studentName);
+/* ===== الاسم ===== */
+window.onload = ()=>{
+  if (!localStorage.getItem("studentName")){
+    studentName = prompt("اسم الطالب:") || "بطل";
+    localStorage.setItem("studentName",studentName);
     document.getElementById("studentNameDisplay").textContent = studentName;
   }
 };
