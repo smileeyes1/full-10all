@@ -25,23 +25,29 @@ body{
 h1{color:#1565c0;font-size:34px}
 h2{color:#2e7d32}
 .story-text{font-size:24px;line-height:2}
-.character{font-size:68px;animation:bounce 2.5s infinite}
+.character{font-size:64px;animation:bounce 2.5s infinite}
 @keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-18px)}}
 .timer{
-  font-size:32px;color:#d32f2f;font-weight:bold;
-  background:#ffebee;padding:12px 25px;border-radius:25px
+  font-size:30px;color:#d32f2f;font-weight:bold;
+  background:#ffebee;padding:10px 22px;border-radius:25px;
+  display:inline-block
 }
 button{
-  padding:16px 34px;margin:12px;
-  font-size:22px;border:none;border-radius:20px;cursor:pointer
+  padding:14px 32px;margin:10px;
+  font-size:20px;border:none;border-radius:20px;cursor:pointer
 }
 .btn-primary{background:#4caf50;color:white}
 .btn-help{background:#ff9800;color:white}
+.btn-parent{background:#9c27b0;color:white}
 input[type=text]{
-  font-size:26px;width:240px;text-align:center;
-  border:4px solid #4caf50;border-radius:18px;padding:12px
+  font-size:24px;width:240px;text-align:center;
+  border:4px solid #4caf50;border-radius:18px;padding:10px
 }
-.feedback{min-height:55px;font-size:26px;font-weight:bold}
+.feedback{min-height:55px;font-size:24px;font-weight:bold}
+
+@media(max-width:600px){
+  input[type=text],button{width:100%}
+}
 </style>
 </head>
 
@@ -51,83 +57,86 @@ input[type=text]{
 <h1>🌟 مغامرة البطل الحكيم 🌟</h1>
 <div class="timer" id="timer">٦٠:٠٠</div>
 
-<div>
+<div style="margin:15px 0">
   <span class="character">🐰</span>
   <span class="character" style="margin:0 25px">🦊</span>
   <span class="character">🐻</span>
+</div>
+
+<!-- أزرار الصوت -->
+<div>
+  <button class="btn-help" onclick="toggleRead()">🔊 اقرأ لي</button>
+  <button class="btn-help" onclick="startVoiceQuestion()">🎙️ اسألني</button>
+  <button class="btn-parent" onclick="stopAllVoice()">⛔ إيقاف الصوت</button>
+  <p id="voiceStatus" style="font-size:16px"></p>
 </div>
 
 <!-- القسم 0 -->
 <section id="section0" class="section active">
 <h2>👋 أهلاً بك في غابة الحكمة</h2>
 <p class="story-text">
-هذه الغابة لا يدخلها إلا الأبطال الحكماء.<br>
-قبل أن تبدأ المغامرة، نريد أن نتعرّف عليك 🌷
+هذه الغابة لا يدخلها إلا من جاء بقلب مطمئن وعقل متفكّر 🌳  
+قبل أن نبدأ، نود أن نتعرّف عليك.
 </p>
-
 <input id="studentNameInput" type="text" placeholder="اسم البطل"><br><br>
 <input id="parentNameInput" type="text" placeholder="اسم ولي الأمر"><br><br>
-
-<button class="btn-primary" onclick="saveNames()">ابدأ رحلتك ✨</button>
+<button class="btn-primary" onclick="saveNames()">ابدأ الرحلة ✨</button>
 </section>
 
 <!-- القسم 1 -->
 <section id="section1" class="section">
 <h2 id="welcomeTitle"></h2>
 <p class="story-text">
-ها أنت تقف الآن يا <strong id="nameInline"></strong> عند مدخل غابة الحكمة 🌳  
-الطيور تغرّد، والريح تهمس، وكل شيء يناديك:
+يا <strong id="name1"></strong>…  
+وأنت تخطو أولى خطواتك داخل الغابة، تشعر بأن كل شيء يرحّب بك.  
+الطيور تغنّي، والريح تهمس:  
 <br><br>
-"لدينا لغز… ولا أحد يحله إلا العقول اللامعة!"
+«تعلّمك اليوم أمانة… ومحاولتك عبادة جميلة». 🌷
 </p>
-
-<button class="btn-primary" onclick="nextSection(2)">ادخل الغابة 🧭</button>
+<button class="btn-primary" onclick="nextSection(2)">أكمل 🌟</button>
 </section>
 
 <!-- القسم 2 -->
 <section id="section2" class="section">
 <h2>🐰 لقاء توتو الأرنب</h2>
 <p class="story-text">
-قفز الأرنب توتو أمامك وقال:
+قال توتو:
 <br><br>
-"يا <strong id="nameInline2"></strong>! نحتاجك!  
-فوفو الثعلب وجد تفاحًا كثيرًا لكنه لا يعرف كم عددها كلها!"
-<br><br>
-وظهر المعلم محمد مبتسمًا:
-"تذكر… الضرب هو جمع متكرر."
+"يا <strong id="name2"></strong>، نحن نثق بك.  
+فوفو الثعلب في حيرة، والمعلم محمد قال لنا إنك قادر بعقلك الهادئ!"
 </p>
 <button class="btn-primary" onclick="nextSection(3)">أنا جاهز ✅</button>
 </section>
 
 <!-- القسم 3 -->
 <section id="section3" class="section">
-<h2>🍎 لغز فوفو الثعلب</h2>
+<h2>🍎 لغز التفاح</h2>
 <p class="story-text">
 قال فوفو:
-"لدي <span id="groupsNum"></span> مجموعات،
-وفي كل مجموعة <span id="eachNum"></span> تفاحة."
+<br>
+لدي <span id="groupsNum"></span> مجموعات،  
+وفي كل مجموعة <span id="eachNum"></span> تفاحات.
 <br><br>
-فكر يا <strong id="nameInline3"></strong>… كم تفاحة بالكل؟
+كم تفاحة لدي يا <strong id="name3"></strong>؟
 </p>
 
-<div id="visualArea" style="font-size:52px"></div>
+<div id="visualArea" style="font-size:48px"></div>
 
 <input id="studentAnswer" type="text" placeholder="اكتب جوابك"><br>
 <button class="btn-primary" onclick="checkAnswer()">تحقق 🦊</button>
-<div id="gameFeedback" class="feedback"></div>
+<div id="gameFeedback" class="feedback" aria-live="polite"></div>
 
-<button onclick="nextQuestion()">لغز جديد 🔄</button>
-<button class="btn-primary" onclick="nextSection(4)">إلى الدفتر ✏️</button>
+<button onclick="nextQuestion()" class="btn-help">لغز آخر 🔄</button>
 </section>
 
 <!-- القسم 4 -->
 <section id="section4" class="section">
-<h2>🐻 دفتر بوبو الذكي</h2>
+<h2>🐻 دفتر بوبو</h2>
 <p class="story-text">
 قال بوبو:
-"حل هذه المسائل وستفتح لك بوابة الحكمة!"
+"اكتب هذه التمارين في دفترك الحقيقي بهدوء…  
+الله يحب القويّ الأمين."
 </p>
-
 <ol style="font-size:24px;text-align:right">
 <li>٢ × ٣</li>
 <li>٤ × ٢</li>
@@ -135,8 +144,7 @@ input[type=text]{
 <li>٥ × ٢</li>
 <li>١ × ٧</li>
 </ol>
-
-<button class="btn-primary" onclick="nextSection(5)">أكملت ✅</button>
+<button class="btn-primary" onclick="nextSection(5)">انتهيت ✅</button>
 </section>
 
 <!-- القسم 5 -->
@@ -148,38 +156,41 @@ input[type=text]{
 
 <!-- القسم 6 -->
 <section id="section6" class="section">
-<h2>🎉 تهانينا يا بطل!</h2>
+<h2>🎉 أحسنت يا بطل!</h2>
 <div id="report"></div>
-<div id="stars" style="font-size:45px"></div>
+<div id="stars" style="font-size:42px"></div>
 <button class="btn-primary" onclick="location.reload()">مغامرة جديدة ✨</button>
 </section>
 
 </div>
 
 <script>
+/* ===== متغيرات ===== */
 let studentName="", parentName="";
 let timeLeft=3600;
-let correctAnswers=0,totalQuestions=0;
-let currentA=2,currentB=3;
+let correctAnswers=0, totalQuestions=0;
+let currentA=2, currentB=3;
 
-const AR='٠١٢٣٤٥٦٧٨٩';
-const toA=n=>n.toString().replace(/\d/g,d=>AR[d]);
-const toW=s=>s.replace(/[٠-٩]/g,d=>AR.indexOf(d));
+const A='٠١٢٣٤٥٦٧٨٩';
+const toA=n=>n.toString().replace(/\d/g,d=>A[d]);
+const toW=s=>s.replace(/[٠-٩]/g,d=>A.indexOf(d));
 
+/* ===== الأسماء ===== */
 function saveNames(){
   if(!studentNameInput.value||!parentNameInput.value){
-    alert("أدخل الاسمَين 🌸");return;
+    alert("أدخل الاسمين بهدوء 🌸"); return;
   }
   studentName=studentNameInput.value;
   parentName=parentNameInput.value;
+
   welcomeTitle.textContent=`السلام عليك يا ${studentName} ❤️`;
-  nameInline.textContent=studentName;
-  nameInline2.textContent=studentName;
-  nameInline3.textContent=studentName;
-  nextSection(1);
+  name1.textContent=name2.textContent=name3.textContent=studentName;
+
   startTimer();
+  nextSection(1);
 }
 
+/* ===== المؤقت ===== */
 function startTimer(){
   setInterval(()=>{
     if(timeLeft<=0)return;
@@ -189,6 +200,7 @@ function startTimer(){
   },1000);
 }
 
+/* ===== التنقل ===== */
 function nextSection(n){
   document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));
   document.getElementById("section"+n).classList.add("active");
@@ -196,6 +208,7 @@ function nextSection(n){
   if(n===5)generateQuiz();
 }
 
+/* ===== مهمة فوفو ===== */
 function generateQuestion(){
   currentA=Math.floor(Math.random()*5)+1;
   currentB=Math.floor(Math.random()*5)+1;
@@ -206,29 +219,35 @@ function generateQuestion(){
 
 function checkAnswer(){
   const v=parseInt(toW(studentAnswer.value));
+  if(isNaN(v))return;
+
   totalQuestions++;
   if(v===currentA*currentB){
     correctAnswers++;
-    gameFeedback.textContent=`✅ أحسنت يا ${studentName}!`;
+    gameFeedback.textContent=
+      `✅ أحسنت يا ${studentName} 🌷  
+      محاولتك عبادة جميلة، والله يبارك جهدك.`;
   }else{
-    gameFeedback.textContent="🙂 حاول مرة أخرى";
+    gameFeedback.textContent=
+      `🙂 لا بأس يا ${studentName}  
+      كل محاولة ترفعك درجة.`;
   }
-}
 
+  setTimeout(()=>{ studentAnswer.value=""; },2500);
+}
 function nextQuestion(){generateQuestion();}
 
+/* ===== الاختبار ===== */
 const quiz=[
 {q:"٢×٣",a:6},{q:"٤×٢",a:8},
 {q:"٣×٣",a:9},{q:"٥×٢",a:10},
 {q:"١×٧",a:7}
 ];
-
 function generateQuiz(){
   quizArea.innerHTML=quiz.map(
-    (x,i)=>`${x.q}= <input id="q${i}"><br><br>`
+    (x,i)=>`${x.q} = <input id="q${i}"><br><br>`
   ).join("");
 }
-
 function finishAdventure(){
   quiz.forEach((x,i)=>{
     const v=parseInt(toW(document.getElementById("q"+i).value));
@@ -237,11 +256,53 @@ function finishAdventure(){
   });
   const score=Math.round((correctAnswers/totalQuestions)*100);
   report.innerHTML=
-  `🌟 تقرير البطل ${studentName}<br>
-   ولي الأمر: ${parentName}<br>
-   نتيجتك ${toA(score)}٪`;
+    `🌟 تقرير البطل ${studentName}<br>
+     ولي الأمر: ${parentName}<br>
+     نتيجتك ${toA(score)}٪`;
   stars.textContent="⭐".repeat(Math.ceil(score/20));
   nextSection(6);
+}
+
+/* ===== الصوت ===== */
+let speaking=false, recognition=null;
+
+function toggleRead(){
+  if(speaking){ speechSynthesis.cancel(); speaking=false; return; }
+  const txt=document.querySelector(".section.active").innerText;
+  const u=new SpeechSynthesisUtterance(txt);
+  u.lang="ar-SA"; u.rate=0.9;
+  speechSynthesis.speak(u);
+  speaking=true;
+  u.onend=()=>speaking=false;
+}
+
+function startVoiceQuestion(){
+  if(!('webkitSpeechRecognition'in window)){
+    alert("الميكروفون غير مدعوم"); return;
+  }
+  recognition=new webkitSpeechRecognition();
+  recognition.lang="ar-SA";
+  recognition.onresult=e=>{
+    const q=e.results[0][0].transcript;
+    answerQuestion(q);
+  };
+  recognition.start();
+}
+
+function answerQuestion(q){
+  let answer=
+    q.includes("صعب")?
+    `أفهمك يا ${studentName}، الصبر قوة، والله معك.`:
+    `سؤالك ذكي يا ${studentName}، فكر خطوة خطوة.`;
+
+  speechSynthesis.speak(
+    new SpeechSynthesisUtterance(answer)
+  );
+}
+
+function stopAllVoice(){
+  if(recognition)recognition.abort();
+  speechSynthesis.cancel();
 }
 </script>
 
