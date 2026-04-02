@@ -3,276 +3,192 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🌟 مغامرة البطل الحكيم إبراهيم 🌟</title>
+<title>🌟 مغامرة البطل الحكيم 🌟</title>
 
 <style>
-
-/* =========================================
-   ============ Global Styles ==============
-   ========================================= */
-* {
-  box-sizing: border-box;
+*{box-sizing:border-box}
+body{
+  font-family:Arial,sans-serif;
+  background:linear-gradient(135deg,#e0f7fa,#f3e5f5,#e8f5e9);
+  margin:0;padding:0;text-align:center;color:#2c3e50
 }
-
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  text-align: center;
-  background: linear-gradient(135deg,#e0f7fa,#f3e5f5,#e8f5e9);
-  color: #2c3e50;
+.container{
+  max-width:980px;margin:20px auto;padding:25px;
+  background:#fff;border-radius:30px;
+  box-shadow:0 15px 40px rgba(0,0,0,.15)
 }
-
-/* =========================================
-   ============ Layout =====================
-   ========================================= */
-.container {
-  max-width: 980px;
-  margin: 20px auto;
-  padding: 25px;
-  background: #fff;
-  border-radius: 30px;
-  box-shadow: 0 15px 40px rgba(0,0,0,.15);
+.section{
+  display:none;background:#f8f9fa;padding:30px;
+  border-radius:25px;margin:20px 0
 }
-
-.section {
-  display: none;
-  background: #f8f9fa;
-  padding: 30px;
-  border-radius: 25px;
-  margin: 20px 0;
-  box-shadow: 0 10px 25px rgba(0,0,0,.1);
+.section.active{display:block}
+h1{color:#1565c0;font-size:34px}
+h2{color:#2e7d32}
+.story-text{font-size:24px;line-height:2}
+.character{font-size:68px;animation:bounce 2.5s infinite}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-18px)}}
+.timer{
+  font-size:32px;color:#d32f2f;font-weight:bold;
+  background:#ffebee;padding:12px 25px;border-radius:25px
 }
-
-.section.active {
-  display: block;
+button{
+  padding:16px 34px;margin:12px;
+  font-size:22px;border:none;border-radius:20px;cursor:pointer
 }
-
-/* =========================================
-   ============ Typography =================
-   ========================================= */
-h1 {
-  font-size: 34px;
-  color: #1565c0;
+.btn-primary{background:#4caf50;color:white}
+.btn-help{background:#ff9800;color:white}
+input[type=text]{
+  font-size:26px;width:240px;text-align:center;
+  border:4px solid #4caf50;border-radius:18px;padding:12px
 }
-
-h2 {
-  color: #2e7d32;
-}
-
-.story-text {
-  font-size: 24px;
-  line-height: 1.8;
-}
-
-/* =========================================
-   ============ Characters =================
-   ========================================= */
-.character {
-  font-size: 68px;
-  animation: bounce 2.5s infinite;
-}
-
-@keyframes bounce {
-  0%,100% { transform: translateY(0); }
-  50%     { transform: translateY(-18px); }
-}
-
-/* =========================================
-   ============ Timer ======================
-   ========================================= */
-.timer {
-  font-size: 32px;
-  font-weight: bold;
-  color: #d32f2f;
-  background: #ffebee;
-  padding: 12px 25px;
-  border-radius: 25px;
-}
-
-/* =========================================
-   ============ Buttons ====================
-   ========================================= */
-button {
-  padding: 16px 34px;
-  margin: 12px;
-  font-size: 22px;
-  border: none;
-  border-radius: 20px;
-  cursor: pointer;
-}
-
-.btn-primary {
-  background: linear-gradient(#4caf50,#388e3c);
-  color: #fff;
-}
-
-.btn-help {
-  background: #ff9800;
-  color: #fff;
-}
-
-.btn-parent {
-  background: #9c27b0;
-  color: #fff;
-}
-
-/* =========================================
-   ============ Inputs & Feedback ==========
-   ========================================= */
-input[type=text] {
-  font-size: 28px;
-  width: 200px;
-  text-align: center;
-  border: 4px solid #4caf50;
-  border-radius: 18px;
-  padding: 12px;
-}
-
-.feedback {
-  min-height: 55px;
-  font-size: 26px;
-  font-weight: bold;
-  margin: 15px 0;
-}
-
-/* =========================================
-   ============ Responsive =================
-   ========================================= */
-@media (max-width: 600px) {
-  h1 { font-size: 26px; }
-  input[type=text], button { width: 100%; }
-}
-
+.feedback{min-height:55px;font-size:26px;font-weight:bold}
 </style>
 </head>
 
 <body>
-
 <div class="container">
 
-<header>
-  <h1>🌟 مغامرة البطل الحكيم إبراهيم 🌟</h1>
-  <p style="font-size:26px">مع المعلم محمد وأصدقائه في غابة الحكمة</p>
-  <div class="timer" id="timer">٦٠:٠٠</div>
+<h1>🌟 مغامرة البطل الحكيم 🌟</h1>
+<div class="timer" id="timer">٦٠:٠٠</div>
 
-  <div style="margin:20px 0">
-    <span class="character">🐰</span>
-    <span class="character" style="margin:0 25px">🦊</span>
-    <span class="character">🐻</span>
-  </div>
-</header>
+<div>
+  <span class="character">🐰</span>
+  <span class="character" style="margin:0 25px">🦊</span>
+  <span class="character">🐻</span>
+</div>
 
-<main>
+<!-- القسم 0 -->
+<section id="section0" class="section active">
+<h2>👋 أهلاً بك في غابة الحكمة</h2>
+<p class="story-text">
+هذه الغابة لا يدخلها إلا الأبطال الحكماء.<br>
+قبل أن تبدأ المغامرة، نريد أن نتعرّف عليك 🌷
+</p>
+
+<input id="studentNameInput" type="text" placeholder="اسم البطل"><br><br>
+<input id="parentNameInput" type="text" placeholder="اسم ولي الأمر"><br><br>
+
+<button class="btn-primary" onclick="saveNames()">ابدأ رحلتك ✨</button>
+</section>
 
 <!-- القسم 1 -->
-<section id="section1" class="section active">
-  <h2>السلام عليكم يا بطلنا الحكيم ❤️</h2>
-  <p class="story-text">
-    في غابة الحكمة ينتظرك أصدقاؤك توتو وفوفو وبوبو لمغامرة جديدة عن سر الضرب!
-  </p>
-  <button class="btn-primary" onclick="startAdventure()">ابدأ المغامرة ✨</button><br><br>
-  <button class="btn-help" onclick="showHelp('nur')">🧠 الحكيم نور</button>
-  <button class="btn-help" onclick="showHelp('teacher')">👨‍🏫 المعلم محمد</button>
-  <button class="btn-parent" onclick="showHelp('parent')">👨‍👩‍👦 ولي الأمر</button>
+<section id="section1" class="section">
+<h2 id="welcomeTitle"></h2>
+<p class="story-text">
+ها أنت تقف الآن يا <strong id="nameInline"></strong> عند مدخل غابة الحكمة 🌳  
+الطيور تغرّد، والريح تهمس، وكل شيء يناديك:
+<br><br>
+"لدينا لغز… ولا أحد يحله إلا العقول اللامعة!"
+</p>
+
+<button class="btn-primary" onclick="nextSection(2)">ادخل الغابة 🧭</button>
 </section>
 
 <!-- القسم 2 -->
 <section id="section2" class="section">
-  <h2>🐰 بداية المغامرة</h2>
-  <p class="story-text">
-    ذات يوم في غابة الحكمة، جاء توتو الأرنب مسرعًا وقال...
-  </p>
-  <button class="btn-primary" onclick="nextSection(3)">نعم، أنا مستعد ✅</button>
+<h2>🐰 لقاء توتو الأرنب</h2>
+<p class="story-text">
+قفز الأرنب توتو أمامك وقال:
+<br><br>
+"يا <strong id="nameInline2"></strong>! نحتاجك!  
+فوفو الثعلب وجد تفاحًا كثيرًا لكنه لا يعرف كم عددها كلها!"
+<br><br>
+وظهر المعلم محمد مبتسمًا:
+"تذكر… الضرب هو جمع متكرر."
+</p>
+<button class="btn-primary" onclick="nextSection(3)">أنا جاهز ✅</button>
 </section>
 
 <!-- القسم 3 -->
 <section id="section3" class="section">
-  <h2>🍎 مهمة فوفو الثعلب</h2>
-  <p class="story-text">
-    قال فوفو: لدي <span id="groupsNum"></span> مجموعات،
-    وفي كل مجموعة <span id="eachNum"></span> تفاحة
-  </p>
+<h2>🍎 لغز فوفو الثعلب</h2>
+<p class="story-text">
+قال فوفو:
+"لدي <span id="groupsNum"></span> مجموعات،
+وفي كل مجموعة <span id="eachNum"></span> تفاحة."
+<br><br>
+فكر يا <strong id="nameInline3"></strong>… كم تفاحة بالكل؟
+</p>
 
-  <div id="visualArea" style="min-height:180px;font-size:52px"></div>
+<div id="visualArea" style="font-size:52px"></div>
 
-  <input type="text" id="studentAnswer" placeholder="اكتب الجواب هنا">
-  <button class="btn-primary" onclick="checkAnswer()">أرسل الجواب 🦊</button>
+<input id="studentAnswer" type="text" placeholder="اكتب جوابك"><br>
+<button class="btn-primary" onclick="checkAnswer()">تحقق 🦊</button>
+<div id="gameFeedback" class="feedback"></div>
 
-  <div id="gameFeedback" class="feedback" aria-live="polite"></div>
-
-  <button onclick="nextQuestion()" style="background:#2196f3;color:white">
-    مهمة جديدة 🔄
-  </button>
-
-  <button class="btn-primary" onclick="nextSection(4)">
-    اذهب إلى الدفتر مع بوبو ➡️
-  </button>
+<button onclick="nextQuestion()">لغز جديد 🔄</button>
+<button class="btn-primary" onclick="nextSection(4)">إلى الدفتر ✏️</button>
 </section>
 
 <!-- القسم 4 -->
 <section id="section4" class="section">
-  <h2>✏️ بوبو الدب ينتظرك في الدفتر</h2>
-  <ol style="font-size:24px;text-align:right;line-height:2.4">
-    <li>٢ × ٣ = ؟</li>
-    <li>٤ × ٢ = ؟</li>
-    <li>٣ × ٣ = ؟</li>
-    <li>٥ × ٢ = ؟</li>
-    <li>١ × ٧ = ؟</li>
-  </ol>
-  <button class="btn-primary" onclick="confirmNotebook()">انتهيت ✅</button>
+<h2>🐻 دفتر بوبو الذكي</h2>
+<p class="story-text">
+قال بوبو:
+"حل هذه المسائل وستفتح لك بوابة الحكمة!"
+</p>
+
+<ol style="font-size:24px;text-align:right">
+<li>٢ × ٣</li>
+<li>٤ × ٢</li>
+<li>٣ × ٣</li>
+<li>٥ × ٢</li>
+<li>١ × ٧</li>
+</ol>
+
+<button class="btn-primary" onclick="nextSection(5)">أكملت ✅</button>
 </section>
 
 <!-- القسم 5 -->
 <section id="section5" class="section">
-  <h2>📝 الاختبار النهائي</h2>
-  <div id="quizArea"></div>
-  <button class="btn-primary" onclick="finishAdventure()">أنهى 🎉</button>
+<h2>📝 اختبار الحكمة</h2>
+<div id="quizArea"></div>
+<button class="btn-primary" onclick="finishAdventure()">أنهِ المغامرة 🎉</button>
 </section>
 
 <!-- القسم 6 -->
 <section id="section6" class="section">
-  <h2>🎉 نهاية المغامرة!</h2>
-  <div id="report"></div>
-  <div id="stars" style="font-size:45px"></div>
-  <button class="btn-primary" onclick="location.reload()">مغامرة جديدة ✨</button>
+<h2>🎉 تهانينا يا بطل!</h2>
+<div id="report"></div>
+<div id="stars" style="font-size:45px"></div>
+<button class="btn-primary" onclick="location.reload()">مغامرة جديدة ✨</button>
 </section>
 
-</main>
 </div>
 
 <script>
+let studentName="", parentName="";
+let timeLeft=3600;
+let correctAnswers=0,totalQuestions=0;
+let currentA=2,currentB=3;
 
-/* =========================================
-   ============ State & Storage ============
-   ========================================= */
-let started=false, storySolved=false, notebookDone=false, quizDone=false;
-let timeLeft=3600, correctAnswers=0, totalQuestions=0;
-let currentA=2, currentB=3;
+const AR='٠١٢٣٤٥٦٧٨٩';
+const toA=n=>n.toString().replace(/\d/g,d=>AR[d]);
+const toW=s=>s.replace(/[٠-٩]/g,d=>AR.indexOf(d));
 
-/* =========================================
-   ============ Utilities ==================
-   ========================================= */
-const ARABIC_DIGITS = '٠١٢٣٤٥٦٧٨٩';
-
-function toArabicDigits(n){
-  return n.toString().replace(/\d/g,d=>ARABIC_DIGITS[d]);
+function saveNames(){
+  if(!studentNameInput.value||!parentNameInput.value){
+    alert("أدخل الاسمَين 🌸");return;
+  }
+  studentName=studentNameInput.value;
+  parentName=parentNameInput.value;
+  welcomeTitle.textContent=`السلام عليك يا ${studentName} ❤️`;
+  nameInline.textContent=studentName;
+  nameInline2.textContent=studentName;
+  nameInline3.textContent=studentName;
+  nextSection(1);
+  startTimer();
 }
 
-function toWesternDigits(str){
-  return str.replace(/[٠-٩]/g,d=>ARABIC_DIGITS.indexOf(d));
+function startTimer(){
+  setInterval(()=>{
+    if(timeLeft<=0)return;
+    timeLeft--;
+    timer.textContent=
+      `${toA(Math.floor(timeLeft/60))}:${toA(timeLeft%60)}`;
+  },1000);
 }
 
-function saveProgress(){
-  localStorage.setItem("ibrahim_adventure", JSON.stringify({
-    started,storySolved,notebookDone,quizDone,
-    timeLeft,correctAnswers,totalQuestions
-  }));
-}
-
-/* =========================================
-   ============ Navigation =================
-   ========================================= */
 function nextSection(n){
   document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));
   document.getElementById("section"+n).classList.add("active");
@@ -280,89 +196,53 @@ function nextSection(n){
   if(n===5)generateQuiz();
 }
 
-/* =========================================
-   ============ Timer ======================
-   ========================================= */
-function startTimer(){
-  setInterval(()=>{
-    if(timeLeft<=0)return;
-    timeLeft--;
-    const m=Math.floor(timeLeft/60);
-    const s=timeLeft%60;
-    timer.textContent=`${toArabicDigits(m)}:${toArabicDigits(s<10?'0'+s:s)}`;
-  },1000);
-}
-
-/* =========================================
-   ============ Game Logic =================
-   ========================================= */
-function startAdventure(){
-  started=true;
-  startTimer();
-  nextSection(2);
-}
-
 function generateQuestion(){
   currentA=Math.floor(Math.random()*5)+1;
   currentB=Math.floor(Math.random()*5)+1;
-  groupsNum.textContent=toArabicDigits(currentB);
-  eachNum.textContent=toArabicDigits(currentA);
-  visualArea.innerHTML = "<div>"+"🍎".repeat(currentA)+"</div>".repeat(currentB);
-  studentAnswer.value="";
-  gameFeedback.textContent="";
+  groupsNum.textContent=toA(currentB);
+  eachNum.textContent=toA(currentA);
+  visualArea.innerHTML=("🍎".repeat(currentA)+"<br>").repeat(currentB);
 }
 
 function checkAnswer(){
-  const v=parseInt(toWesternDigits(studentAnswer.value));
+  const v=parseInt(toW(studentAnswer.value));
   totalQuestions++;
   if(v===currentA*currentB){
     correctAnswers++;
-    storySolved=true;
-    gameFeedback.textContent="✅ أحسنت!";
-  } else {
+    gameFeedback.textContent=`✅ أحسنت يا ${studentName}!`;
+  }else{
     gameFeedback.textContent="🙂 حاول مرة أخرى";
   }
 }
 
-function nextQuestion(){ generateQuestion(); }
-
-/* =========================================
-   ============ Notebook & Quiz ============
-   ========================================= */
-function confirmNotebook(){
-  notebookDone=true;
-  nextSection(5);
-}
+function nextQuestion(){generateQuestion();}
 
 const quiz=[
-  {q:"٢ × ٣",a:6},{q:"٤ × ٢",a:8},
-  {q:"٣ × ٣",a:9},{q:"٥ × ٢",a:10},
-  {q:"١ × ٧",a:7}
+{q:"٢×٣",a:6},{q:"٤×٢",a:8},
+{q:"٣×٣",a:9},{q:"٥×٢",a:10},
+{q:"١×٧",a:7}
 ];
 
 function generateQuiz(){
   quizArea.innerHTML=quiz.map(
-    (x,i)=>`${x.q} = <input type="text" id="quiz${i}"><br><br>`
+    (x,i)=>`${x.q}= <input id="q${i}"><br><br>`
   ).join("");
 }
 
 function finishAdventure(){
-  quizDone=true;
   quiz.forEach((x,i)=>{
-    const v=parseInt(toWesternDigits(document.getElementById("quiz"+i).value));
+    const v=parseInt(toW(document.getElementById("q"+i).value));
     totalQuestions++;
     if(v===x.a)correctAnswers++;
   });
-  nextSection(6);
   const score=Math.round((correctAnswers/totalQuestions)*100);
-  report.innerHTML=`نتيجتك ${toArabicDigits(score)}٪ 🌟`;
+  report.innerHTML=
+  `🌟 تقرير البطل ${studentName}<br>
+   ولي الأمر: ${parentName}<br>
+   نتيجتك ${toA(score)}٪`;
   stars.textContent="⭐".repeat(Math.ceil(score/20));
+  nextSection(6);
 }
-
-function showHelp(type){
-  alert("✨ استمر يا بطل");
-}
-
 </script>
 
 </body>
