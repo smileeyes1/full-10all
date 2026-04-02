@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>حصة الضرب ضمن ١٠ - ٦٠ دقيقة</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(135deg, #e0f7fa 0%, #f3e5f5 100%);
+      margin: 0; padding: 0;
+      color: #333;
+      text-align: center;
+    }
+    .container {
+      max-width: ٩٠٠px;
+      margin: ٢٠px auto;
+      padding: ٢٠px;
+      background: white;
+      border-radius: ٢٥px;
+      box-shadow: 0 ١٠px ٣٠px rgba(0,0,0,0.1);
+    }
+    h1 { color: #1565c0; margin: ١٠px ٠; }
+    .timer { font-size: ٢٨px; color: #d32f2f; font-weight: bold; }
+    button {
+      padding: ١٥px ٣٠px;
+      margin: ١٠px;
+      font-size: ٢٢px;
+      border: none;
+      border-radius: ١٥px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .btn-primary { background: #4caf50; color: white; }
+    .btn-primary:hover { background: #388e3c; transform: scale(1.05); }
+    .btn-help { background: #ff9800; color: white; }
+    .section { display: none; padding: ٢٠px; background: #f9f9f9; border-radius: ٢٠px; margin: ١٥px ٠; }
+    .active { display: block; }
+    .apple { font-size: ٤٥px; margin: ٨px; }
+    input[type="number"] {
+      font-size: ٣٠px;
+      width: ١٨٠px;
+      text-align: center;
+      padding: ١٠px;
+      border-radius: ١٥px;
+      border: ٣px solid #4caf50;
+    }
+    .feedback { font-size: ٢٨px; margin: ١٥px ٠; min-height: ٥٠px; }
+    .progress { height: ١٢px; background: linear-gradient(to right, #4caf50, #8bc34a); border-radius: ١٠px; margin: ١٥px ٠; }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <button onclick="toggleFullScreen()" style="position:fixed; top:١٠px; left:١٠px; background:#2196f3; color:white; padding:١٠px ٢٠px;">🖥️ ملء الشاشة</button>
+
+  <h1>🌟 حصة الضرب ضمن العدد ١٠ 🌟</h1>
+  <p style="font-size:٢٤px;">مرحبا يا <span id="studentNameDisplay">بطل</span>!</p>
+  <div class="timer" id="timer">٦٠:٠٠</div>
+  <div class="progress" id="progress"></div>
+
+  <!-- القسم ١: الترحيب والتهيئة -->
+  <div id="section1" class="section active">
+    <h2>السلام عليكم يا [اسم الطالب] ❤️</h2>
+    <p style="font-size:٢٢px;">اليوم سنتعلم الضرب بطريقة ممتعة جدًا.<br>كل محاولة ترفعك درجة عند الله!</p>
+    
+    <button class="btn-primary" onclick="startLesson()">ابدأ الحصة الآن</button>
+    
+    <button class="btn-help" onclick="showHelp('حكيم نور')">🧠 الحكيم نور (طمأنينة)</button>
+    <button class="btn-help" onclick="showHelp('معلم محمد')">👨‍🏫 المعلم محمد (شرح)</button>
+  </div>
+
+  <!-- القسم ٢: الشرح -->
+  <div id="section2" class="section">
+    <h2>الضرب = جمع متكرر</h2>
+    <p style="font-size:٢٢px;">٢ × ٣ يعني: ثلاث مجموعات، كل مجموعة فيها تفاحتين</p>
+    <div id="exampleVisual" style="font-size:٥٠px; margin:٢٠px ٠;"></div>
+    <button class="btn-primary" onclick="nextSection(3)">فهمت، التالي →</button>
+  </div>
+
+  <!-- القسم ٣: اللعبة التفاعلية -->
+  <div id="section3" class="section">
+    <h2>لعبة المجموعات السعيدة 🍎</h2>
+    <p>كم تفاحة في <span id="groupsNum">٣</span> مجموعات، كل مجموعة <span id="eachNum">٢</span> ؟</p>
+    <div id="visualArea" style="margin:٢٠px ٠; min-height:١٨٠px;"></div>
+    
+    <input type="number" id="studentAnswer" placeholder="اكتب الجواب">
+    <button class="btn-primary" onclick="checkAnswer()">تحقق من إجابتي</button>
+    <div id="gameFeedback" class="feedback"></div>
+    
+    <button onclick="nextQuestion()" style="background:#2196f3; color:white;">سؤال جديد</button>
+  </div>
+
+  <!-- القسم ٤: التدريب في الدفتر -->
+  <div id="section4" class="section">
+    <h2>الآن في دفترك الحقيقي ✏️</h2>
+    <p style="font-size:٢٢px;">ارسم وأجب:</p>
+    <ol style="font-size:٢٢px; text-align:right; max-width:٦٠٠px; margin:٢٠px auto;">
+      <li>٢ × ٤ = ؟</li>
+      <li>٣ × ٣ = ؟</li>
+      <li>٥ × ٢ = ؟</li>
+      <li>٤ × ٢ = ؟</li>
+    </ol>
+    <p>عندما تنتهي، اضغط "انتهيت من الدفتر"</p>
+    <button class="btn-primary" onclick="nextSection(5)">انتهيت من الدفتر →</button>
+  </div>
+
+  <!-- القسم ٥: التقويم -->
+  <div id="section5" class="section">
+    <h2>اختبار سريع وممتع</h2>
+    <div id="quizArea"></div>
+    <button class="btn-primary" onclick="finishLesson()">إنهاء الحصة</button>
+  </div>
+
+  <!-- الختام -->
+  <div id="section6" class="section">
+    <h2>مبارك يا [اسم الطالب]! 🎉</h2>
+    <p style="font-size:٢٨px;">لقد أكملت الحصة بنجاح.<br>الله يبارك في جهدك ويجعله في ميزان حسناتك.</p>
+    <div id="report"></div>
+    <button class="btn-primary" onclick="restartLesson()">ابدأ حصة جديدة</button>
+  </div>
+</div>
+
+<script>
+// ==================== بيانات الحصة ====================
+let studentName = localStorage.getItem('studentName') || '[اسم الطالب]';
+let startTime = Date.now();
+let timeLeft = ٣٦٠٠; // ٦٠ دقيقة بالثواني
+let correctAnswers = ٠;
+let totalQuestions = ٠;
+
+document.getElementById('studentNameDisplay').textContent = studentName;
+
+// حفظ التقدم
+function saveProgress() {
+  localStorage.setItem('darab10_progress', JSON.stringify({
+    lastSuccess: Date.now(),
+    correct: correctAnswers,
+    stage: 'ضرب ضمن ١٠',
+    level: 'مبتدئ'
+  }));
+}
+
+// مؤقت الحصة
+function startTimer() {
+  const timerEl = document.getElementById('timer');
+  const interval = setInterval(() => {
+    timeLeft--;
+    const min = Math.floor(timeLeft / ٦٠);
+    const sec = timeLeft % ٦٠;
+    timerEl.textContent = `\( {min}: \){sec < ١٠ ? '٠' : ''}${sec}`;
+    
+    if (timeLeft <= ٠) {
+      clearInterval(interval);
+      alert('انتهت المدة! لكن يمكنك إكمال النشاط بهدوء.');
+    }
+  }, ١٠٠٠);
+}
+
+// ملء الشاشة
+function toggleFullScreen() {
+  if (!document.fullscreenElement) {
+    document.documentElement.requestFullscreen();
+  } else {
+    document.exitFullscreen();
+  }
+}
+
+// أزرار المساعدة
+function showHelp(type) {
+  let msg = '';
+  if (type === 'حكيم نور') msg = 'لا تقلق يا عزيزي، كل شيء سهل وأنت تستطيع. الله معك ❤️';
+  else if (type === 'معلم محمد') msg = 'دعنا نعد معًا خطوة بخطوة ببطء وبدون استعجال.';
+  
+  alert(msg);
+}
+
+// بدء الحصة
+function startLesson() {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.getElementById('section2').classList.add('active');
+  startTimer();
+  showExample();
+}
+
+// مثال بصري
+function showExample() {
+  const visual = document.getElementById('exampleVisual');
+  visual.innerHTML = `
+    🍎🍎 &nbsp;&nbsp; 🍎🍎 &nbsp;&nbsp; 🍎🍎 <br>
+    <span style="font-size:٢٢px;">٢ + ٢ + ٢ = ٦ → ٢ × ٣ = ٦</span>
+  `;
+}
+
+// الانتقال بين الأقسام
+function nextSection(sectionNum) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.getElementById(`section${sectionNum}`).classList.add('active');
+  
+  if (sectionNum === ٣) generateQuestion();
+  if (sectionNum === ٥) generateQuiz();
+}
+
+// اللعبة التفاعلية
+let currentA = ٢, currentB = ٣;
+
+function generateQuestion() {
+  currentA = Math.floor(Math.random() * ٥) + ١;
+  currentB = Math.floor(Math.random() * ٣) + ١;
+  if (currentA * currentB > ١٠) currentB = Math.floor(١٠ / currentA);
+  
+  document.getElementById('groupsNum').textContent = currentB;
+  document.getElementById('eachNum').textContent = currentA;
+  
+  let visual = '';
+  for (let i = ٠; i < currentB; i++) {
+    visual += '<div style="margin:١٠px;">';
+    for (let j = ٠; j < currentA; j++) {
+      visual += '<span class="apple">🍎</span>';
+    }
+    visual += '</div>';
+  }
+  document.getElementById('visualArea').innerHTML = visual;
+  document.getElementById('studentAnswer').value = '';
+  document.getElementById('gameFeedback').innerHTML = '';
+}
+
+function checkAnswer() {
+  const ans = parseInt(document.getElementById('studentAnswer').value);
+  const correct = currentA * currentB;
+  totalQuestions++;
+  
+  const feedback = document.getElementById('gameFeedback');
+  
+  if (ans === correct) {
+    correctAnswers++;
+    feedback.innerHTML = `🎉 ممتاز يا ${studentName}! ${currentB} × ${currentA} = ${correct}<br>الله يبارك في جهدك!`;
+    saveProgress();
+    setTimeout(() => {
+      if (Math.random() > ٠.٥) nextQuestion();
+    }, ٢٥٠٠);
+  } else {
+    feedback.innerHTML = `😊 محاولة جميلة! دعنا نعد معًا: ${currentB} مجموعات × ${currentA} = ${correct}`;
+  }
+}
+
+function nextQuestion() {
+  generateQuestion();
+}
+
+// التقويم
+function generateQuiz() {
+  const quizArea = document.getElementById('quizArea');
+  const questions = [
+    {q: "٢ × ٤ =", a: ٨},
+    {q: "٣ × ٣ =", a: ٩},
+    {q: "٥ × ٢ =", a: ١٠},
+    {q: "٤ × ٢ =", a: ٨},
+    {q: "١ × ٧ =", a: ٧}
+  ];
+  
+  let html = '';
+  questions.forEach((item, i) => {
+    html += `
+      <p style="font-size:٢٤px;">${i+١}. ${item.q} 
+        <input type="number" id="q${i}" style="width:١٠٠px; font-size:٢٤px; text-align:center;">
+      </p>`;
+  });
+  quizArea.innerHTML = html;
+}
+
+function finishLesson() {
+  // حساب الدرجة التقريبية
+  const score = Math.round((correctAnswers / Math.max(totalQuestions, ٥)) * ١٠٠);
+  
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.getElementById('section6').classList.add('active');
+  
+  document.getElementById('report').innerHTML = `
+    <p style="font-size:٢٨px; color:#4caf50;">
+      تقدمك اليوم: ${score}٪<br>
+      أجب صحيحًا على ${correctAnswers} من الأسئلة<br><br>
+      يا ${studentName}، أنت بطل! كل محاولة قمت بها عبادة جميلة.
+    </p>
+    <p>نصيحة لولي الأمر: كرر اللعبة مرتين في الأسبوع ليثبت الجدول.</p>
+  `;
+  
+  saveProgress();
+}
+
+// إعادة بدء
+function restartLesson() {
+  location.reload();
+}
+
+// بدء تلقائي
+window.onload = () => {
+  // طلب اسم الطالب في أول مرة
+  if (!localStorage.getItem('studentName')) {
+    studentName = prompt('أدخل اسم الطالب من فضلك:') || 'بطل';
+    localStorage.setItem('studentName', studentName);
+    document.getElementById('studentNameDisplay').textContent = studentName;
+  }
+};
+</script>
+
+</body>
+</html>
