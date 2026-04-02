@@ -1,309 +1,276 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>🌟 مغامرة البطل الحكيم إبراهيم 🌟</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🌟 مغامرة البطل الحكيم إبراهيم 🌟</title>
 
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #e0f7fa, #f3e5f5, #e8f5e9);
-      margin: 0;
-      padding: 0;
-      color: #2c3e50;
-      text-align: center;
-    }
-
-    .container {
-      max-width: 980px;
-      margin: 20px auto;
-      padding: 25px;
-      background: white;
-      border-radius: 30px;
-      box-shadow: 0 15px 40px rgba(0,0,0,0.15);
-    }
-
-    h1 { color: #1565c0; font-size: 34px; }
-    h2 { color: #2e7d32; }
-
-    .character {
-      font-size: 68px;
-      animation: bounce 2.5s infinite;
-    }
-
-    @keyframes bounce {
-      0%,100% { transform: translateY(0); }
-      50% { transform: translateY(-18px); }
-    }
-
-    .timer {
-      font-size: 32px;
-      color: #d32f2f;
-      font-weight: bold;
-      background: #ffebee;
-      padding: 12px 25px;
-      border-radius: 25px;
-      display: inline-block;
-    }
-
-    .section {
-      display: none;
-      background: #f8f9fa;
-      padding: 30px;
-      border-radius: 25px;
-      margin: 20px 0;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-    }
-
-    .active { display: block; }
-
-    button {
-      padding: 16px 34px;
-      margin: 12px;
-      font-size: 22px;
-      border: none;
-      border-radius: 20px;
-      cursor: pointer;
-    }
-
-    .btn-primary { background: linear-gradient(#4caf50,#388e3c); color: white; }
-    .btn-help { background: #ff9800; color: white; }
-    .btn-parent { background: #9c27b0; color: white; }
-
-    input[type="text"] {
-      font-size: 28px;
-      width: 200px;
-      text-align: center;
-      border: 4px solid #4caf50;
-      border-radius: 18px;
-      padding: 12px;
-    }
-
-    .feedback {
-      min-height: 55px;
-      font-size: 26px;
-      font-weight: bold;
-      margin: 15px 0;
-    }
-
-    .story-text {
-      font-size: 24px;
-      line-height: 1.8;
-    }
-  </style>
+<style>
+body{
+  font-family:Arial,sans-serif;
+  background:linear-gradient(135deg,#e0f7fa,#f3e5f5,#e8f5e9);
+  margin:0;padding:0;text-align:center;color:#2c3e50
+}
+.container{
+  max-width:980px;margin:20px auto;padding:25px;
+  background:#fff;border-radius:30px;
+  box-shadow:0 15px 40px rgba(0,0,0,.15)
+}
+h1{color:#1565c0;font-size:34px}
+h2{color:#2e7d32}
+.character{font-size:68px;animation:bounce 2.5s infinite}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-18px)}}
+.timer{
+  font-size:32px;color:#d32f2f;font-weight:bold;
+  background:#ffebee;padding:12px 25px;border-radius:25px
+}
+.section{
+  display:none;background:#f8f9fa;padding:30px;
+  border-radius:25px;margin:20px 0;
+  box-shadow:0 10px 25px rgba(0,0,0,.1)
+}
+.active{display:block}
+button{
+  padding:16px 34px;margin:12px;
+  font-size:22px;border:none;border-radius:20px;cursor:pointer
+}
+.btn-primary{background:linear-gradient(#4caf50,#388e3c);color:white}
+.btn-help{background:#ff9800;color:white}
+.btn-parent{background:#9c27b0;color:white}
+input[type=text]{
+  font-size:28px;width:200px;text-align:center;
+  border:4px solid #4caf50;border-radius:18px;padding:12px
+}
+.feedback{min-height:55px;font-size:26px;font-weight:bold;margin:15px 0}
+.story-text{font-size:24px;line-height:1.8}
+</style>
 </head>
 
 <body>
 <div class="container">
 
-  <h1>🌟 مغامرة البطل الحكيم إبراهيم 🌟</h1>
-  <p style="font-size:26px;">مع المعلم محمد وأصدقائه في غابة الحكمة</p>
+<h1>🌟 مغامرة البطل الحكيم إبراهيم 🌟</h1>
+<p style="font-size:26px">مع المعلم محمد وأصدقائه في غابة الحكمة</p>
+<div class="timer" id="timer">٦٠:٠٠</div>
 
-  <div class="timer" id="timer">٦٠:٠٠</div>
+<div style="margin:20px 0">
+<span class="character">🐰</span>
+<span class="character" style="margin:0 25px">🦊</span>
+<span class="character">🐻</span>
+</div>
 
-  <div style="margin:20px 0;">
-    <span class="character">🐰</span>
-    <span class="character" style="margin:0 25px;">🦊</span>
-    <span class="character">🐻</span>
-  </div>
+<!-- القسم 1 -->
+<div id="section1" class="section active">
+<h2>السلام عليكم يا بطلنا الحكيم ❤️</h2>
+<p class="story-text">
+في غابة الحكمة ينتظرك أصدقاؤك توتو وفوفو وبوبو لمغامرة جديدة عن سر الضرب!
+</p>
+<button class="btn-primary" onclick="startAdventure()">ابدأ المغامرة ✨</button><br><br>
+<button class="btn-help" onclick="showHelp('nur')">🧠 الحكيم نور</button>
+<button class="btn-help" onclick="showHelp('teacher')">👨‍🏫 المعلم محمد</button>
+<button class="btn-parent" onclick="showHelp('parent')">👨‍👩‍👦 ولي الأمر</button>
+</div>
 
-  <div id="section1" class="section active">
-    <h2>السلام عليكم يا بطلنا الحكيم ❤️</h2>
-    <p class="story-text">
-      في غابة الحكمة ينتظرك أصدقاؤك توتو وفوفو وبوبو لمغامرة جديدة عن سر الضرب!
-    </p>
-    <button class="btn-primary" onclick="startAdventure()">ابدأ المغامرة ✨</button>
-    <br><br>
-    <button class="btn-help" onclick="showHelp('nur')">🧠 الحكيم نور</button>
-    <button class="btn-help" onclick="showHelp('teacher')">👨‍🏫 المعلم محمد</button>
-    <button class="btn-parent" onclick="showHelp('parent')">👨‍👩‍👦 ولي الأمر</button>
-  </div>
+<!-- القسم 2 -->
+<div id="section2" class="section">
+<h2>🐰 بداية المغامرة</h2>
+<p class="story-text">
+ذات يوم في غابة الحكمة، جاء توتو الأرنب مسرعًا وقال:<br>
+«يا بطلنا الحكيم إبراهيم! نحتاج مساعدتك. فوفو الثعلب وجد مجموعات من التفاح،
+ولا يعرف كم تفاحة بالكل!»<br><br>
+المعلم محمد يبتسم وقال:
+«الضرب هو جمع متكرر يا إبراهيم، هل أنت مستعد؟»
+</p>
+<button class="btn-primary" onclick="nextSection(3)">نعم، أنا مستعد ✅</button>
+</div>
 
-  <div id="section2" class="section">
-    <h2>🐰 بداية المغامرة</h2>
-    <p class="story-text">
-      ذات يوم في غابة الحكمة، جاء توتو الأرنب مسرعًا وقال:<br>
-      «يا بطلنا الحكيم إبراهيم! نحتاج مساعدتك. فوفو الثعلب وجد مجموعات من التفاح،
-      ولا يعرف كم تفاحة بالكل!»<br><br>
-      المعلم محمد يبتسم وقال:
-      «الضرب هو جمع متكرر يا إبراهيم، هل أنت مستعد لمساعدة أصدقائك؟»
-    </p>
-    <button class="btn-primary" onclick="nextSection(3)">
-      نعم، أنا مستعد يا معلم محمد ✅
-    </button>
-  </div>
+<!-- القسم 3 -->
+<div id="section3" class="section">
+<h2>🍎 مهمة فوفو الثعلب</h2>
+<p class="story-text">
+قال فوفو: «لدي <span id="groupsNum"></span> مجموعات،
+وفي كل مجموعة <span id="eachNum"></span> تفاحة»<br>
+كم تفاحة بالكل؟
+</p>
 
-  <div id="section3" class="section">
-    <h2>🍎 مهمة فوفو الثعلب</h2>
-    <p class="story-text">
-      قال فوفو: «لدي <span id="groupsNum"></span> مجموعات،
-      وفي كل مجموعة <span id="eachNum"></span> تفاحة»<br>
-      يا بطلنا الحكيم إبراهيم، كم تفاحة بالكل؟
-    </p>
+<div id="visualArea" style="min-height:180px;font-size:52px"></div>
 
-    <div id="visualArea" style="min-height:180px; font-size:52px;"></div>
+<input type="text" id="studentAnswer" placeholder="اكتب الجواب هنا"><br><br>
+<button class="btn-primary" onclick="checkAnswer()">أرسل الجواب 🦊</button>
+<div id="gameFeedback" class="feedback"></div>
 
-    <input type="text" id="studentAnswer" placeholder="اكتب الجواب هنا">
-    <br><br>
-    <button class="btn-primary" onclick="checkAnswer()">أرسل الجواب إلى فوفو 🦊</button>
-    <div id="gameFeedback" class="feedback"></div>
+<button onclick="nextQuestion()" style="background:#2196f3;color:white">
+مهمة جديدة 🔄
+</button>
+<button class="btn-primary" onclick="nextSection(4)">
+اذهب إلى الدفتر مع بوبو ➡️
+</button>
+</div>
 
-    <button onclick="nextQuestion()" style="background:#2196f3;color:white;">
-      مهمة جديدة 🔄
-    </button>
-    <button class="btn-primary" onclick="nextSection(4)">
-      اذهب إلى الدفتر مع بوبو ➡️
-    </button>
-  </div>
+<!-- القسم 4 -->
+<div id="section4" class="section">
+<h2>✏️ بوبو الدب ينتظرك في الدفتر</h2>
+<ol style="font-size:24px;text-align:right;line-height:2.4">
+<li>٢ × ٣ = ؟</li>
+<li>٤ × ٢ = ؟</li>
+<li>٣ × ٣ = ؟</li>
+<li>٥ × ٢ = ؟</li>
+<li>١ × ٧ = ؟</li>
+</ol>
+<button class="btn-primary" onclick="confirmNotebook()">
+انتهيت من الكتابة في الدفتر ✅
+</button>
+</div>
 
-  <div id="section4" class="section">
-    <h2>✏️ بوبو الدب ينتظرك في الدفتر</h2>
-    <ol style="font-size:24px; text-align:right; line-height:2.4;">
-      <li>٢ × ٣ = ؟</li>
-      <li>٤ × ٢ = ؟</li>
-      <li>٣ × ٣ = ؟</li>
-      <li>٥ × ٢ = ؟</li>
-      <li>١ × ٧ = ؟</li>
-    </ol>
-    <button class="btn-primary" onclick="nextSection(5)">
-      انتهيت من الكتابة في الدفتر ✅
-    </button>
-  </div>
+<!-- القسم 5 -->
+<div id="section5" class="section">
+<h2>📝 الاختبار النهائي في غابة الحكمة</h2>
+<div id="quizArea" style="font-size:24px;line-height:2.8"></div>
+<button class="btn-primary" onclick="finishAdventure()">
+أنهِ المغامرة 🎉
+</button>
+</div>
 
-  <div id="section5" class="section">
-    <h2>📝 الاختبار النهائي في غابة الحكمة</h2>
-    <div id="quizArea" style="font-size:24px; line-height:2.8;"></div>
-    <button class="btn-primary" onclick="finishAdventure()">
-      أنهِ المغامرة 🎉
-    </button>
-  </div>
-
-  <div id="section6" class="section">
-    <h2>🎉 نهاية المغامرة المباركة!</h2>
-    <div id="report" style="font-size:26px; line-height:1.9; margin:30px 0;"></div>
-    <div id="stars" style="font-size:45px; letter-spacing:10px;"></div>
-    <button class="btn-primary" onclick="location.reload()">
-      مغامرة جديدة ✨
-    </button>
-    <button class="btn-parent" onclick="showHelp('parent')">
-      أرسل تقريرًا إلى ولي الأمر
-    </button>
-  </div>
+<!-- القسم 6 -->
+<div id="section6" class="section">
+<h2>🎉 نهاية المغامرة المباركة!</h2>
+<div id="report" style="font-size:26px;line-height:1.9;margin:30px 0"></div>
+<div id="stars" style="font-size:45px;letter-spacing:10px"></div>
+<button class="btn-primary" onclick="location.reload()">مغامرة جديدة ✨</button>
+<button class="btn-parent" onclick="showHelp('parent')">تقرير ولي الأمر</button>
+</div>
 
 </div>
 
 <script>
-let studentName = "البطل الحكيم إبراهيم";
-let parentName = "ولي الأمر";
-let timeLeft = 3600;
-let correctAnswers = 0;
-let totalQuestions = 0;
-let currentA = 2, currentB = 3;
+// ================== متغيرات التحكم ==================
+let started=false, storySolved=false, notebookDone=false, quizDone=false;
+let timeLeft=3600, correctAnswers=0, totalQuestions=0;
+let currentA=2,currentB=3;
 
-function toArabicDigits(num) {
-  const a = '٠١٢٣٤٥٦٧٨٩';
-  return num.toString().replace(/\d/g, d => a[d]);
+// ================== أدوات ==================
+function toArabicDigits(n){
+const a='٠١٢٣٤٥٦٧٨٩';
+return n.toString().replace(/\d/g,d=>a[d]);
+}
+function toWesternDigits(s){
+const a='٠١٢٣٤٥٦٧٨٩';
+return s.replace(/[٠-٩]/g,d=>a.indexOf(d));
 }
 
-function toWesternDigits(str) {
-  const a = '٠١٢٣٤٥٦٧٨٩';
-  return str.replace(/[٠-٩]/g, d => a.indexOf(d));
+// ================== المؤقت ==================
+function startTimer(){
+const t=document.getElementById("timer");
+setInterval(()=>{
+ if(timeLeft<=0)return;
+ timeLeft--;
+ const m=Math.floor(timeLeft/60);
+ const s=timeLeft%60;
+ t.textContent=`${toArabicDigits(m)}:${toArabicDigits(s<10?'0'+s:s)}`;
+},1000);
 }
 
-function startTimer() {
-  const timer = document.getElementById("timer");
-  setInterval(() => {
-    if (timeLeft <= 0) return;
-    timeLeft--;
-    const m = Math.floor(timeLeft / 60);
-    const s = timeLeft % 60;
-    timer.textContent =
-      `${toArabicDigits(m)}:${toArabicDigits(s<10?'0'+s:s)}`;
-  }, 1000);
+// ================== المساعدة ==================
+function showHelp(type){
+if(type==="nur")alert("🧠 أنت بطل حكيم");
+if(type==="teacher")alert("👨‍🏫 المعلم محمد يشجعك");
+if(type==="parent")alert("🌷 تم إنجاز المغامرة بنجاح");
 }
 
-function showHelp(type) {
-  if (type==="nur") alert(`🧠 يا ${studentName}، أنت بطل حكيم ❤️`);
-  if (type==="teacher") alert(`👨‍🏫 المعلم محمد معك خطوة بخطوة 🌱`);
-  if (type==="parent")
-    alert(`السلام عليكم ${parentName}\n${studentName} أنهى مغامرة الضرب اليوم بجهد رائع`);
+// ================== التحكم في الأقسام ==================
+function startAdventure(){
+started=true;
+nextSection(2);
+startTimer();
 }
 
-function startAdventure() {
-  nextSection(2);
-  startTimer();
+function nextSection(n){
+if(!started && n>1){alert("ابدأ المغامرة أولًا");return;}
+if(n===4 && !storySolved){alert("أجب عن مهمة فوفو أولًا");return;}
+if(n===5 && !notebookDone){alert("أكمل الدفتر أولًا");return;}
+if(n===6 && !quizDone){alert("أنهِ الاختبار أولًا");return;}
+
+document.querySelectorAll(".section")
+.forEach(s=>s.classList.remove("active"));
+document.getElementById("section"+n).classList.add("active");
+
+if(n===3)generateQuestion();
+if(n===5)generateQuiz();
 }
 
-function nextSection(n) {
-  document.querySelectorAll('.section')
-    .forEach(s=>s.classList.remove('active'));
-  document.getElementById('section'+n).classList.add('active');
-  if (n===3) generateQuestion();
-  if (n===5) generateQuiz();
+// ================== مهمة فوفو ==================
+function generateQuestion(){
+currentA=Math.floor(Math.random()*5)+1;
+currentB=Math.floor(Math.random()*5)+1;
+document.getElementById("groupsNum").textContent=toArabicDigits(currentB);
+document.getElementById("eachNum").textContent=toArabicDigits(currentA);
+
+let v="";
+for(let i=0;i<currentB;i++){
+ v+="<div>";
+ for(let j=0;j<currentA;j++)v+="🍎";
+ v+="</div>";
+}
+document.getElementById("visualArea").innerHTML=v;
 }
 
-function generateQuestion() {
-  currentA = Math.floor(Math.random()*5)+1;
-  currentB = Math.floor(Math.random()*5)+1;
-  document.getElementById("groupsNum").textContent = toArabicDigits(currentB);
-  document.getElementById("eachNum").textContent = toArabicDigits(currentA);
+function checkAnswer(){
+const input=document.getElementById("studentAnswer").value.trim();
+if(input===""){alert("اكتب الجواب أولًا");return;}
 
-  let v="";
-  for(let i=0;i<currentB;i++){
-    v+="<div>";
-    for(let j=0;j<currentA;j++) v+="🍎";
-    v+="</div>";
-  }
-  document.getElementById("visualArea").innerHTML=v;
+const val=parseInt(toWesternDigits(input));
+totalQuestions++;
+if(val===currentA*currentB){
+correctAnswers++;
+storySolved=true;
+document.getElementById("gameFeedback").textContent=
+"✅ أحسنت! يمكنك الآن الذهاب إلى الدفتر";
+}else{
+document.getElementById("gameFeedback").textContent=
+"🙂 حاول مرة أخرى";
+}
+}
+function nextQuestion(){generateQuestion();}
+
+// ================== الدفتر ==================
+function confirmNotebook(){
+notebookDone=true;
+nextSection(5);
 }
 
-function checkAnswer() {
-  const val = parseInt(
-    toWesternDigits(document.getElementById("studentAnswer").value)
-  );
-  totalQuestions++;
-  if (val===currentA*currentB) {
-    correctAnswers++;
-    document.getElementById("gameFeedback").textContent="✅ أحسنت";
-  } else {
-    document.getElementById("gameFeedback").textContent =
-      "🙂 الجواب الصحيح "+toArabicDigits(currentA*currentB);
-  }
-}
-
-function nextQuestion(){ generateQuestion(); }
-
-const quiz = [
-  {q:"٢ × ٣",a:6},
-  {q:"٤ × ٢",a:8},
-  {q:"٣ × ٣",a:9},
-  {q:"٥ × ٢",a:10},
-  {q:"١ × ٧",a:7}
+// ================== الاختبار ==================
+const quiz=[
+{q:"٢ × ٣",a:6},
+{q:"٤ × ٢",a:8},
+{q:"٣ × ٣",a:9},
+{q:"٥ × ٢",a:10},
+{q:"١ × ٧",a:7}
 ];
 
-function generateQuiz() {
-  let h="";
-  quiz.forEach((x,i)=>{
-    h+=`${x.q} = <input type="text" id="quiz${i}"><br><br>`;
-  });
-  document.getElementById("quizArea").innerHTML=h;
+function generateQuiz(){
+let h="";
+quiz.forEach((x,i)=>{
+h+=`${x.q} = <input type="text" id="quiz${i}"><br><br>`;
+});
+document.getElementById("quizArea").innerHTML=h;
 }
 
-function finishAdventure() {
-  quiz.forEach((x,i)=>{
-    const v=parseInt(
-      toWesternDigits(document.getElementById("quiz"+i).value)
-    );
-    totalQuestions++;
-    if (v===x.a) correctAnswers++;
-  });
-  nextSection(6);
-  const score=Math.round((correctAnswers/totalQuestions)*100);
-  document.getElementById("report").innerHTML =
-    `يا ${studentName} الحكيم، نتيجتك ${toArabicDigits(score)}٪ 🌟`;
-  document.getElementById("stars").textContent =
-    "⭐".repeat(Math.ceil(score/20));
+function finishAdventure(){
+quizDone=true;
+quiz.forEach((x,i)=>{
+const v=parseInt(
+toWesternDigits(document.getElementById("quiz"+i).value)
+);
+totalQuestions++;
+if(v===x.a)correctAnswers++;
+});
+
+nextSection(6);
+const score=Math.round((correctAnswers/totalQuestions)*100);
+document.getElementById("report").innerHTML=
+`يا البطل الحكيم، نتيجتك ${toArabicDigits(score)}٪ 🌟`;
+document.getElementById("stars").textContent=
+"⭐".repeat(Math.ceil(score/20));
 }
 </script>
 
