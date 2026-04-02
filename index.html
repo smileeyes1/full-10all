@@ -142,7 +142,7 @@ input[type=text]{
 
 <!-- القسم 6 -->
 <section id="section6" class="section">
-<h2>تهانينا 🎉</h2>
+<h2>تهانينا</h2>
 <div id="report"></div>
 <div id="stars" style="font-size:42px"></div>
 <button class="btn-primary" onclick="location.reload()">مغامرة جديدة</button>
@@ -162,8 +162,7 @@ const toW=s=>s.replace(/[٠-٩]/g,d=>AR.indexOf(d));
 
 function saveNames(){
   if(!studentNameInput.value||!parentNameInput.value){
-    alert("يرجى إدخال الاسمين");
-    return;
+    alert("يرجى إدخال الاسمين");return;
   }
   studentName=studentNameInput.value;
   parentName=parentNameInput.value;
@@ -189,46 +188,37 @@ function nextSection(n){
   if(n===5)generateQuiz();
 }
 
-/* 🎯 توليد السؤال وقراءة نص السؤال فقط */
+/* ===== السؤال ===== */
 function generateQuestion(){
   currentA=Math.floor(Math.random()*5)+1;
   currentB=Math.floor(Math.random()*5)+1;
-
   groupsNum.textContent=toA(currentB);
   eachNum.textContent=toA(currentA);
-
-  visualArea.innerHTML =
-    ("🍎".repeat(currentA)+"<br>").repeat(currentB);
-
+  visualArea.innerHTML=("🍎".repeat(currentA)+"<br>").repeat(currentB);
   readQuestionOnly();
 }
 
-/* ✅ التحقق وقراءة التعزيز فقط */
 function checkAnswer(){
   const v=parseInt(toW(studentAnswer.value));
   if(isNaN(v))return;
-
   totalQuestions++;
   let feedback="";
-
   if(v===currentA*currentB){
     correctAnswers++;
     feedback=`أحسنت يا ${studentName}  
-    محاولتك عبادة جميلة، والله يبارك جهدك.`;
+    محاولتك عبادة جميلة.`;
   }else{
     feedback=`لا بأس يا ${studentName}  
     كل محاولة ترفعك درجة.`;
   }
-
-  gameFeedback.textContent = feedback;
+  gameFeedback.textContent=feedback;
   speakFeedbackOnly(feedback);
-
   setTimeout(()=>{studentAnswer.value="";},2500);
 }
 
 function nextQuestion(){generateQuestion();}
 
-/* الاختبار */
+/* ===== اختبار ===== */
 const quiz=[
 {q:"٢×٣",a:6},{q:"٤×٢",a:8},
 {q:"٣×٣",a:9},{q:"٥×٢",a:10},
@@ -257,7 +247,7 @@ function finishAdventure(){
 }
 
 /* ===== الصوت ===== */
-let speaking=false,recognition=null;
+let recognition=null;
 
 function cleanTextForSpeech(text){
   return text
@@ -267,13 +257,29 @@ function cleanTextForSpeech(text){
     .trim();
 }
 
+/* ✅ قراءة تعليمية فقط (بدون أزرار) */
+function toggleRead(){
+  stopAllVoice();
+  const sec=document.querySelector(".section.active");
+  if(!sec)return;
+  let text="";
+  sec.querySelectorAll("h2, .story-text").forEach(el=>{
+    text+=" "+el.innerText;
+  });
+  text=cleanTextForSpeech(text);
+  if(!text)return;
+  const u=new SpeechSynthesisUtterance(text);
+  u.lang="ar-SA";u.rate=0.9;
+  speechSynthesis.speak(u);
+}
+
 /* قراءة السؤال فقط */
 function readQuestionOnly(){
   stopAllVoice();
   const q=document.getElementById("questionText");
   if(!q)return;
-  const text=cleanTextForSpeech(q.innerText);
-  const u=new SpeechSynthesisUtterance(text);
+  const t=cleanTextForSpeech(q.innerText);
+  const u=new SpeechSynthesisUtterance(t);
   u.lang="ar-SA";u.rate=0.9;
   speechSynthesis.speak(u);
 }
@@ -287,22 +293,10 @@ function speakFeedbackOnly(text){
   speechSynthesis.speak(u);
 }
 
-/* قراءة عامة عند الضغط على اقرأ لي */
-function toggleRead(){
-  const sec=document.querySelector(".section.active");
-  if(!sec)return;
-  const text=cleanTextForSpeech(sec.innerText);
-  const u=new SpeechSynthesisUtterance(text);
-  u.lang="ar-SA";u.rate=0.9;
-  speechSynthesis.speak(u);
-}
-
-/* سؤال صوتي */
 function startVoiceQuestion(){
-  alert("ميزة السؤال الصوتي مفعّلة كتجربة تعليمية");
+  alert("ميزة السؤال الصوتي مفعّلة");
 }
 
-/* إيقاف الصوت */
 function stopAllVoice(){
   if(recognition)recognition.abort();
   speechSynthesis.cancel();
