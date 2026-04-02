@@ -44,7 +44,6 @@ input[type=text]{
   border:4px solid #4caf50;border-radius:18px;padding:10px
 }
 .feedback{min-height:55px;font-size:24px;font-weight:bold}
-
 @media(max-width:600px){
   input[type=text],button{width:100%}
 }
@@ -182,10 +181,8 @@ function saveNames(){
   }
   studentName=studentNameInput.value;
   parentName=parentNameInput.value;
-
   welcomeTitle.textContent=`السلام عليك يا ${studentName} ❤️`;
   name1.textContent=name2.textContent=name3.textContent=studentName;
-
   startTimer();
   nextSection(1);
 }
@@ -264,45 +261,90 @@ function finishAdventure(){
 }
 
 /* ===== الصوت ===== */
-let speaking=false, recognition=null;
+let speaking=false;
+let recognition=null;
+let silenceTimer=null;
 
 function toggleRead(){
-  if(speaking){ speechSynthesis.cancel(); speaking=false; return; }
+  if(speaking){
+    speechSynthesis.cancel();
+    speaking=false;
+    return;
+  }
   const txt=document.querySelector(".section.active").innerText;
   const u=new SpeechSynthesisUtterance(txt);
-  u.lang="ar-SA"; u.rate=0.9;
+  u.lang="ar-SA";
+  u.rate=0.9;
   speechSynthesis.speak(u);
   speaking=true;
   u.onend=()=>speaking=false;
 }
 
 function startVoiceQuestion(){
-  if(!('webkitSpeechRecognition'in window)){
+  if(!('webkitSpeechRecognition' in window)){
     alert("الميكروفون غير مدعوم"); return;
   }
+
   recognition=new webkitSpeechRecognition();
   recognition.lang="ar-SA";
+  recognition.interimResults=true;
+  recognition.continuous=false;
+
+  let finalText="";
+
+  voiceStatus.textContent=
+    `🎙️ تحدث بهدوء يا ${studentName}… أنا أستمع 🌷`;
+
   recognition.onresult=e=>{
-    const q=e.results[0][0].transcript;
-    answerQuestion(q);
+    clearTimeout(silenceTimer);
+    for(let i=e.resultIndex;i<e.results.length;i++){
+      if(e.results[i].isFinal){
+        finalText+=e.results[i][0].transcript;
+      }
+    }
+    silenceTimer=setTimeout(()=>{
+      recognition.stop();
+      if(finalText.trim()){
+        handleStudentQuestion(finalText.trim());
+      }else{
+        speakAnswer(`لم أسمعك جيدًا يا ${studentName}، حاول مرة أخرى بهدوء 🌸`);
+      }
+    },3000);
   };
+
   recognition.start();
 }
 
-function answerQuestion(q){
-  let answer=
-    q.includes("صعب")?
-    `أفهمك يا ${studentName}، الصبر قوة، والله معك.`:
-    `سؤالك ذكي يا ${studentName}، فكر خطوة خطوة.`;
+function handleStudentQuestion(q){
+  let answer="";
+  const s=q.toLowerCase();
 
-  speechSynthesis.speak(
-    new SpeechSynthesisUtterance(answer)
-  );
+  if(s.includes("ليش")||s.includes("لماذا")){
+    answer=`سؤال جميل يا ${studentName}. التفكير عبادة، دعنا نحلها خطوة خطوة 🌟`;
+  }else if(s.includes("صعب")){
+    answer=`أفهمك يا ${studentName}. الهدوء قوة، وكل محاولة تقربك أكثر 🌷`;
+  }else if(s.includes("غلط")){
+    answer=`الخطأ طريق الفهم يا ${studentName}. لا حرج، جرب مطمئنًا 🌼`;
+  }else{
+    answer=`سؤالك ذكي يا ${studentName}. خذ نفسًا وفكر بهدوء، وأنا معك 😊`;
+  }
+  speakAnswer(answer);
+}
+
+function speakAnswer(text){
+  speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(text);
+  u.lang="ar-SA";
+  u.rate=0.9;
+  u.pitch=1.1;
+  speechSynthesis.speak(u);
 }
 
 function stopAllVoice(){
   if(recognition)recognition.abort();
   speechSynthesis.cancel();
+  speaking=false;
+  voiceStatus.textContent="⛔ تم إيقاف الصوت";
 }
 </script>
 
