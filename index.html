@@ -27,9 +27,13 @@
     h1 { color: #1565c0; font-size: 34px; }
     h2 { color: #2e7d32; }
 
-    .character { font-size: 68px; animation: bounce 2.5s infinite; }
+    .character {
+      font-size: 68px;
+      animation: bounce 2.5s infinite;
+    }
+
     @keyframes bounce {
-      0%, 100% { transform: translateY(0); }
+      0%,100% { transform: translateY(0); }
       50% { transform: translateY(-18px); }
     }
 
@@ -51,6 +55,7 @@
       margin: 20px 0;
       box-shadow: 0 10px 25px rgba(0,0,0,0.1);
     }
+
     .active { display: block; }
 
     button {
@@ -62,7 +67,7 @@
       cursor: pointer;
     }
 
-    .btn-primary { background: linear-gradient(#4caf50, #388e3c); color: white; }
+    .btn-primary { background: linear-gradient(#4caf50,#388e3c); color: white; }
     .btn-help { background: #ff9800; color: white; }
     .btn-parent { background: #9c27b0; color: white; }
 
@@ -75,8 +80,17 @@
       padding: 12px;
     }
 
-    .feedback { min-height: 55px; font-size: 26px; font-weight: bold; margin: 15px 0; }
-    .story-text { font-size: 24px; line-height: 1.8; }
+    .feedback {
+      min-height: 55px;
+      font-size: 26px;
+      font-weight: bold;
+      margin: 15px 0;
+    }
+
+    .story-text {
+      font-size: 24px;
+      line-height: 1.8;
+    }
   </style>
 </head>
 
@@ -88,7 +102,7 @@
 
   <div class="timer" id="timer">٦٠:٠٠</div>
 
-  <div style="margin:20px 0; font-size:55px;">
+  <div style="margin:20px 0;">
     <span class="character">🐰</span>
     <span class="character" style="margin:0 25px;">🦊</span>
     <span class="character">🐻</span>
@@ -112,9 +126,12 @@
       ذات يوم في غابة الحكمة، جاء توتو الأرنب مسرعًا وقال:<br>
       «يا بطلنا الحكيم إبراهيم! نحتاج مساعدتك. فوفو الثعلب وجد مجموعات من التفاح،
       ولا يعرف كم تفاحة بالكل!»<br><br>
-      المعلم محمد يبتسم وقال: «الضرب هو جمع متكرر يا إبراهيم، هل أنت مستعد؟»
+      المعلم محمد يبتسم وقال:
+      «الضرب هو جمع متكرر يا إبراهيم، هل أنت مستعد لمساعدة أصدقائك؟»
     </p>
-    <button class="btn-primary" onclick="nextSection(3)">نعم، أنا مستعد ✅</button>
+    <button class="btn-primary" onclick="nextSection(3)">
+      نعم، أنا مستعد يا معلم محمد ✅
+    </button>
   </div>
 
   <div id="section3" class="section">
@@ -122,45 +139,56 @@
     <p class="story-text">
       قال فوفو: «لدي <span id="groupsNum"></span> مجموعات،
       وفي كل مجموعة <span id="eachNum"></span> تفاحة»<br>
-      كم تفاحة بالكل؟
+      يا بطلنا الحكيم إبراهيم، كم تفاحة بالكل؟
     </p>
 
     <div id="visualArea" style="min-height:180px; font-size:52px;"></div>
 
     <input type="text" id="studentAnswer" placeholder="اكتب الجواب هنا">
     <br><br>
-    <button class="btn-primary" onclick="checkAnswer()">أرسل الجواب 🦊</button>
+    <button class="btn-primary" onclick="checkAnswer()">أرسل الجواب إلى فوفو 🦊</button>
     <div id="gameFeedback" class="feedback"></div>
 
-    <button onclick="nextQuestion()" style="background:#2196f3;color:white;">مهمة جديدة 🔄</button>
-    <button class="btn-primary" onclick="nextSection(4)">اذهب إلى الدفتر ➡️</button>
+    <button onclick="nextQuestion()" style="background:#2196f3;color:white;">
+      مهمة جديدة 🔄
+    </button>
+    <button class="btn-primary" onclick="nextSection(4)">
+      اذهب إلى الدفتر مع بوبو ➡️
+    </button>
   </div>
 
   <div id="section4" class="section">
-    <h2>✏️ بوبو الدب ينتظرك</h2>
-    <ol style="font-size:24px; text-align:right;">
+    <h2>✏️ بوبو الدب ينتظرك في الدفتر</h2>
+    <ol style="font-size:24px; text-align:right; line-height:2.4;">
       <li>٢ × ٣ = ؟</li>
       <li>٤ × ٢ = ؟</li>
       <li>٣ × ٣ = ؟</li>
       <li>٥ × ٢ = ؟</li>
       <li>١ × ٧ = ؟</li>
     </ol>
-    <button class="btn-primary" onclick="nextSection(5)">انتهيت ✅</button>
+    <button class="btn-primary" onclick="nextSection(5)">
+      انتهيت من الكتابة في الدفتر ✅
+    </button>
   </div>
 
   <div id="section5" class="section">
-    <h2>📝 الاختبار النهائي</h2>
-    <div id="quizArea"></div>
-    <button class="btn-primary" onclick="finishAdventure()">أنهِ المغامرة 🎉</button>
+    <h2>📝 الاختبار النهائي في غابة الحكمة</h2>
+    <div id="quizArea" style="font-size:24px; line-height:2.8;"></div>
+    <button class="btn-primary" onclick="finishAdventure()">
+      أنهِ المغامرة 🎉
+    </button>
   </div>
 
   <div id="section6" class="section">
-    <h2>🎉 نهاية المغامرة!</h2>
-    <div id="report"></div>
-    <div id="stars" style="font-size:45px;"></div>
-
-    <button class="btn-primary" onclick="location.reload()">مغامرة جديدة ✨</button>
-    <button class="btn-parent" onclick="showHelp('parent')">تقرير ولي الأمر</button>
+    <h2>🎉 نهاية المغامرة المباركة!</h2>
+    <div id="report" style="font-size:26px; line-height:1.9; margin:30px 0;"></div>
+    <div id="stars" style="font-size:45px; letter-spacing:10px;"></div>
+    <button class="btn-primary" onclick="location.reload()">
+      مغامرة جديدة ✨
+    </button>
+    <button class="btn-parent" onclick="showHelp('parent')">
+      أرسل تقريرًا إلى ولي الأمر
+    </button>
   </div>
 
 </div>
@@ -184,20 +212,22 @@ function toWesternDigits(str) {
 }
 
 function startTimer() {
-  const el = document.getElementById("timer");
+  const timer = document.getElementById("timer");
   setInterval(() => {
     if (timeLeft <= 0) return;
     timeLeft--;
     const m = Math.floor(timeLeft / 60);
     const s = timeLeft % 60;
-    el.textContent = `${toArabicDigits(m)}:${toArabicDigits(s < 10 ? "0"+s : s)}`;
+    timer.textContent =
+      `${toArabicDigits(m)}:${toArabicDigits(s<10?'0'+s:s)}`;
   }, 1000);
 }
 
 function showHelp(type) {
-  if (type === "nur") alert(`يا ${studentName} أنت بطل حكيم ❤️`);
-  if (type === "teacher") alert(`المعلم محمد يشجعك دائمًا 🌱`);
-  if (type === "parent") alert(`السلام عليكم ${parentName}\nتم إنجاز المغامرة بنجاح`);
+  if (type==="nur") alert(`🧠 يا ${studentName}، أنت بطل حكيم ❤️`);
+  if (type==="teacher") alert(`👨‍🏫 المعلم محمد معك خطوة بخطوة 🌱`);
+  if (type==="parent")
+    alert(`السلام عليكم ${parentName}\n${studentName} أنهى مغامرة الضرب اليوم بجهد رائع`);
 }
 
 function startAdventure() {
@@ -206,10 +236,11 @@ function startAdventure() {
 }
 
 function nextSection(n) {
-  document.querySelectorAll(".section").forEach(s => s.classList.remove("active"));
-  document.getElementById("section"+n).classList.add("active");
-  if (n === 3) generateQuestion();
-  if (n === 5) generateQuiz();
+  document.querySelectorAll('.section')
+    .forEach(s=>s.classList.remove('active'));
+  document.getElementById('section'+n).classList.add('active');
+  if (n===3) generateQuestion();
+  if (n===5) generateQuiz();
 }
 
 function generateQuestion() {
@@ -228,18 +259,20 @@ function generateQuestion() {
 }
 
 function checkAnswer() {
-  const val = parseInt(toWesternDigits(document.getElementById("studentAnswer").value));
+  const val = parseInt(
+    toWesternDigits(document.getElementById("studentAnswer").value)
+  );
   totalQuestions++;
-  if (val === currentA*currentB) {
+  if (val===currentA*currentB) {
     correctAnswers++;
     document.getElementById("gameFeedback").textContent="✅ أحسنت";
   } else {
-    document.getElementById("gameFeedback").textContent=
+    document.getElementById("gameFeedback").textContent =
       "🙂 الجواب الصحيح "+toArabicDigits(currentA*currentB);
   }
 }
 
-function nextQuestion(){generateQuestion();}
+function nextQuestion(){ generateQuestion(); }
 
 const quiz = [
   {q:"٢ × ٣",a:6},
@@ -249,7 +282,7 @@ const quiz = [
   {q:"١ × ٧",a:7}
 ];
 
-function generateQuiz(){
+function generateQuiz() {
   let h="";
   quiz.forEach((x,i)=>{
     h+=`${x.q} = <input type="text" id="quiz${i}"><br><br>`;
@@ -257,17 +290,20 @@ function generateQuiz(){
   document.getElementById("quizArea").innerHTML=h;
 }
 
-function finishAdventure(){
+function finishAdventure() {
   quiz.forEach((x,i)=>{
-    const v=parseInt(toWesternDigits(document.getElementById("quiz"+i).value));
+    const v=parseInt(
+      toWesternDigits(document.getElementById("quiz"+i).value)
+    );
     totalQuestions++;
-    if(v===x.a) correctAnswers++;
+    if (v===x.a) correctAnswers++;
   });
   nextSection(6);
   const score=Math.round((correctAnswers/totalQuestions)*100);
-  document.getElementById("report").innerHTML=
-    `نتيجتك ${toArabicDigits(score)}٪ 🌟`;
-  document.getElementById("stars").textContent="⭐".repeat(Math.ceil(score/20));
+  document.getElementById("report").innerHTML =
+    `يا ${studentName} الحكيم، نتيجتك ${toArabicDigits(score)}٪ 🌟`;
+  document.getElementById("stars").textContent =
+    "⭐".repeat(Math.ceil(score/20));
 }
 </script>
 
