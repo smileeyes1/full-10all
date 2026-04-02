@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>حصة الضرب ضمن ١٠ - ٦٠ دقيقة</title>
+  <title>حصة الضرب ضمن ١٠ - ٦٠ دقيقة (مصححة)</title>
   <style>
     body {
       font-family: 'Arial', sans-serif;
@@ -124,7 +124,6 @@
 <script>
 // ==================== بيانات الحصة ====================
 let studentName = localStorage.getItem('studentName') || '[اسم الطالب]';
-let startTime = Date.now();
 let timeLeft = ٣٦٠٠; // ٦٠ دقيقة بالثواني
 let correctAnswers = ٠;
 let totalQuestions = ٠;
@@ -141,7 +140,7 @@ function saveProgress() {
   }));
 }
 
-// مؤقت الحصة
+// مؤقت الحصة (مصحح)
 function startTimer() {
   const timerEl = document.getElementById('timer');
   const interval = setInterval(() => {
@@ -152,7 +151,7 @@ function startTimer() {
     
     if (timeLeft <= ٠) {
       clearInterval(interval);
-      alert('انتهت المدة! لكن يمكنك إكمال النشاط بهدوء.');
+      alert('انتهت المدة! لكن يمكنك إكمال النشاط بهدوء يا [اسم الطالب].');
     }
   }, ١٠٠٠);
 }
@@ -171,7 +170,6 @@ function showHelp(type) {
   let msg = '';
   if (type === 'حكيم نور') msg = 'لا تقلق يا عزيزي، كل شيء سهل وأنت تستطيع. الله معك ❤️';
   else if (type === 'معلم محمد') msg = 'دعنا نعد معًا خطوة بخطوة ببطء وبدون استعجال.';
-  
   alert(msg);
 }
 
@@ -186,10 +184,7 @@ function startLesson() {
 // مثال بصري
 function showExample() {
   const visual = document.getElementById('exampleVisual');
-  visual.innerHTML = `
-    🍎🍎 &nbsp;&nbsp; 🍎🍎 &nbsp;&nbsp; 🍎🍎 <br>
-    <span style="font-size:٢٢px;">٢ + ٢ + ٢ = ٦ → ٢ × ٣ = ٦</span>
-  `;
+  visual.innerHTML = `🍎🍎 &nbsp;&nbsp; 🍎🍎 &nbsp;&nbsp; 🍎🍎 <br><span style="font-size:٢٢px;">٢ + ٢ + ٢ = ٦ → ٢ × ٣ = ٦</span>`;
 }
 
 // الانتقال بين الأقسام
@@ -236,9 +231,7 @@ function checkAnswer() {
     correctAnswers++;
     feedback.innerHTML = `🎉 ممتاز يا ${studentName}! ${currentB} × ${currentA} = ${correct}<br>الله يبارك في جهدك!`;
     saveProgress();
-    setTimeout(() => {
-      if (Math.random() > ٠.٥) nextQuestion();
-    }, ٢٥٠٠);
+    setTimeout(() => { if (Math.random() > ٠.٥) nextQuestion(); }, ٢٥٠٠);
   } else {
     feedback.innerHTML = `😊 محاولة جميلة! دعنا نعد معًا: ${currentB} مجموعات × ${currentA} = ${correct}`;
   }
@@ -261,16 +254,12 @@ function generateQuiz() {
   
   let html = '';
   questions.forEach((item, i) => {
-    html += `
-      <p style="font-size:٢٤px;">${i+١}. ${item.q} 
-        <input type="number" id="q${i}" style="width:١٠٠px; font-size:٢٤px; text-align:center;">
-      </p>`;
+    html += `<p style="font-size:٢٤px;">${i+١}. \( {item.q} <input type="number" id="q \){i}" style="width:١٠٠px; font-size:٢٤px; text-align:center;"></p>`;
   });
   quizArea.innerHTML = html;
 }
 
 function finishLesson() {
-  // حساب الدرجة التقريبية
   const score = Math.round((correctAnswers / Math.max(totalQuestions, ٥)) * ١٠٠);
   
   document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
@@ -284,7 +273,6 @@ function finishLesson() {
     </p>
     <p>نصيحة لولي الأمر: كرر اللعبة مرتين في الأسبوع ليثبت الجدول.</p>
   `;
-  
   saveProgress();
 }
 
@@ -295,7 +283,6 @@ function restartLesson() {
 
 // بدء تلقائي
 window.onload = () => {
-  // طلب اسم الطالب في أول مرة
   if (!localStorage.getItem('studentName')) {
     studentName = prompt('أدخل اسم الطالب من فضلك:') || 'بطل';
     localStorage.setItem('studentName', studentName);
