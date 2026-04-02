@@ -74,67 +74,63 @@ input[type=text]{
 <section id="section0" class="section active">
 <h2>👋 أهلاً بك في غابة الحكمة</h2>
 <p class="story-text">
-هذه الغابة لا يدخلها إلا من جاء بقلب مطمئن وعقل متفكّر 🌳  
+هذه الغابة لا يدخلها إلا من جاء بقلب مطمئن وعقل متفكّر  
 قبل أن نبدأ، نود أن نتعرّف عليك.
 </p>
 <input id="studentNameInput" type="text" placeholder="اسم البطل"><br><br>
 <input id="parentNameInput" type="text" placeholder="اسم ولي الأمر"><br><br>
-<button class="btn-primary" onclick="saveNames()">ابدأ الرحلة ✨</button>
+<button class="btn-primary" onclick="saveNames()">ابدأ الرحلة</button>
 </section>
 
 <!-- القسم 1 -->
 <section id="section1" class="section">
 <h2 id="welcomeTitle"></h2>
 <p class="story-text">
-يا <strong id="name1"></strong>…  
+يا <strong id="name1"></strong>  
 وأنت تخطو أولى خطواتك داخل الغابة، تشعر بأن كل شيء يرحّب بك.  
 الطيور تغنّي، والريح تهمس:  
-<br><br>
-«تعلّمك اليوم أمانة… ومحاولتك عبادة جميلة». 🌷
+تعلمك اليوم أمانة ومحاولتك عبادة جميلة.
 </p>
-<button class="btn-primary" onclick="nextSection(2)">أكمل 🌟</button>
+<button class="btn-primary" onclick="nextSection(2)">أكمل</button>
 </section>
 
 <!-- القسم 2 -->
 <section id="section2" class="section">
-<h2>🐰 لقاء توتو الأرنب</h2>
+<h2>لقاء توتو الأرنب</h2>
 <p class="story-text">
-قال توتو:
-<br><br>
-"يا <strong id="name2"></strong>، نحن نثق بك.  
-فوفو الثعلب في حيرة، والمعلم محمد قال لنا إنك قادر بعقلك الهادئ!"
+قال توتو:  
+يا <strong id="name2"></strong> نحن نثق بك.  
+فوفو الثعلب في حيرة، والمعلم محمد قال لنا إنك قادر بعقلك الهادئ.
 </p>
-<button class="btn-primary" onclick="nextSection(3)">أنا جاهز ✅</button>
+<button class="btn-primary" onclick="nextSection(3)">أنا جاهز</button>
 </section>
 
 <!-- القسم 3 -->
 <section id="section3" class="section">
-<h2>🍎 لغز التفاح</h2>
+<h2>لغز التفاح</h2>
 <p class="story-text">
-قال فوفو:
-<br>
-لدي <span id="groupsNum"></span> مجموعات،  
-وفي كل مجموعة <span id="eachNum"></span> تفاحات.
-<br><br>
-كم تفاحة لدي يا <strong id="name3"></strong>؟
+قال فوفو:  
+لدي <span id="groupsNum"></span> مجموعات  
+وفي كل مجموعة <span id="eachNum"></span> تفاحات  
+كم تفاحة لدي يا <strong id="name3"></strong>
 </p>
 
 <div id="visualArea" style="font-size:48px"></div>
 
 <input id="studentAnswer" type="text" placeholder="اكتب جوابك"><br>
-<button class="btn-primary" onclick="checkAnswer()">تحقق 🦊</button>
+<button class="btn-primary" onclick="checkAnswer()">تحقق</button>
 <div id="gameFeedback" class="feedback" aria-live="polite"></div>
 
-<button onclick="nextQuestion()" class="btn-help">لغز آخر 🔄</button>
+<button onclick="nextQuestion()" class="btn-help">لغز آخر</button>
 </section>
 
 <!-- القسم 4 -->
 <section id="section4" class="section">
-<h2>🐻 دفتر بوبو</h2>
+<h2>دفتر بوبو</h2>
 <p class="story-text">
-قال بوبو:
-"اكتب هذه التمارين في دفترك الحقيقي بهدوء…  
-الله يحب القويّ الأمين."
+قال بوبو:  
+اكتب هذه التمارين في دفترك الحقيقي بهدوء  
+الله يحب القوي الأمين.
 </p>
 <ol style="font-size:24px;text-align:right">
 <li>٢ × ٣</li>
@@ -143,22 +139,22 @@ input[type=text]{
 <li>٥ × ٢</li>
 <li>١ × ٧</li>
 </ol>
-<button class="btn-primary" onclick="nextSection(5)">انتهيت ✅</button>
+<button class="btn-primary" onclick="nextSection(5)">انتهيت</button>
 </section>
 
 <!-- القسم 5 -->
 <section id="section5" class="section">
-<h2>📝 اختبار الحكمة</h2>
+<h2>اختبار الحكمة</h2>
 <div id="quizArea"></div>
-<button class="btn-primary" onclick="finishAdventure()">أنهِ المغامرة 🎉</button>
+<button class="btn-primary" onclick="finishAdventure()">أنه المغامرة</button>
 </section>
 
 <!-- القسم 6 -->
 <section id="section6" class="section">
-<h2>🎉 أحسنت يا بطل!</h2>
+<h2>أحسنت يا بطل</h2>
 <div id="report"></div>
 <div id="stars" style="font-size:42px"></div>
-<button class="btn-primary" onclick="location.reload()">مغامرة جديدة ✨</button>
+<button class="btn-primary" onclick="location.reload()">مغامرة جديدة</button>
 </section>
 
 </div>
@@ -174,14 +170,14 @@ const A='٠١٢٣٤٥٦٧٨٩';
 const toA=n=>n.toString().replace(/\d/g,d=>A[d]);
 const toW=s=>s.replace(/[٠-٩]/g,d=>A.indexOf(d));
 
-/* ===== الأسماء ===== */
+/* ===== حفظ الأسماء ===== */
 function saveNames(){
   if(!studentNameInput.value||!parentNameInput.value){
-    alert("أدخل الاسمين بهدوء 🌸"); return;
+    alert("أدخل الاسمين بهدوء"); return;
   }
   studentName=studentNameInput.value;
   parentName=parentNameInput.value;
-  welcomeTitle.textContent=`السلام عليك يا ${studentName} ❤️`;
+  welcomeTitle.textContent=`السلام عليك يا ${studentName}`;
   name1.textContent=name2.textContent=name3.textContent=studentName;
   startTimer();
   nextSection(1);
@@ -205,30 +201,23 @@ function nextSection(n){
   if(n===5)generateQuiz();
 }
 
-/* ===== مهمة فوفو ===== */
+/* ===== الأسئلة ===== */
 function generateQuestion(){
   currentA=Math.floor(Math.random()*5)+1;
   currentB=Math.floor(Math.random()*5)+1;
   groupsNum.textContent=toA(currentB);
   eachNum.textContent=toA(currentA);
-  visualArea.innerHTML=("🍎".repeat(currentA)+"<br>").repeat(currentB);
+  visualArea.innerHTML=("تفاح ".repeat(currentA)+"<br>").repeat(currentB);
 }
 
 function checkAnswer(){
   const v=parseInt(toW(studentAnswer.value));
   if(isNaN(v))return;
-
   totalQuestions++;
-  if(v===currentA*currentB){
-    correctAnswers++;
-    gameFeedback.textContent=
-      `✅ أحسنت يا ${studentName} 🌷  
-      محاولتك عبادة جميلة، والله يبارك جهدك.`;
-  }else{
-    gameFeedback.textContent=
-      `🙂 لا بأس يا ${studentName}  
-      كل محاولة ترفعك درجة.`;
-  }
+  gameFeedback.textContent=
+    v===currentA*currentB ?
+    `أحسنت يا ${studentName} محاولتك عبادة جميلة` :
+    `لا بأس يا ${studentName} كل محاولة ترفعك درجة`;
 
   setTimeout(()=>{ studentAnswer.value=""; },2500);
 }
@@ -253,9 +242,9 @@ function finishAdventure(){
   });
   const score=Math.round((correctAnswers/totalQuestions)*100);
   report.innerHTML=
-    `🌟 تقرير البطل ${studentName}<br>
-     ولي الأمر: ${parentName}<br>
-     نتيجتك ${toA(score)}٪`;
+    `تقرير البطل ${studentName}<br>
+     ولي الأمر ${parentName}<br>
+     النتيجة ${toA(score)}٪`;
   stars.textContent="⭐".repeat(Math.ceil(score/20));
   nextSection(6);
 }
@@ -265,14 +254,26 @@ let speaking=false;
 let recognition=null;
 let silenceTimer=null;
 
+/* تنقية النص من الرموز والإيموجي */
+function cleanTextForSpeech(text){
+  return text
+    .replace(/[\u{1F300}-\u{1FAFF}]/gu,"")
+    .replace(/[^\u0600-\u06FF\s.,؟!]/g,"")
+    .replace(/\s+/g," ")
+    .trim();
+}
+
+/* القراءة */
 function toggleRead(){
   if(speaking){
     speechSynthesis.cancel();
     speaking=false;
     return;
   }
-  const txt=document.querySelector(".section.active").innerText;
-  const u=new SpeechSynthesisUtterance(txt);
+  const section=document.querySelector(".section.active");
+  let text=cleanTextForSpeech(section.innerText);
+  if(!text)return;
+  const u=new SpeechSynthesisUtterance(text);
   u.lang="ar-SA";
   u.rate=0.9;
   speechSynthesis.speak(u);
@@ -280,71 +281,46 @@ function toggleRead(){
   u.onend=()=>speaking=false;
 }
 
+/* السؤال الصوتي */
 function startVoiceQuestion(){
-  if(!('webkitSpeechRecognition' in window)){
+  if(!('webkitSpeechRecognition'in window)){
     alert("الميكروفون غير مدعوم"); return;
   }
-
   recognition=new webkitSpeechRecognition();
   recognition.lang="ar-SA";
   recognition.interimResults=true;
   recognition.continuous=false;
 
   let finalText="";
-
-  voiceStatus.textContent=
-    `🎙️ تحدث بهدوء يا ${studentName}… أنا أستمع 🌷`;
+  voiceStatus.textContent=`تحدث بهدوء يا ${studentName}`;
 
   recognition.onresult=e=>{
     clearTimeout(silenceTimer);
     for(let i=e.resultIndex;i<e.results.length;i++){
-      if(e.results[i].isFinal){
+      if(e.results[i].isFinal)
         finalText+=e.results[i][0].transcript;
-      }
     }
     silenceTimer=setTimeout(()=>{
       recognition.stop();
       if(finalText.trim()){
-        handleStudentQuestion(finalText.trim());
-      }else{
-        speakAnswer(`لم أسمعك جيدًا يا ${studentName}، حاول مرة أخرى بهدوء 🌸`);
+        speakAnswer(`سؤالك ذكي يا ${studentName} فكر خطوة خطوة`);
       }
     },3000);
   };
-
   recognition.start();
 }
 
-function handleStudentQuestion(q){
-  let answer="";
-  const s=q.toLowerCase();
-
-  if(s.includes("ليش")||s.includes("لماذا")){
-    answer=`سؤال جميل يا ${studentName}. التفكير عبادة، دعنا نحلها خطوة خطوة 🌟`;
-  }else if(s.includes("صعب")){
-    answer=`أفهمك يا ${studentName}. الهدوء قوة، وكل محاولة تقربك أكثر 🌷`;
-  }else if(s.includes("غلط")){
-    answer=`الخطأ طريق الفهم يا ${studentName}. لا حرج، جرب مطمئنًا 🌼`;
-  }else{
-    answer=`سؤالك ذكي يا ${studentName}. خذ نفسًا وفكر بهدوء، وأنا معك 😊`;
-  }
-  speakAnswer(answer);
-}
-
-function speakAnswer(text){
-  speechSynthesis.cancel();
-  const u=new SpeechSynthesisUtterance(text);
+function speakAnswer(t){
+  const u=new SpeechSynthesisUtterance(t);
   u.lang="ar-SA";
   u.rate=0.9;
-  u.pitch=1.1;
   speechSynthesis.speak(u);
 }
 
+/* إيقاف الصوت */
 function stopAllVoice(){
   if(recognition)recognition.abort();
   speechSynthesis.cancel();
-  speaking=false;
-  voiceStatus.textContent="⛔ تم إيقاف الصوت";
 }
 </script>
 
