@@ -105,6 +105,15 @@
             margin-top: 15px;
             margin-bottom: 15px;
         }
+        
+        .teacher-innovation-card {
+            background: linear-gradient(135deg, #fef9e7 0%, #fff 100%);
+            border: 2px dashed #f39c12;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 15px;
+            margin-bottom: 15px;
+        }
 
         .actions-row {
             display: flex;
@@ -404,15 +413,31 @@
                 </select>
             </div>
             <div class="input-group">
+                <label for="gradeSelector">الصف المستهدف</label>
+                <select id="gradeSelector" onchange="saveMetadata()">
+                    <option value="الأول">الصف الأول الأساسي</option>
+                    <option value="الثاني" selected>الصف الثاني الأساسي</option>
+                    <option value="الثالث">الصف الثالث الأساسي</option>
+                    <option value="الرابع">الصف الرابع الأساسي</option>
+                </select>
+            </div>
+            <div class="input-group">
                 <label for="countInput">عدد الأسئلة المطلوبة</label>
                 <input type="text" inputmode="numeric" id="countInput" value="٥" oninput="formatEasternInput(this)">
             </div>
         </div>
         
+        <div class="teacher-innovation-card">
+            <div class="input-group">
+                <label for="teacherCustomIdea" style="color: #d35400; font-weight: bold; font-size: 11pt;">💡 زاوية تحكم المعلم الابتكارية (دمج الأفكار والسياق المحلي في المسائل)</label>
+                <textarea id="teacherCustomIdea" rows="2" placeholder="اكتب أفكاراً، أسماء طلاب، أو سياقاً محلياً ليتم دمجه فوراً في المسائل اللفظية والتطبيقية..."></textarea>
+            </div>
+        </div>
+
         <div class="intelligence-card">
             <div class="input-group">
-                <label for="aiIntelligenceInput" style="color: var(--primary-color); font-weight: bold; font-size: 12pt;">🧠 صندوق المطلوب التربوي الذكي (ادخل المهارة، الصف، أو المحور المراد توليده فوراً)</label>
-                <textarea id="aiIntelligenceInput" rows="3" placeholder="مثال: رياضيات الصف الثاني طرح بالاستلاف عن قطف الزيتون في عاطوف، أو: لغة عربية تحليل الكلمات واللام الشمسية، أو: علوم الحواس الخمس..."></textarea>
+                <label for="aiIntelligenceInput" style="color: var(--primary-color); font-weight: bold; font-size: 12pt;">🧠 صندوق المطلوب التربوي الذكي (ادخل المهارة بدقة)</label>
+                <textarea id="aiIntelligenceInput" rows="3" placeholder="مثال: قسمة، كسور، حقائق الضرب للعدد ٢، ساعة، أشكال هندسية، أو مهارات اللغة والعلوم..."></textarea>
             </div>
             <div style="display: flex; gap: 10px; margin-top: 12px; flex-wrap: wrap;">
                 <button class="btn btn-primary" onclick="generateSmartWorksheet()">🌀 توليد ورقة العمل بالمنطق الحتمي المتدرج</button>
@@ -443,7 +468,7 @@
             </div>
             <div class="header-item left">
                 <div>الاسم: ...........................................................</div>
-                <div id="outGrade">المبحث: مهارات تعليمية متكاملة</div>
+                <div id="outGrade">الصف: الثاني الأساسي</div>
                 <div id="outTeacher">المعلم: محمد وجيه غنام</div>
                 <div id="outDate">التاريخ: ...... / ...... / ٢٠٢٦ م</div>
             </div>
@@ -460,6 +485,7 @@
     let typingTimer;
     
     const educationalEmojis = ['🍎', '🍊', '🍋', '🌳', '🌻', '🐝', '🦋', '🐟', '🐥', '🐑', '🎈', '🎁', '✏️', '🕊️', '🍒', '🍓', '🥕', '🍉'];
+    const geometricShapes = ["مربع", "مستطيل", "مثلث", "دائرة", "مكعب", "متوازي مستطيلات"];
 
     function toEasternArabicDigits(num) {
         if (num === null || num === undefined) return '';
@@ -498,11 +524,13 @@
             const schInput = document.getElementById("schoolInput");
             const teaInput = document.getElementById("teacherInput");
             const modSelector = document.getElementById("modelSelector");
+            const gradeSelector = document.getElementById("gradeSelector");
 
             if (dirInput) localStorage.setItem('gov_directorate', dirInput.value);
             if (schInput) localStorage.setItem('gov_school', schInput.value);
             if (teaInput) localStorage.setItem('gov_teacher', teaInput.value);
             if (modSelector) localStorage.setItem('gov_model', modSelector.value);
+            if (gradeSelector) localStorage.setItem('gov_grade', gradeSelector.value);
         } catch (e) {
             console.warn('Metadata sync failed.', e);
         }
@@ -515,11 +543,13 @@
             const schInput = document.getElementById("schoolInput");
             const teaInput = document.getElementById("teacherInput");
             const modSelector = document.getElementById("modelSelector");
+            const gradeSelector = document.getElementById("gradeSelector");
 
             if(dirInput && localStorage.getItem('gov_directorate')) dirInput.value = localStorage.getItem('gov_directorate');
             if(schInput && localStorage.getItem('gov_school')) schInput.value = localStorage.getItem('gov_school');
             if(teaInput && localStorage.getItem('gov_teacher')) teaInput.value = localStorage.getItem('gov_teacher');
             if(modSelector && localStorage.getItem('gov_model')) modSelector.value = localStorage.getItem('gov_model');
+            if(gradeSelector && localStorage.getItem('gov_grade')) gradeSelector.value = localStorage.getItem('gov_grade');
         } catch (e) {
             console.warn('Metadata loading failed.', e);
         }
@@ -530,16 +560,19 @@
         const outSchool = document.getElementById("outSchool");
         const outTeacher = document.getElementById("outTeacher");
         const outModel = document.getElementById("outModel");
+        const outGrade = document.getElementById("outGrade");
 
         const dirInput = document.getElementById("directorateInput");
         const schInput = document.getElementById("schoolInput");
         const teaInput = document.getElementById("teacherInput");
         const modSelector = document.getElementById("modelSelector");
+        const gradeSelector = document.getElementById("gradeSelector");
 
         if (outDirectorate && dirInput) outDirectorate.innerText = "مديرية التربية والتعليم - " + toEasternArabicDigits(dirInput.value);
         if (outSchool && schInput) outSchool.innerText = "مدرسة: " + toEasternArabicDigits(schInput.value);
         if (outTeacher && teaInput) outTeacher.innerText = "المعلم: " + toEasternArabicDigits(teaInput.value);
         if (outModel && modSelector) outModel.innerText = "نموذج: " + toEasternArabicDigits(modSelector.value);
+        if (outGrade && gradeSelector) outGrade.innerText = "الصف: " + gradeSelector.value + " الأساسي";
     }
 
     function buildQuestionHTML(id, title, body) {
@@ -634,10 +667,13 @@
     function generateSmartWorksheet() {
         saveMetadata();
         const aiIntelInput = document.getElementById("aiIntelligenceInput");
+        const teacherIdeaInput = document.getElementById("teacherCustomIdea");
         const cntInput = document.getElementById("countInput");
         if (!aiIntelInput || !cntInput) return;
 
         const userPrompt = aiIntelInput.value.trim();
+        const teacherIdea = teacherIdeaInput ? teacherIdeaInput.value.trim() : "";
+        
         if (!userPrompt) {
             alert("يرجى كتابة المطلوب التربوي في الصندوق ليقوم الذكاء الخبير بتوليده.");
             return;
@@ -657,13 +693,12 @@
         sheetBody.innerHTML = "";
         wrapper.style.display = "block";
 
-        let isMath = userPrompt.includes("رياضيات") || userPrompt.includes("حساب") || userPrompt.includes("طرح") || userPrompt.includes("جمع") || userPrompt.includes("ضرب") || userPrompt.includes("أعداد") || userPrompt.includes("منزلية");
-        let isArabic = userPrompt.includes("عربي") || userPrompt.includes("لغة") || userPrompt.includes("قراءة") || userPrompt.includes("حروف") || userPrompt.includes("كلمات") || userPrompt.includes("تحليل");
-        let isScience = userPrompt.includes("علوم") || userPrompt.includes("حواس") || userPrompt.includes("نبات") || userPrompt.includes("حيوان") || userPrompt.includes("مادة");
+        let isMath = userPrompt.match(/رياضيات|حساب|طرح|جمع|ضرب|قسمة|كسور|ساعة|وقت|أشكال|هندسة|أعداد/);
+        let isArabic = userPrompt.match(/عربي|لغة|قراءة|حروف|كلمات|تحليل|شمسية|قمرية/);
+        let isScience = userPrompt.match(/علوم|حواس|نبات|حيوان|مادة/);
 
         const outSubjectTitle = document.getElementById("outSubjectTitle");
         const outLessonTitle = document.getElementById("outLessonTitle");
-        const outGrade = document.getElementById("outGrade");
 
         if (outSubjectTitle) {
             outSubjectTitle.innerText = isMath ? "مبحث الرياضيات المشرقية" : (isArabic ? "مبحث اللغة العربية والتمكين" : (isScience ? "مبحث العلوم والحياة والاستكشاف" : "ورقة عمل تكاملية"));
@@ -671,14 +706,9 @@
         if (outLessonTitle) {
             outLessonTitle.innerText = userPrompt.length > 50 ? userPrompt.substring(0, 50) + "..." : userPrompt;
         }
-        if (outGrade) {
-            let gradeMatch = userPrompt.match(/(أول|ثاني|ثالث|رابع|خامس)/);
-            outGrade.innerText = gradeMatch ? `الصف: ${gradeMatch[0]} الأساسي` : "الصف الدراسي: مستهدف التوليد الذكي";
-        }
 
         let generatedHTML = "";
         let baseSeed = userPrompt.length + targetCount;
-        
         const numericLimit = extractMaxLimitFromPrompt(userPrompt);
 
         for (let i = 1; i <= targetCount; i++) {
@@ -697,11 +727,11 @@
             else if (i <= Math.ceil(targetCount * 0.7)) currentLevel = "semi_concrete";
 
             if (isMath) {
-                qBody = parseAndGenerateMath(userPrompt, currentLevel, seed, i, numericLimit);
+                qBody = parseAndGenerateMath(userPrompt, currentLevel, seed, i, numericLimit, teacherIdea);
             } else if (isArabic) {
-                qBody = parseAndGenerateArabic(userPrompt, currentLevel, seed, i);
+                qBody = parseAndGenerateArabic(userPrompt, currentLevel, seed, i, teacherIdea);
             } else if (isScience) {
-                qBody = parseAndGenerateScience(userPrompt, currentLevel, seed, i);
+                qBody = parseAndGenerateScience(userPrompt, currentLevel, seed, i, teacherIdea);
             } else {
                 qBody = `تطبيق تفكيري موجه حول المهارة المعرفية المستهدفة (<b>${escapeHTML(userPrompt)}</b>):<br><div class="custom-writing-area">مساحة عمل مخصصة لإنتاج الطالب المنضبط: <span class="blank-space-long"></span></div>`;
             }
@@ -713,13 +743,76 @@
         executePostGenerationModifiers();
     }
 
-    function parseAndGenerateMath(prompt, level, seed, index, numericLimit) {
-        let isSubtraction = prompt.includes("طرح") || prompt.includes("ناقص") || prompt.includes("استلاف");
-        let isMul = prompt.includes("ضرب") || prompt.includes("مجموعات");
-        
+    function parseAndGenerateMath(prompt, level, seed, index, numericLimit, teacherIdea) {
         const emojiSymbol = educationalEmojis[seed % educationalEmojis.length];
+        let contextWord = teacherIdea ? teacherIdea : "صناديق من المحصول";
 
-        if (isSubtraction) {
+        // معالجة الساعة والوقت
+        if (prompt.includes("ساعة") || prompt.includes("وقت")) {
+            let hour = getRandomInt(1, 12, seed);
+            let mins = [0, 15, 30, 45][getRandomInt(0, 3, seed+1)];
+            if (level === "concrete") {
+                return `ارسم عقارب الساعة بدقة لتمثيل الوقت التالي: ( ${toEasternArabicDigits(hour)}:${toEasternArabicDigits(mins === 0 ? '٠٠' : mins)} )<br><div style="width:80px; height:80px; border:3px solid #000; border-radius:50%; margin:15px auto; position:relative;"><div style="position:absolute; top:50%; left:50%; width:4px; height:4px; background:#000; border-radius:50%; transform:translate(-50%, -50%);"></div></div>`;
+            } else {
+                return `اقرأ الساعة المشرقية واكتب الوقت بالكلمات:<br>الوقت هو: <span class="blank-space-long"></span>`;
+            }
+        }
+
+        // معالجة الأشكال الهندسية
+        if (prompt.includes("أشكال") || prompt.includes("هندسة") || prompt.includes("مربع") || prompt.includes("دائرة")) {
+            let shape = geometricShapes[getRandomInt(0, geometricShapes.length - 1, seed)];
+            if (level === "concrete") {
+                return `تأمل الشكل الهندسي وارسم ( <b>${shape}</b> ) باستخدام المسطرة (إن لزم) في المساحة المخصصة:<br><div style="height:100px; border:2px dashed #ccc; margin-top:10px;"></div>`;
+            } else {
+                return `أكمل الخصائص الهندسية بدقة للشكل ( <b>${shape}</b> ):<br>عدد الرؤوس: <span class="blank-space"></span>، عدد الأضلاع: <span class="blank-space"></span>`;
+            }
+        }
+
+        // معالجة الكسور
+        if (prompt.includes("كسور") || prompt.includes("كسر") || prompt.includes("نصف") || prompt.includes("ربع")) {
+            let denominators = [2, 3, 4];
+            let den = denominators[getRandomInt(0, 2, seed)];
+            if (level === "concrete") {
+                return `ظلل ما يمثل الكسر ( <b>١ / ${toEasternArabicDigits(den)}</b> ) في الشكل المقسم المعطى:<br><div style="width:120px; height:40px; border:2px solid #000; display:flex; margin:10px 0;">${'<div style="flex:1; border-left:1px solid #000;"></div>'.repeat(den)}</div>`;
+            } else {
+                return `اكتب الكسر الدال على الجزء المظلل بالرموز المشرقية، ثم اقرأه:<br>الكسر: <span class="blank-space"></span> ، يُقرأ: <span class="blank-space-long"></span>`;
+            }
+        }
+
+        // معالجة القسمة
+        if (prompt.includes("قسمة") || prompt.includes("توزيع")) {
+            let divisor = getRandomInt(2, 9, seed);
+            let dividend = divisor * getRandomInt(2, Math.floor(numericLimit/divisor) || 9, seed+1);
+            if (level === "concrete") {
+                return `وزّع ( ${toEasternArabicDigits(dividend)} ) عنصراً على ( ${toEasternArabicDigits(divisor)} ) مجموعات بالتساوي (بالرسم البصري):<br>جملة القسمة: <span class="blank-space"></span> ÷ <span class="blank-space"></span> = <span class="blank-space"></span>`;
+            } else if (level === "semi_concrete") {
+                return `في سياق نشاطنا ( ${escapeHTML(contextWord)} )، أردنا توزيع ( ${toEasternArabicDigits(dividend)} ) بالتساوي على ( ${toEasternArabicDigits(divisor)} ). كم النصيب الواحد؟<br>الحل المنضبط: <span class="blank-space"></span> ÷ <span class="blank-space"></span> = <span class="blank-space"></span>`;
+            } else {
+                return `أوجد ناتج القسمة المجردة مباشرة لثبات المهارة:<br><b>${toEasternArabicDigits(dividend)} ÷ ${toEasternArabicDigits(divisor)} = <span class="blank-space"></span></b>`;
+            }
+        }
+
+        // معالجة الضرب مع الحفاظ على قاعدة الرقم ٢
+        if (prompt.includes("ضرب") || prompt.includes("مجموعات")) {
+            let groups = getRandomInt(2, 5, seed);
+            // قاعدة صارمة: إذا ذُكر العدد 2، تُجبر المجموعات على أن تكون 2
+            if (prompt.match(/٢|2|اثنان|اثنين/)) {
+                groups = 2;
+            }
+            let elements = getRandomInt(2, Math.max(2, Math.floor(numericLimit / groups)), seed + 1);
+
+            if (level === "concrete") {
+                let visual = " ( " + emojiSymbol.repeat(elements) + " )   ";
+                return `عَبِّر عن المجموعات البصرية المتكافئة التالية بجملة ضرب مشرقي منضبطة:<br><div style="margin:10px 0;">${visual.repeat(groups)}</div>جملة الضرب: <span class="blank-space"></span> × <span class="blank-space"></span> = <span class="blank-space"></span>`;
+            } else if (level === "semi_concrete") {
+                return `لدينا ( ${toEasternArabicDigits(groups)} ) مجموعات من ( ${escapeHTML(contextWord)} )، في كل منها ( ${toEasternArabicDigits(elements)} ). ما العدد الكلي؟<br>جملة الحل: <span class="blank-space"></span> × <span class="blank-space"></span> = <span class="blank-space"></span>`;
+            } else {
+                return `حوّل جملة الجمع المتكرر إلى ضرب وجد الناتج:<br> ` + `${toEasternArabicDigits(elements)} + `.repeat(groups-1) + `${toEasternArabicDigits(elements)} = <span class="blank-space"></span> × <span class="blank-space"></span> = <span class="blank-space"></span>`;
+            }
+        }
+
+        // معالجة الطرح
+        if (prompt.includes("طرح") || prompt.includes("ناقص") || prompt.includes("استلاف")) {
             let n1 = getRandomInt(Math.max(2, Math.ceil(numericLimit / 2)), numericLimit, seed);
             let n2 = getRandomInt(1, Math.max(1, n1 - 1), seed + 7);
             
@@ -735,29 +828,15 @@
             }
 
             if (level === "concrete") {
-                return `اكتب جملة الطرح الرياضية الممثلة بالشطب البصري التوضيحي علماً أن العدد الكلي الأصلي هو (${toEasternArabicDigits(n1)}):<br><div class="shapes-container" style="text-decoration: line-through; color: #7f8c8d;">` + (emojiSymbol + " ").repeat(n2) + `</div>جملة الطرح الصحيحة: <span class="blank-space"></span> - <span class="blank-space"></span> = <span class="blank-space"></span>`;
+                return `اكتب جملة الطرح الممثلة بالشطب البصري التوضيحي علماً أن العدد الكلي هو (${toEasternArabicDigits(n1)}):<br><div class="shapes-container" style="text-decoration: line-through; color: #7f8c8d;">` + (emojiSymbol + " ").repeat(n2) + `</div>جملة الطرح الصحيحة: <span class="blank-space"></span> - <span class="blank-space"></span> = <span class="blank-space"></span>`;
             } else if (level === "semi_concrete") {
-                return `في حقول بلدة عاطوف المباركة، كان لدى مزارع (${toEasternArabicDigits(n1)}) من الصناديق، استخدم منها (${toEasternArabicDigits(n2)}) صندوقاً. كم صندوقاً متبقياً لديه؟<br>جملة الحل المنضبطة: <span class="blank-space"></span> - <span class="blank-space"></span> = <span class="blank-space"></span>`;
+                return `من واقعنا، وبناءً على ( ${escapeHTML(contextWord)} )، كان العدد (${toEasternArabicDigits(n1)})، أُخذ منه (${toEasternArabicDigits(n2)}). الباقي هو؟<br>جملة الحل المنضبطة: <span class="blank-space"></span> - <span class="blank-space"></span> = <span class="blank-space"></span>`;
             } else {
                 return `جِد ناتج الطرح العمودي الدقيق مع مراعاة المنازل العددية الصارمة:<br><div class="math-column-form">${toEasternArabicDigits(n1)}<br>- ${toEasternArabicDigits(n2)}<div class="math-column-line"></div><span class="blank-space" style="width:50px; height:20px;"></span></div>`;
             }
         }
 
-        if (isMul) {
-            let groups = getRandomInt(2, 4, seed);
-            let elements = getRandomInt(2, Math.max(2, Math.floor(numericLimit / groups)), seed + 1);
-            if (groups * elements > numericLimit) {
-                groups = 2; elements = Math.max(1, Math.floor(numericLimit / 2));
-            }
-
-            if (level === "concrete") {
-                let visual = " ( " + emojiSymbol.repeat(elements) + " )   ";
-                return `عَبِّر عن المجموعات البصرية المتكافئة التالية بجملة ضرب مشرقي منضبطة:<br><div style="margin:10px 0;">${visual.repeat(groups)}</div>جملة الضرب: <span class="blank-space"></span> × <span class="blank-space"></span> = <span class="blank-space"></span>`;
-            } else {
-                return `حوّل جملة الجمع المتكرر المذكورة إلى جملة ضرب موجزة وجد الناتج الإجمالي:<br> ` + `${toEasternArabicDigits(elements)} + `.repeat(groups-1) + `${toEasternArabicDigits(elements)} = <span class="blank-space"></span> × <span class="blank-space"></span> = <span class="blank-space"></span>`;
-            }
-        }
-
+        // الجمع الافتراضي
         let n1 = getRandomInt(1, Math.max(1, numericLimit - 1), seed);
         let n2 = getRandomInt(0, Math.max(0, numericLimit - n1), seed + 13);
 
@@ -765,31 +844,35 @@
             let countCount = getRandomInt(2, Math.min(9, numericLimit), seed);
             return `عُدَّ العناصر البصرية المنظمة واكتب العدد المشرقي المقابل بدقة:<br><div class="shapes-container">${(emojiSymbol + " ").repeat(countCount)}</div>العدد الصحيح هو: <span class="blank-space"></span>`;
         } else if (level === "semi_concrete") {
-            return `جمع طالب في مدرستنا (${toEasternArabicDigits(n1)}) من المقتنيات، ثم وهبه معلمه (${toEasternArabicDigits(n2)}) من القطع الإضافية. كم أصبح معه؟<br>الحل اللفظي المنهجي: <span class="blank-space"></span> + <span class="blank-space"></span> = <span class="blank-space"></span>`;
+            return `تطبيقاً على ( ${escapeHTML(contextWord)} )، كان لدينا (${toEasternArabicDigits(n1)}) وأضفنا إليها (${toEasternArabicDigits(n2)}). المجموع هو؟<br>الحل اللفظي المنهجي: <span class="blank-space"></span> + <span class="blank-space"></span> = <span class="blank-space"></span>`;
         } else {
-            return `جِد ناتج الجمع الأفقي المجرد بشكل مباشر وسريع لثبات المهارة الرياضية المستهدفة:<br><b>${toEasternArabicDigits(n1)} + ${toEasternArabicDigits(n2)} = <span class="blank-space"></span></b>`;
+            return `جِد ناتج الجمع الأفقي المجرد بشكل مباشر وسريع لثبات المهارة المستهدفة:<br><b>${toEasternArabicDigits(n1)} + ${toEasternArabicDigits(n2)} = <span class="blank-space"></span></b>`;
         }
     }
 
-    function parseAndGenerateArabic(prompt, level, seed, index) {
+    function parseAndGenerateArabic(prompt, level, seed, index, teacherIdea) {
         let pool = ["بَيْت", "وَلَد", "طُوباس", "زَيْتُون", "مَدْرَسَة", "شَمْس", "قَمَر"];
         let word = pool[seed % pool.length];
         const emojiSymbol = educationalEmojis[seed % educationalEmojis.length];
+        let customWord = teacherIdea ? teacherIdea.split(" ")[0] : word; // استخدام كلمة المعلم إن وجدت
 
         if (prompt.includes("تحليل") || prompt.includes("حروف")) {
-            return `${emojiSymbol} حَلِّل الكلمة المعروضة أمامك إلى حروفها المنفصلة مع ضبط الحركات الإعرابية السليمة:<br>كلمة ( <b>${word}</b> ) ➔ <span class="blank-space" style="width:50px;"></span> + <span class="blank-space" style="width:50px;"></span> + <span class="blank-space" style="width:50px;"></span> + <span class="blank-space" style="width:50px;"></span>`;
+            return `${emojiSymbol} حَلِّل الكلمة المعروضة أمامك إلى حروفها المنفصلة مع ضبط الحركات الإعرابية السليمة:<br>كلمة ( <b>${customWord}</b> ) ➔ <span class="blank-space" style="width:50px;"></span> + <span class="blank-space" style="width:50px;"></span> + <span class="blank-space" style="width:50px;"></span> + <span class="blank-space" style="width:50px;"></span>`;
         }
         if (prompt.includes("شمسية") || prompt.includes("قمرية") || prompt.includes("لام")) {
-            return `${emojiSymbol} أَدْخِل ال التعريف على كلمة ( <b>${word}</b> ) then بيّن نوع اللام (شمسية أم قمرية) في الفراغ المخصص:<br>الكلمة بعد الإدخال: <span class="blank-space-long"></span> نوع اللام: <span class="blank-space"></span>`;
+            return `${emojiSymbol} أَدْخِل ال التعريف على كلمة ( <b>${customWord}</b> ) ثم بيّن نوع اللام (شمسية أم قمرية) في الفراغ المخصص:<br>الكلمة بعد الإدخال: <span class="blank-space-long"></span> نوع اللام: <span class="blank-space"></span>`;
         }
-        return `اكتب بخطّك النسخي الجميل والمنضبط الجملة التربوية التالية محاكياً نمط الكتاب المقرّر:<br><div style="font-size:16pt; font-weight:bold; margin:10px 0;">« نَحْنُ نُحِبُّ أَرْضَنَا المُبَارَكَةَ وَنَتَعَلَّمُ فِيهَا بِنَشَاطٍ »</div><div class="custom-writing-area">السطر المخصص للكتابة: <span class="blank-space-long" style="width:100%"></span></div>`;
+        let sentenceText = teacherIdea ? teacherIdea : "نَحْنُ نُحِبُّ أَرْضَنَا المُبَارَكَةَ وَنَتَعَلَّمُ فِيهَا بِنَشَاطٍ";
+        return `اكتب بخطّك النسخي الجميل والمنضبط الجملة التربوية التالية محاكياً نمط الكتاب المقرّر:<br><div style="font-size:16pt; font-weight:bold; margin:10px 0;">« ${escapeHTML(sentenceText)} »</div><div class="custom-writing-area">السطر المخصص للكتابة: <span class="blank-space-long" style="width:100%"></span></div>`;
     }
 
-    function parseAndGenerateScience(prompt, level, seed, index) {
+    function parseAndGenerateScience(prompt, level, seed, index, teacherIdea) {
         const emojiSymbol = educationalEmojis[seed % educationalEmojis.length];
+        let contextAddition = teacherIdea ? `في بيئتنا (${escapeHTML(teacherIdea)})` : "في مهارة الاستكشاف الحياتي";
+
         if (prompt.includes("حواس") || prompt.includes("جسم")) {
             let organ = ["العين", "الأذن", "الأنف", "اللسان"][seed % 4];
-            return `${emojiSymbol} أكمل الجملة العلمية التالية بما يناسبها بخصوص عضو الحس ووظيفته الأساسية:<br>عضو الحس ( <b>${organ}</b> ) نستخدمه في مهارة الاستكشاف الحياتي لـ: <span class="blank-space-long"></span>`;
+            return `${emojiSymbol} أكمل الجملة العلمية التالية بما يناسبها بخصوص عضو الحس ووظيفته الأساسية:<br>عضو الحس ( <b>${organ}</b> ) نستخدمه ${contextAddition} لـ: <span class="blank-space-long"></span>`;
         }
         return `صَنِّف المواد والكائنات المذكورة بين الأقواس إلى (كائن حي) أو (جماد) في الفراغ المتروك:<br> ( العصفور ، الحجر ، شجرة التين )<br> الكائن الحي: <span class="blank-space"></span> ➔ الجماد: <span class="blank-space"></span>`;
     }
@@ -799,7 +882,10 @@
         if (!sheetBody) return;
         const count = sheetBody.children.length + 1;
         const aiIntelInput = document.getElementById("aiIntelligenceInput");
+        const teacherIdeaInput = document.getElementById("teacherCustomIdea");
+        
         const promptText = aiIntelInput ? aiIntelInput.value : "";
+        const customContext = teacherIdeaInput && teacherIdeaInput.value ? teacherIdeaInput.value : "حقل فيه صناديق زيتون مجهولة العدد";
         const numericLimit = extractMaxLimitFromPrompt(promptText);
         
         let targetNum = 8;
@@ -810,7 +896,7 @@
         let innovationHTML = buildQuestionHTML(
             `innovation_${innovationCounter++}`,
             `سؤال الابتكار والتميز والذكاء العالي (${toEasternArabicDigits(count)}):`,
-            `🚀 <b>تَحدَّ نفسك:</b> إذا كان لدى مزارع في طوباس حقل فيه صناديق زيتون مجهولة العدد، أعطى جيرانه نصفها وبقي لديه تمهيداً للعصر (${toEasternArabicDigits(targetNum)}) صناديق كاملة، كم كان العدد الإجمالي الصحيح للصناديق قبل العطاء؟ اشرح طريقة تفكيرك العبقرية لمعلمك الفاضل.<br><div class="custom-writing-area">إجابتي المبتكرة الممنهجة: <span class="blank-space-long"></span></div>`
+            `🚀 <b>تَحدَّ نفسك:</b> بناءً على ( ${escapeHTML(customContext)} )، إذا أعطينا النصف وبقي لدينا (${toEasternArabicDigits(targetNum)}) كاملة، كم كان العدد الإجمالي الصحيح قبل ذلك؟ اشرح طريقة تفكيرك العبقرية لمعلمك الفاضل.<br><div class="custom-writing-area">إجابتي المبتكرة الممنهجة: <span class="blank-space-long"></span></div>`
         );
         
         sheetBody.insertAdjacentHTML('beforeend', innovationHTML);
@@ -830,7 +916,7 @@
                 <div class="creative-box" id="creativityBoxSection">
                     <div class="creative-box-title">🎨 زاوية الإبداع والرسم البصري الحر (تعزيز التعلم البصري والنفسي)</div>
                     <div style="font-size:13pt; line-height:2; color:#27ae60;">
-                        عزيزي الطالب الموهوب، قم برسم لوحة بصرية مصغرة تعبر فيها عن حبك للبيئة الفلسطينية الجميلة في بلدتك، مع تمثيل العدد الذي تعلمته اليوم بالرسم.
+                        عزيزي الطالب الموهوب، قم برسم لوحة بصرية مصغرة تعبر فيها عن حبك للبيئة الفلسطينية الجميلة في بلدتك، مع تمثيل المهارة التي تعلمتها اليوم بالرسم.
                     </div>
                     <div style="height:150px; border:1px dashed #27ae60; margin-top:15px; border-radius:6px; background:#fff;"></div>
                 </div>
@@ -875,7 +961,7 @@
         while (node = walker.nextNode()) {
             if (node.parentElement) {
                 const tag = node.parentElement.tagName.toUpperCase();
-                if (tag === 'SCRIPT' || tag === 'STYLE' || tag === 'TEXTAREA' || tag === 'INPUT') continue;
+                if (tag === 'SCRIPT' || tag === 'STYLE' || tag === 'TEXTAREA' || tag === 'INPUT' || tag === 'SELECT') continue;
                 if (node.parentElement.classList.contains('pin-action') || node.parentElement.classList.contains('delete-action')) continue;
             }
             nodesToModify.push(node);
@@ -918,7 +1004,7 @@
         };
         
         recognition.onend = function() {
-            if (aiIntelInput) aiIntelInput.placeholder = "مثال: رياضيات الصف الثاني طرح بالاستلاف...";
+            if (aiIntelInput) aiIntelInput.placeholder = "مثال: قسمة، كسور، حقائق الضرب للعدد ٢...";
         };
         recognition.start();
     }
@@ -936,7 +1022,7 @@
     }
 
     function safePrint() {
-        const printBtn = document.querySelector('.btn-primary');
+        const printBtn = document.querySelector('.btn-primary[onclick="safePrint()"]');
         const oldText = printBtn.innerText;
         printBtn.innerText = "⏳ يتم تجهيز الصفحة المشرقية...";
         executePostGenerationModifiers();
