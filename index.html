@@ -19,6 +19,7 @@
             --pin-light: #fef5eb;
             --shadow-sm: 0 2px 4px rgba(0,0,0,0.02);
             --shadow-md: 0 10px 30px rgba(0,0,0,0.04);
+            --edit-indicator: #2980b9;
         }
 
         * { box-sizing: border-box; }
@@ -202,8 +203,8 @@
         }
 
         .question-block:hover {
-            border-color: #e0e0e0;
-            background-color: #fafafa;
+            border-color: #d0d0d0;
+            background-color: #fcfcfc;
         }
 
         .question-block.is-pinned {
@@ -230,6 +231,15 @@
             padding-right: 15px;
             color: #000;
             outline: none;
+            border: 1px dashed transparent;
+            border-radius: 4px;
+            padding: 5px;
+            transition: var(--transition-smooth);
+        }
+
+        .question-body:hover, .question-body:focus {
+            border-color: var(--edit-indicator);
+            background-color: #fbfeff;
         }
 
         .question-actions {
@@ -288,12 +298,12 @@
         .pin-action.active-pin { background: var(--pin-color); }
 
         .shapes-container {
-            font-size: 32pt;
-            margin: 20px 0;
-            letter-spacing: 16px;
+            font-size: 26pt;
+            margin: 15px 0;
+            letter-spacing: 12px;
             user-select: none;
             display: block;
-            line-height: 1.2;
+            line-height: 1.4;
         }
 
         .blank-space {
@@ -360,6 +370,7 @@
                 background-image: none !important;
             }
             .question-block, .creative-box, .math-column-form { page-break-inside: avoid !important; break-inside: avoid !important; }
+            .question-body { border: none !important; background-color: transparent !important; padding: 0 !important; }
         }
     </style>
 </head>
@@ -447,6 +458,9 @@
     let creativityActive = false;
     let pinnedQuestions = new Set();
     let typingTimer;
+    
+    // قائمة غنية بالأيقونات البصرية التعليمية المتنوعة لتعزيز التدريس المحسوس
+    const educationalEmojis = ['🍎', '🍊', '🍋', '🌳', '🌻', '🐝', '🦋', '🐟', '🐥', '🐑', '🎈', '🎁', '✏️', '🕊️', '🍒', '🍓', '🥕', '🍉'];
 
     function toEasternArabicDigits(num) {
         if (num === null || num === undefined) return '';
@@ -549,9 +563,50 @@
     function handleContenteditableInput(element) {
         if (!element) return;
         clearTimeout(typingTimer);
+        // تم زيادة المهلة قليلاً لضمان عدم تشتيت المعلم أثناء الكتابة الحية ولتثبيت المؤشر
         typingTimer = setTimeout(() => {
-            convertTextNodesToEastern(element);
-        }, 800);
+            saveCursorAndConvertText(element);
+        }, 1200);
+    }
+
+    function saveCursorAndConvertText(element) {
+        const selection = window.getSelection();
+        let offset = 0;
+        let targetNode = null;
+        
+        if (selection.rangeCount > 0) {
+            const range = selection.getRangeAt(0);
+            targetNode = range.startContainer;
+            offset = range.startOffset;
+        }
+
+        convertTextNodesToEastern(element);
+
+        if (targetNode && element.contains(targetNode) && targetNode.nodeType === Node.TEXT_NODE) {
+            try {
+                const newRange = document.createRange();
+                newRange.setStart(targetNode, Math.min(offset, targetNode.length));
+                newRange.collapse(true);
+                selection.removeAllRanges();
+                selection.addRange(newRange);
+            } catch (err) {
+                console.debug("Cursor restoration skipped.");
+            }
+        }
+    }
+
+    // خوارزمية ذكية لاستخراج سقف النطاق العددي المستهدف من عبارات المعلم (مثال: ضمن العدد ١٨)
+    function extractMaxLimitFromPrompt(prompt) {
+        let maxLimit = 99; // الافتراضي الاستراتيجي
+        const pattern = /(?:ضمن|لغاية|حتى|العدد|دون|مجموعها)\s*([٠-٩0-9]+)/;
+        const match = prompt.match(pattern);
+        if (match) {
+            const extractedNumber = fromEasternArabicDigits(toEasternArabicDigits(match[1]));
+            if (extractedNumber > 0) {
+                maxLimit = extractedNumber;
+            }
+        }
+        return maxLimit;
     }
 
     function generateSmartWorksheet() {
@@ -571,7 +626,6 @@
         const wrapper = document.getElementById("sheetOutput");
         if (!sheetBody || !wrapper) return;
 
-        // الحفاظ على الأسئلة المثبتة
         let preservedBlocks = {};
         pinnedQuestions.forEach(id => {
             const el = document.getElementById(`q_block_${id}`);
@@ -581,12 +635,10 @@
         sheetBody.innerHTML = "";
         wrapper.style.display = "block";
 
-        // استخلاص وتحليل المبحث بذكاء خبير
         let isMath = userPrompt.includes("رياضيات") || userPrompt.includes("حساب") || userPrompt.includes("طرح") || userPrompt.includes("جمع") || userPrompt.includes("ضرب") || userPrompt.includes("أعداد") || userPrompt.includes("منزلية");
         let isArabic = userPrompt.includes("عربي") || userPrompt.includes("لغة") || userPrompt.includes("قراءة") || userPrompt.includes("حروف") || userPrompt.includes("كلمات") || userPrompt.includes("تحليل");
         let isScience = userPrompt.includes("علوم") || userPrompt.includes("حواس") || userPrompt.includes("نبات") || userPrompt.includes("حيوان") || userPrompt.includes("مادة");
 
-        // تحديث الترويسة حسب تحليل المحتوى
         const outSubjectTitle = document.getElementById("outSubjectTitle");
         const outLessonTitle = document.getElementById("outLessonTitle");
         const outGrade = document.getElementById("outGrade");
@@ -604,6 +656,9 @@
 
         let generatedHTML = "";
         let baseSeed = userPrompt.length + targetCount;
+        
+        // استخراج القيمة القصوى الصارمة للمسائل الحسابية لضمان الانضباط التام بالمدخلات
+        const numericLimit = extractMaxLimitFromPrompt(userPrompt);
 
         for (let i = 1; i <= targetCount; i++) {
             const qId = `smart_q_${i}`;
@@ -616,19 +671,17 @@
             let qBody = "";
             let seed = baseSeed * i + 43;
 
-            // تحديد مستوى التدرج التلقائي (محسوس -> شبه محسوس -> مجرد)
             let currentLevel = "abstract";
             if (i <= Math.ceil(targetCount * 0.4)) currentLevel = "concrete";
             else if (i <= Math.ceil(targetCount * 0.7)) currentLevel = "semi_concrete";
 
             if (isMath) {
-                qBody = parseAndGenerateMath(userPrompt, currentLevel, seed, i);
+                qBody = parseAndGenerateMath(userPrompt, currentLevel, seed, i, numericLimit);
             } else if (isArabic) {
                 qBody = parseAndGenerateArabic(userPrompt, currentLevel, seed, i);
             } else if (isScience) {
                 qBody = parseAndGenerateScience(userPrompt, currentLevel, seed, i);
             } else {
-                // توليد مرن وشامل في حال عدم تحديد مهارة معينة بدقة
                 qBody = `تطبيق تفكيري موجه حول المهارة المعرفية المستهدفة (<b>${escapeHTML(userPrompt)}</b>):<br><div class="custom-writing-area">مساحة عمل مخصصة لإنتاج الطالب المنضبط: <span class="blank-space-long"></span></div>`;
             }
 
@@ -639,67 +692,88 @@
         executePostGenerationModifiers();
     }
 
-    // خوارزمية توليد الرياضيات المشرقية بذكاء متخصص
-    function parseAndGenerateMath(prompt, level, seed, index) {
+    // خوارزمية توليد الرياضيات المشرقية المنضبطة التزاماً تاماً بالسقف العددي للمعلم
+    function parseAndGenerateMath(prompt, level, seed, index, numericLimit) {
         let isSubtraction = prompt.includes("طرح") || prompt.includes("ناقص") || prompt.includes("استلاف");
-        let isCarry = prompt.includes("حمل") || prompt.includes("زائد") || prompt.includes("جمع");
         let isMul = prompt.includes("ضرب") || prompt.includes("مجموعات");
-
-        let n1 = getRandomInt(40, 95, seed);
-        let n2 = getRandomInt(15, 39, seed + 7);
+        
+        // اختيار أيقونة عشوائية لتضمينها بداخل السلوك البصري للمسألة المعززة
+        const emojiSymbol = educationalEmojis[seed % educationalEmojis.length];
 
         if (isSubtraction) {
-            if ((n1 % 10) >= (n2 % 10)) { // إجبار الاستلاف إن وجد النص
-                n1 = (Math.floor(n1/10)*10) + getRandomInt(0, 3, seed);
-                n2 = (Math.floor(n2/10)*10) + getRandomInt(5, 9, seed+2);
+            // انضباط الطرح: العدد الأول لا يتجاوز السقف الإجمالي
+            let n1 = getRandomInt(Math.max(2, Math.ceil(numericLimit / 2)), numericLimit, seed);
+            let n2 = getRandomInt(1, n1 - i => 0 ? i : 1, seed + 7);
+            
+            // ضبط الاستلاف التلقائي عند الطلب دون كسر الحد الأقصى
+            if (prompt.includes("استلاف") && n1 >= 10 && (n1 % 10) >= (n2 % 10)) {
+                let units1 = getRandomInt(0, 3, seed);
+                let units2 = getRandomInt(4, 9, seed + 2);
+                let tens1 = Math.floor(n1 / 10);
+                let tens2 = getRandomInt(1, Math.max(1, tens1 - 1), seed + 5);
+                n1 = (tens1 * 10) + units1;
+                n2 = (tens2 * 10) + units2;
+                if (n1 > numericLimit) n1 = numericLimit;
+                if (n2 >= n1) n2 = Math.max(1, n1 - 2);
             }
+
             if (level === "concrete") {
-                return `اكتب جملة الطرح الرياضية الممثلة بالشطب البصري التوضيحي علماً أن العدد الكلي الأصلي هو (${toEasternArabicDigits(n1)}):<br><div class="shapes-container" style="text-decoration: line-through; color: #7f8c8d;">` + "❌ ".repeat(n2) + `</div>جملة الطرح الصحيحة: <span class="blank-space"></span> - <span class="blank-space"></span> = <span class="blank-space"></span>`;
+                return `اكتب جملة الطرح الرياضية الممثلة بالشطب البصري التوضيحي علماً أن العدد الكلي الأصلي هو (${toEasternArabicDigits(n1)}):<br><div class="shapes-container" style="text-decoration: line-through; color: #7f8c8d;">` + (emojiSymbol + " ").repeat(n2) + `</div>جملة الطرح الصحيحة: <span class="blank-space"></span> - <span class="blank-space"></span> = <span class="blank-space"></span>`;
             } else if (level === "semi_concrete") {
-                return `في موسم قطف الزيتون في بلدة عاطوف، كان لدى عائلة أحمد (${toEasternArabicDigits(n1)}) كيساً، تم عَصْرُ (${toEasternArabicDigits(n2)}) كيساً منها. كم كيساً بقي معهم؟<br>الحل اللفظي المكتمل: <span class="blank-space"></span> - <span class="blank-space"></span> = <span class="blank-space"></span> أكياس.`;
+                return `في حقول بلدة عاطوف المباركة، كان لدى مزارع (${toEasternArabicDigits(n1)}) من الصناديق، استخدم منها (${toEasternArabicDigits(n2)}) صندوقاً. كم صندوقاً متبقياً لديه؟<br>جملة الحل المنضبطة: <span class="blank-space"></span> - <span class="blank-space"></span> = <span class="blank-space"></span>`;
             } else {
-                return `جِد ناتج الطرح العمودي الدقيق مع الاستلاف ومراعاة منزلة الآحاد والعشرات:<br><div class="math-column-form">${toEasternArabicDigits(n1)}<br>- ${toEasternArabicDigits(n2)}<div class="math-column-line"></div><span class="blank-space" style="width:50px; height:20px;"></span></div>`;
+                return `جِد ناتج الطرح العمودي الدقيق مع مراعاة المنازل العددية الصارمة:<br><div class="math-column-form">${toEasternArabicDigits(n1)}<br>- ${toEasternArabicDigits(n2)}<div class="math-column-line"></div><span class="blank-space" style="width:50px; height:20px;"></span></div>`;
             }
         }
 
         if (isMul) {
             let groups = getRandomInt(2, 4, seed);
-            let elements = getRandomInt(2, 5, seed + 1);
+            let elements = getRandomInt(2, Math.max(2, Math.floor(numericLimit / groups)), seed + 1);
+            if (groups * elements > numericLimit) {
+                groups = 2; elements = Math.max(1, Math.floor(numericLimit / 2));
+            }
+
             if (level === "concrete") {
-                let visual = " ( " + "🍏".repeat(elements) + " )   ";
+                let visual = " ( " + emojiSymbol.repeat(elements) + " )   ";
                 return `عَبِّر عن المجموعات البصرية المتكافئة التالية بجملة ضرب مشرقي منضبطة:<br><div style="margin:10px 0;">${visual.repeat(groups)}</div>جملة الضرب: <span class="blank-space"></span> × <span class="blank-space"></span> = <span class="blank-space"></span>`;
             } else {
                 return `حوّل جملة الجمع المتكرر المذكورة إلى جملة ضرب موجزة وجد الناتج الإجمالي:<br> ` + `${toEasternArabicDigits(elements)} + `.repeat(groups-1) + `${toEasternArabicDigits(elements)} = <span class="blank-space"></span> × <span class="blank-space"></span> = <span class="blank-space"></span>`;
             }
         }
 
-        // الافتراضي: جمع وتأسيس قيم منزلية
+        // الافتراضي الصارم: الجمع الأفقي والعمودي المنضبط بالحد الأقصى (المجموع لا يتخطى numericLimit)
+        let n1 = getRandomInt(1, Math.max(1, numericLimit - 1), seed);
+        let n2 = getRandomInt(0, Math.max(0, numericLimit - n1), seed + 13);
+
         if (level === "concrete") {
-            return `عُدَّ العناصر البصرية المنظمة واكتب العدد المشرقي المقابل بدقة:<br><div class="shapes-container">` + "🦋 ".repeat(getRandomInt(4, 9, seed)) + `</div>العدد الصحيح هو: <span class="blank-space"></span>`;
+            let countCount = getRandomInt(2, Math.min(9, numericLimit), seed);
+            return `عُدَّ العناصر البصرية المنظمة واكتب العدد المشرقي المقابل بدقة:<br><div class="shapes-container">${(emojiSymbol + " ").repeat(countCount)}</div>العدد الصحيح هو: <span class="blank-space"></span>`;
+        } else if (level === "semi_concrete") {
+            return `جمع طالب في مدرستنا (${toEasternArabicDigits(n1)}) من المقتنيات، ثم وهبه معلمه (${toEasternArabicDigits(n2)}) من القطع الإضافية. كم أصبح معه؟<br>الحل اللفظي المنهجي: <span class="blank-space"></span> + <span class="blank-space"></span> = <span class="blank-space"></span>`;
         } else {
-            return `جِد ناتج الجمع الأفقي المجرد بشكل مباشر وسريع لثبات المهارة:<br><b>${toEasternArabicDigits(n1)} + ${toEasternArabicDigits(n2)} = <span class="blank-space"></span></b>`;
+            return `جِد ناتج الجمع الأفقي المجرد بشكل مباشر وسريع لثبات المهارة الرياضية المستهدفة:<br><b>${toEasternArabicDigits(n1)} + ${toEasternArabicDigits(n2)} = <span class="blank-space"></span></b>`;
         }
     }
 
-    // خوارزمية توليد اللغة العربية بذكاء متخصص
     function parseAndGenerateArabic(prompt, level, seed, index) {
         let pool = ["بَيْت", "وَلَد", "طُوباس", "زَيْتُون", "مَدْرَسَة", "شَمْس", "قَمَر"];
         let word = pool[seed % pool.length];
+        const emojiSymbol = educationalEmojis[seed % educationalEmojis.length];
 
         if (prompt.includes("تحليل") || prompt.includes("حروف")) {
-            return `حَلِّل الكلمة المعروضة أمامك إلى حروفها المنفصلة مع ضبط الحركات الإعرابية السليمة:<br>كلمة ( <b>${word}</b> ) ➔ <span class="blank-space" style="width:50px;"></span> + <span class="blank-space" style="width:50px;"></span> + <span class="blank-space" style="width:50px;"></span> + <span class="blank-space" style="width:50px;"></span>`;
+            return `${emojiSymbol} حَلِّل الكلمة المعروضة أمامك إلى حروفها المنفصلة مع ضبط الحركات الإعرابية السليمة:<br>كلمة ( <b>${word}</b> ) ➔ <span class="blank-space" style="width:50px;"></span> + <span class="blank-space" style="width:50px;"></span> + <span class="blank-space" style="width:50px;"></span> + <span class="blank-space" style="width:50px;"></span>`;
         }
         if (prompt.includes("شمسية") || prompt.includes("قمرية") || prompt.includes("لام")) {
-            return `أَدْخِل ال التعريف على كلمة ( <b>${word}</b> ) ثم بيّن نوع اللام (شمسية أم قمرية) في الفراغ المخصص:<br>الكلمة بعد الإدخال: <span class="blank-space-long"></span> نوع اللام: <span class="blank-space"></span>`;
+            return `${emojiSymbol} أَدْخِل ال التعريف على كلمة ( <b>${word}</b> ) ثم بيّن نوع اللام (شمسية أم قمرية) في الفراغ المخصص:<br>الكلمة بعد الإدخال: <span class="blank-space-long"></span> نوع اللام: <span class="blank-space"></span>`;
         }
         return `اكتب بخطّك النسخي الجميل والمنضبط الجملة التربوية التالية محاكياً نمط الكتاب المقرّر:<br><div style="font-size:16pt; font-weight:bold; margin:10px 0;">« نَحْنُ نُحِبُّ أَرْضَنَا المُبَارَكَةَ وَنَتَعَلَّمُ فِيهَا بِنَشَاطٍ »</div><div class="custom-writing-area">السطر المخصص للكتابة: <span class="blank-space-long" style="width:100%"></span></div>`;
     }
 
-    // خوارزمية توليد العلوم بذكاء متخصص
     function parseAndGenerateScience(prompt, level, seed, index) {
+        const emojiSymbol = educationalEmojis[seed % educationalEmojis.length];
         if (prompt.includes("حواس") || prompt.includes("جسم")) {
             let organ = ["العين", "الأذن", "الأنف", "اللسان"][seed % 4];
-            return `أكمل الجملة العلمية التالية بما يناسبها بخصوص عضو الحس ووظيفته الأساسية:<br>عضو الحس ( <b>${organ}</b> ) نستخدمه في مهارة الاستكشاف الحياتي لـ: <span class="blank-space-long"></span>`;
+            return `${emojiSymbol} أكمل الجملة العلمية التالية بما يناسبها بخصوص عضو الحس ووظيفته الأساسية:<br>عضو الحس ( <b>${organ}</b> ) نستخدمه في مهارة الاستكشاف الحياتي لـ: <span class="blank-space-long"></span>`;
         }
         return `صَنِّف المواد والكائنات المذكورة بين الأقواس إلى (كائن حي) أو (جماد) في الفراغ المتروك:<br> ( العصفور ، الحجر ، شجرة التين )<br> الكائن الحي: <span class="blank-space"></span> ➔ الجماد: <span class="blank-space"></span>`;
     }
@@ -708,11 +782,19 @@
         const sheetBody = document.getElementById("sheetBody");
         if (!sheetBody) return;
         const count = sheetBody.children.length + 1;
+        const aiIntelInput = document.getElementById("aiIntelligenceInput");
+        const promptText = aiIntelInput ? aiIntelInput.value : "";
+        const numericLimit = extractMaxLimitFromPrompt(promptText);
         
+        let targetNum = 8;
+        if (numericLimit <= 18 && numericLimit > 4) {
+            targetNum = Math.floor(numericLimit / 2);
+        }
+
         let innovationHTML = buildQuestionHTML(
             `innovation_${innovationCounter++}`,
             `سؤال الابتكار والتميز والذكاء العالي (${toEasternArabicDigits(count)}):`,
-            `🚀 <b>تَحدَّ نفسك:</b> إذا كان لدى مزارع في طوباس حقل فيه صناديق زيتون مجهولة العدد، أعطى جيرانه نصفها وبقي لديه تمهيداً للعصر (${toEasternArabicDigits(8)}) صناديق كاملة، كم كان العدد الإجمالي الصحيح للصناديق قبل العطاء؟ اشرح طريقة تفكيرك العبقرية لمعلمك الفاضل.<br><div class="custom-writing-area">إجابتي المبتكرة الممنهجة: <span class="blank-space-long"></span></div>`
+            `🚀 <b>تَحدَّ نفسك:</b> إذا كان لدى مزارع في طوباس حقل فيه صناديق زيتون مجهولة العدد، أعطى جيرانه نصفها وبقي لديه تمهيداً للعصر (${toEasternArabicDigits(targetNum)}) صناديق كاملة، كم كان العدد الإجمالي الصحيح للصناديق قبل العطاء؟ اشرح طريقة تفكيرك العبقرية لمعلمك الفاضل.<br><div class="custom-writing-area">إجابتي المبتكرة الممنهجة: <span class="blank-space-long"></span></div>`
         );
         
         sheetBody.insertAdjacentHTML('beforeend', innovationHTML);
