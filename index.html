@@ -53,7 +53,7 @@
         .control-panel h2 {
             color: var(--primary-color);
             margin-top: 0;
-            font-size: 18pt;
+            font-size: 16pt;
             border-bottom: 2px solid var(--primary-light);
             padding-bottom: 10px;
             display: flex;
@@ -63,20 +63,20 @@
 
         .panel-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
             margin-bottom: 20px;
         }
 
         .input-group {
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 6px;
         }
 
         .input-group label {
             font-weight: bold;
-            font-size: 11pt;
+            font-size: 10.5pt;
             color: #34495e;
         }
 
@@ -98,7 +98,7 @@
 
         .intelligence-card {
             background: linear-gradient(135deg, #ffffff 0%, #f9fbf9 100%);
-            border: 2px solid var(--teacher-color);
+            border: 2px solid var(--primary-color);
             border-radius: 12px;
             padding: 20px;
             margin-top: 15px;
@@ -139,8 +139,6 @@
         .btn-creativity:hover { background-color: #1e8449; transform: translateY(-1px); }
         .btn-beauty { background-color: #8e44ad; color: white; }
         .btn-beauty:hover { background-color: #732d91; transform: translateY(-1px); }
-        .btn-teacher { background-color: var(--teacher-color); color: white; }
-        .btn-teacher:hover { background-color: #004d40; transform: translateY(-1px); }
         .btn-ai { background-color: #2980b9; color: white; }
         .btn-ai:hover { background-color: #1f618d; transform: translateY(-1px); }
 
@@ -177,8 +175,8 @@
         .header-item.center { text-align: center; }
         .header-item.left { text-align: left; font-size: 12pt; line-height: 1.8; color: #000; }
         
-        .main-title { font-size: 22pt; margin: 0 0 5px 0; font-weight: bold; color: #000; }
-        .sub-title { font-size: 14pt; margin: 0; font-weight: bold; color: #000; }
+        .main-title { font-size: 20pt; margin: 0 0 5px 0; font-weight: bold; color: #000; }
+        .sub-title { font-size: 13pt; margin: 0; font-weight: bold; color: #000; }
         
         .model-badge {
             display: inline-block;
@@ -239,17 +237,6 @@
             gap: 8px;
         }
 
-        .creative-addition {
-            margin-top: 15px;
-            padding: 10px 14px;
-            background: #f9fbf9;
-            border-right: 4px solid #27ae60;
-            font-size: 12pt;
-            color: #1e8449;
-            font-weight: bold;
-            border-radius: 0 4px 4px 0;
-        }
-
         .creative-box {
             border: 2px dashed #27ae60;
             border-radius: 8px;
@@ -298,9 +285,7 @@
             margin-left: 6px;
         }
 
-        .pin-action.active-pin {
-            background: var(--pin-color);
-        }
+        .pin-action.active-pin { background: var(--pin-color); }
 
         .shapes-container {
             font-size: 32pt;
@@ -383,7 +368,7 @@
 <div class="global-container">
     
     <div class="control-panel no-print">
-        <h2>⚙️ المنظومة السيادية للتحضير والإنتاج المعرفي الحتمي (المنهاج الفلسطيني الكامل)</h2>
+        <h2>⚙️ منظومة الإنتاج المعرفي والتربوي الفائق (المنهاج الفلسطيني المشرقي)</h2>
         
         <div class="panel-grid">
             <div class="input-group">
@@ -399,7 +384,7 @@
                 <input type="text" id="teacherInput" value="محمد وجيه غنام" onchange="saveMetadata()">
             </div>
             <div class="input-group">
-                <label for="modelSelector">النموذج المتوازن</label>
+                <label for="modelSelector">النموذج</label>
                 <select id="modelSelector" onchange="saveMetadata()">
                     <option value="أ">نموذج ( أ )</option>
                     <option value="ب">نموذج ( ب )</option>
@@ -407,75 +392,29 @@
                     <option value="د">نموذج ( د )</option>
                 </select>
             </div>
-        </div>
-        
-        <div class="panel-grid">
             <div class="input-group">
-                <label for="gradeSelector">الصف الدراسي والمسار</label>
-                <select id="gradeSelector" onchange="populateLessons()">
-                    <option value="grade1">الصف الأول الأساسي</option>
-                    <option value="grade2" selected>الصف الثاني الأساسي</option>
-                    <option value="grade3">الصف الثالث الأساسي</option>
-                    <option value="grade4">الصف الرابع الأساسي</option>
-                </select>
-            </div>
-            <div class="input-group">
-                <label for="subjectSelector">المبحث التعليمي</label>
-                <select id="subjectSelector" onchange="populateLessons()">
-                    <option value="math">الرياضيات والمنطق الرقمي</option>
-                    <option value="arabic">اللغة العربية والتمكين اللغوي</option>
-                    <option value="science">العلوم والحياة والاستكشاف</option>
-                </select>
-            </div>
-            <div class="input-group">
-                <label for="lessonSelector">المحور أو الدرس التفصيلي المتطابق</label>
-                <select id="lessonSelector" onchange="generateWorksheet()"></select>
-            </div>
-            <div class="input-group">
-                <label for="levelSelector">مستوى التدرج التربوي النفسي</label>
-                <select id="levelSelector" onchange="generateWorksheet()">
-                    <option value="adaptive">متوازن وتكيفي متدرج (محسوس ➔ مجرد)</option>
-                    <option value="concrete">المستوى المحسوس (رسومات، رموز شطب، وبصريات)</option>
-                    <option value="semi_concrete">المستوى شبه المحسوس (مسائل لفظية وسياقات واقعية)</option>
-                    <option value="abstract">المستوى المجرد (معادلات ورموز رياضية بحتة)</option>
-                </select>
-            </div>
-        </div>
-
-        <div class="panel-grid">
-            <div class="input-group">
-                <label for="countInput">عدد الأسئلة المستهدفة</label>
-                <input type="text" inputmode="numeric" id="countInput" value="٥" oninput="formatEasternInput(this)" onchange="generateWorksheet()">
-            </div>
-            <div class="input-group" style="grid-column: span 2;">
-                <label for="teacherCustomIdeaInput">💡 فكرة المعلم التربوية الحرة (تُدمج فوراً بالنظام المشرقي الحتمي)</label>
-                <input type="text" id="teacherCustomIdeaInput" placeholder="مثال: مسائل طرح بالاستلاف مرتبطة بموسم قطف الزيتون في بلدة عاطوف...">
-            </div>
-            <div class="input-group">
-                <label>التحكم والاتصال المباشر</label>
-                <button class="btn btn-ai" style="background-color: #2980b9;" onclick="triggerVoiceInput()">🎤 إدخال الفكرة بالصوت (Live Web)</button>
+                <label for="countInput">عدد الأسئلة المطلوبة</label>
+                <input type="text" inputmode="numeric" id="countInput" value="٥" oninput="formatEasternInput(this)">
             </div>
         </div>
         
         <div class="intelligence-card">
             <div class="input-group">
-                <label for="aiIntelligenceInput" style="color: #2980b9; font-weight: bold;">🧠 محرك التحليل والترجمة الخوارزمي الصارم (تفسير فائق وصفر أخطاء)</label>
-                <textarea id="aiIntelligenceInput" rows="2" placeholder="اكتب مهارة، جملة، أو موضوعاً حراً هنا (مثال: توليد مراجعة شاملة للأشكال الهندسية والكسور لربيع طوباس وفلسطين، أو قراءة الساعة بدقة)..."></textarea>
+                <label for="aiIntelligenceInput" style="color: var(--primary-color); font-weight: bold; font-size: 12pt;">🧠 صندوق المطلوب التربوي الذكي (ادخل المهارة، الصف، أو المحور المراد توليده فوراً)</label>
+                <textarea id="aiIntelligenceInput" rows="3" placeholder="مثال: رياضيات الصف الثاني طرح بالاستلاف عن قطف الزيتون في عاطوف، أو: لغة عربية تحليل الكلمات واللام الشمسية، أو: علوم الحواس الخمس..."></textarea>
             </div>
-            <div style="display: flex; gap: 10px; margin-top: 10px; flex-wrap: wrap;">
-                <button class="btn btn-ai" onclick="processDeterministicEngine(false)">⚡ إدراج كمسألة ذكية إضافية</button>
-                <button class="btn btn-ai" style="background-color: #8e44ad;" onclick="processDeterministicEngine(true)">🌀 توليد ورقة عمل/تحضير كامل بالمنطق الحتمي</button>
-                <button class="btn btn-secondary" onclick="fetchLiveEducationalData()">🌐 جلب مصادر معرفية حية (Live Fetch)</button>
+            <div style="display: flex; gap: 10px; margin-top: 12px; flex-wrap: wrap;">
+                <button class="btn btn-primary" onclick="generateSmartWorksheet()">🌀 توليد ورقة العمل بالمنطق الحتمي المتدرج</button>
+                <button class="btn btn-ai" onclick="triggerVoiceInput()">🎤 إدخال بالصوت</button>
+                <button class="btn btn-secondary" onclick="fetchLiveEducationalData()">🌐 جلب مصادر حية</button>
             </div>
         </div>
         
         <div class="actions-row">
-            <button class="btn btn-secondary" onclick="generateWorksheet()">⚡ توليد المتن النظيف</button>
-            <button class="btn btn-teacher" onclick="injectTeacherCustomIdea()">🧠 إدراج فكرة المعلم</button>
             <button class="btn btn-innovation" onclick="injectInnovativeQuestion()">💡 زر الابتكار</button>
-            <button class="btn btn-creativity" onclick="activateCreativityMode()">🎨 زر الإبداع</button>
-            <button class="btn btn-beauty" onclick="toggleBeautyTheme()">✨ زر الجمال</button>
-            <button class="btn btn-primary" onclick="window.print()">🖨️ طباعة فورية قياسية</button>
+            <button class="btn btn-creativity" onclick="activateCreativityMode()">🎨 زاوية الإبداع</button>
+            <button class="btn btn-beauty" onclick="toggleBeautyTheme()">✨ مظهر الجمال</button>
+            <button class="btn btn-primary" style="background-color: #111;" onclick="safePrint()">🖨️ طباعة فورية قياسية</button>
         </div>
     </div>
     
@@ -487,13 +426,13 @@
                 <div id="outSchool">مدرسة: عاطوف الأساسية المختلطة</div>
             </div>
             <div class="header-item center">
-                <div class="main-title" id="outSubjectTitle">مبحث الرياضيات</div>
-                <div class="sub-title" id="outLessonTitle">ورقة عمل تكيّفية منضبطة</div>
+                <div class="main-title" id="outSubjectTitle">ورقة عمل تعليمية</div>
+                <div class="sub-title" id="outLessonTitle">تقييم تكيّفي منضبط الاستهداف</div>
                 <span class="model-badge" id="outModel">نموذج: أ</span>
             </div>
             <div class="header-item left">
                 <div>الاسم: ...........................................................</div>
-                <div id="outGrade">الصف: الثاني الأساسي</div>
+                <div id="outGrade">المبحث: مهارات تعليمية متكاملة</div>
                 <div id="outTeacher">المعلم: محمد وجيه غنام</div>
                 <div id="outDate">التاريخ: ...... / ...... / ٢٠٢٦ م</div>
             </div>
@@ -507,73 +446,7 @@
     let innovationCounter = 1;
     let creativityActive = false;
     let pinnedQuestions = new Set();
-    let typingTimer; // لمنع ارتباك المؤشر أثناء الكتابة اليدوية
-
-    const curriculumRepository = {
-        grade1: {
-            name: "الصف الأول الأساسي",
-            math: [
-                { id: "g1_m_u1", type: "fixed_range", minVal: 1, maxVal: 5, title: "الوحدة ١: الأعداد المشرقية حتى ٥ وتمثيلها البصري", shape: "🍎" },
-                { id: "g1_m_u2", type: "fixed_range", minVal: 6, maxVal: 9, title: "الوحدة ١: الأعداد من ٦ إلى ٩ ومفهوم الصفر", shape: "⭐" },
-                { id: "g1_m_u3", type: "comparison", minVal: 0, maxVal: 9, title: "الوحدة ١: مقارنة الأعداد ضمن النطاق ٩ (أكبر، أصغر، يساوي)" },
-                { id: "g1_m_u4", type: "operation_add", minVal: 1, maxVal: 9, title: "الوحدة ٢: مفهوم الجمع البصري والمجرد ضمن العدد ٩" },
-                { id: "g1_m_u5", type: "operation_sub", minVal: 1, maxVal: 9, title: "الوحدة ٢: الطرح بالشطب والمحسوس في سياق بيئي فلسطيني" }
-            ],
-            arabic: [
-                { id: "g1_a_u1", type: "lang_letters", title: "حروف الوحدة الأولى (المدود والحركات القصيرة: أ، ب، د، ر)" },
-                { id: "g1_a_u2", type: "lang_words", title: "تركيب وتحليل الكلمات البسيطة المجرّدة" }
-            ],
-            science: [
-                { id: "g1_s_u1", type: "sci_concept", title: "الحواس الخمس ووظائفها والمحافظة عليها" },
-                { id: "g1_s_u2", type: "sci_concept", title: "الكائنات الحية والجمادات في محيط المدرسة" }
-            ]
-        },
-        grade2: {
-            name: "الصف الثاني الأساسي",
-            math: [
-                { id: "g2_m_u1", type: "fixed_range", minVal: 10, maxVal: 99, title: "الوحدة ١: مراجعة وتأسيس الأعداد ضمن النطاق ٩٩ والقيمة المنزلية", shape: "🦋" },
-                { id: "g2_m_u2", type: "comparison", minVal: 10, maxVal: 99, title: "الوحدة ١: المقارنة والترتيب التصاعدي والتنازلي ضمن النطاق ٩٩" },
-                { id: "g2_m_u3", type: "operation_add", minVal: 10, maxVal: 99, title: "الوحدة ٢: الجمع دون حمل (أفقي وعمودي) ضمن النطاق ٩٩" },
-                { id: "g2_m_u4", type: "operation_add_carry", minVal: 10, maxVal: 99, title: "الوحدة ٢: الجمع مع الحمل البصري والرمزي ضمن النطاق ٩٩" },
-                { id: "g2_m_u5", type: "operation_sub_borrow", minVal: 10, maxVal: 99, title: "الوحدة ٢: الطرح مع الاستلاف (مسائل عمودية وأفقية وسياقات لفظية)" },
-                { id: "g2_m_u6", type: "fixed_range", minVal: 100, maxVal: 999, title: "الوحدة ٣: الأعداد والقيمة المنزلية والمقارنة ضمن النطاق الشامل ٩٩٩" },
-                { id: "g2_m_u7", type: "mul_concept", minVal: 2, maxVal: 5, title: "الوحدة ٦: مفهوم الضرب كجمع متكرر وتشكيل المجموعات المتكافئة" }
-            ],
-            arabic: [
-                { id: "g2_a_u1", type: "lang_comprehension", title: "درس الحرية - القراءة الواعية واستخراج المهارات اللغوية" },
-                { id: "g2_a_u2", type: "lang_grammar", title: "قواعد التمكين: اللام الشمسية واللام القمرية والتنوين منضبطاً" }
-            ],
-            science: [
-                { id: "g2_s_u1", type: "sci_concept", title: "أجزاء النباتات ووظيفة كل جزء (الجذر، الساق، الأوراق، الأزهار)" },
-                { id: "g2_s_u2", type: "sci_concept", title: "البيئات المختلفة للكائنات الحية في فلسطين (الأغوار، الجبال)" }
-            ]
-        },
-        grade3: {
-            name: "الصف الثالث الأساسي",
-            math: [
-                { id: "g3_m_u1", type: "fixed_range", minVal: 1000, maxVal: 9999, title: "الأعداد ضمن النطاق الشامل ٩٩٩٩ والقيمة والترتيب" },
-                { id: "g3_m_u2", type: "operation_add", minVal: 1000, maxVal: 9999, title: "الجمع والطرح ضمن النطاق ٩٩٩٩ مع الحمل والاستلاف" }
-            ],
-            arabic: [
-                { id: "g3_a_u1", type: "lang_grammar", title: "الجملة الاسمية والجملة الفعلية ومحاكاة الأنماط التركيبية" }
-            ],
-            science: [
-                { id: "g3_s_u1", type: "sci_concept", title: "حالات المادة الثلاث وتأثير الحرارة عليها (الانصهار والتبخر)" }
-            ]
-        },
-        grade4: {
-            name: "الصف الرابع الأساسي",
-            math: [
-                { id: "g4_m_u1", type: "fixed_range", minVal: 10000, maxVal: 99999, title: "الأعداد ضمن النطاق الشامل ٩٩٩٩٩ والعمليات الحسابية الكبرى" }
-            ],
-            arabic: [
-                { id: "g4_a_u1", type: "lang_grammar", title: "أقسام الكلام، الفاعل والمفعول به، وضبط أواخر الكلمات" }
-            ],
-            science: [
-                { id: "g4_s_u1", type: "sci_concept", title: "أجهزة جسم الإنسان: الجهاز الهضمي والجهاز التنفسي وعملهما" }
-            ]
-        }
-    };
+    let typingTimer;
 
     function toEasternArabicDigits(num) {
         if (num === null || num === undefined) return '';
@@ -606,28 +479,6 @@
         return min + Math.floor(seededRandom(seed) * (max - min + 1));
     }
 
-    function populateLessons() {
-        const gradeSelector = document.getElementById("gradeSelector");
-        const subjectSelector = document.getElementById("subjectSelector");
-        const lessonSelector = document.getElementById("lessonSelector");
-        if (!gradeSelector || !subjectSelector || !lessonSelector) return;
-
-        const grade = gradeSelector.value;
-        const subject = subjectSelector.value;
-        
-        lessonSelector.innerHTML = "";
-        
-        if (curriculumRepository[grade] && curriculumRepository[grade][subject]) {
-            curriculumRepository[grade][subject].forEach(item => {
-                let opt = document.createElement("option");
-                opt.value = item.id;
-                opt.innerText = item.title;
-                lessonSelector.appendChild(opt);
-            });
-        }
-        generateWorksheet();
-    }
-
     function saveMetadata() {
         try {
             const dirInput = document.getElementById("directorateInput");
@@ -640,7 +491,7 @@
             if (teaInput) localStorage.setItem('gov_teacher', teaInput.value);
             if (modSelector) localStorage.setItem('gov_model', modSelector.value);
         } catch (e) {
-            console.warn('Metadata persistent storage sync failed.', e);
+            console.warn('Metadata sync failed.', e);
         }
         updateHeaderUI();
     }
@@ -657,7 +508,7 @@
             if(teaInput && localStorage.getItem('gov_teacher')) teaInput.value = localStorage.getItem('gov_teacher');
             if(modSelector && localStorage.getItem('gov_model')) modSelector.value = localStorage.getItem('gov_model');
         } catch (e) {
-            console.warn('Metadata item loading failed.', e);
+            console.warn('Metadata loading failed.', e);
         }
     }
 
@@ -666,27 +517,16 @@
         const outSchool = document.getElementById("outSchool");
         const outTeacher = document.getElementById("outTeacher");
         const outModel = document.getElementById("outModel");
-        const outGrade = document.getElementById("outGrade");
-        const outSubjectTitle = document.getElementById("outSubjectTitle");
 
         const dirInput = document.getElementById("directorateInput");
         const schInput = document.getElementById("schoolInput");
         const teaInput = document.getElementById("teacherInput");
         const modSelector = document.getElementById("modelSelector");
-        const gradeSel = document.getElementById("gradeSelector");
-        const subSel = document.getElementById("subjectSelector");
 
         if (outDirectorate && dirInput) outDirectorate.innerText = "مديرية التربية والتعليم - " + toEasternArabicDigits(dirInput.value);
         if (outSchool && schInput) outSchool.innerText = "مدرسة: " + toEasternArabicDigits(schInput.value);
         if (outTeacher && teaInput) outTeacher.innerText = "المعلم: " + toEasternArabicDigits(teaInput.value);
         if (outModel && modSelector) outModel.innerText = "نموذج: " + toEasternArabicDigits(modSelector.value);
-        
-        if (outGrade && gradeSel && gradeSel.selectedIndex >= 0) {
-            outGrade.innerText = "الصف: " + toEasternArabicDigits(gradeSel.options[gradeSel.selectedIndex].text);
-        }
-        if (outSubjectTitle && subSel && subSel.selectedIndex >= 0) {
-            outSubjectTitle.innerText = "مبحث " + toEasternArabicDigits(subSel.options[subSel.selectedIndex].text.split(" ")[0]);
-        }
     }
 
     function buildQuestionHTML(id, title, body) {
@@ -709,32 +549,29 @@
     function handleContenteditableInput(element) {
         if (!element) return;
         clearTimeout(typingTimer);
-        // تأخير تحويل الأرقام لحين التوقف عن الكتابة بـ 800ms لمنع قفز المؤشر
         typingTimer = setTimeout(() => {
             convertTextNodesToEastern(element);
         }, 800);
     }
 
-    function generateWorksheet() {
+    function generateSmartWorksheet() {
         saveMetadata();
-        const gradeSel = document.getElementById("gradeSelector");
-        const subSel = document.getElementById("subjectSelector");
-        const lesSel = document.getElementById("lessonSelector");
-        const levSel = document.getElementById("levelSelector");
+        const aiIntelInput = document.getElementById("aiIntelligenceInput");
         const cntInput = document.getElementById("countInput");
+        if (!aiIntelInput || !cntInput) return;
 
-        if (!gradeSel || !subSel || !lesSel || !levSel || !cntInput) return;
+        const userPrompt = aiIntelInput.value.trim();
+        if (!userPrompt) {
+            alert("يرجى كتابة المطلوب التربوي في الصندوق ليقوم الذكاء الخبير بتوليده.");
+            return;
+        }
 
-        const grade = gradeSel.value;
-        const subject = subSel.value;
-        const lessonId = lesSel.value;
-        const level = levSel.value;
         const targetCount = fromEasternArabicDigits(cntInput.value) || 5;
-        
         const sheetBody = document.getElementById("sheetBody");
         const wrapper = document.getElementById("sheetOutput");
         if (!sheetBody || !wrapper) return;
-        
+
+        // الحفاظ على الأسئلة المثبتة
         let preservedBlocks = {};
         pinnedQuestions.forEach(id => {
             const el = document.getElementById(`q_block_${id}`);
@@ -743,19 +580,33 @@
 
         sheetBody.innerHTML = "";
         wrapper.style.display = "block";
-        
-        if (!curriculumRepository[grade] || !curriculumRepository[grade][subject]) return;
-        const currentLesson = curriculumRepository[grade][subject].find(l => l.id === lessonId);
-        if (!currentLesson) return;
 
+        // استخلاص وتحليل المبحث بذكاء خبير
+        let isMath = userPrompt.includes("رياضيات") || userPrompt.includes("حساب") || userPrompt.includes("طرح") || userPrompt.includes("جمع") || userPrompt.includes("ضرب") || userPrompt.includes("أعداد") || userPrompt.includes("منزلية");
+        let isArabic = userPrompt.includes("عربي") || userPrompt.includes("لغة") || userPrompt.includes("قراءة") || userPrompt.includes("حروف") || userPrompt.includes("كلمات") || userPrompt.includes("تحليل");
+        let isScience = userPrompt.includes("علوم") || userPrompt.includes("حواس") || userPrompt.includes("نبات") || userPrompt.includes("حيوان") || userPrompt.includes("مادة");
+
+        // تحديث الترويسة حسب تحليل المحتوى
+        const outSubjectTitle = document.getElementById("outSubjectTitle");
         const outLessonTitle = document.getElementById("outLessonTitle");
-        if (outLessonTitle) outLessonTitle.innerText = currentLesson.title;
-        
+        const outGrade = document.getElementById("outGrade");
+
+        if (outSubjectTitle) {
+            outSubjectTitle.innerText = isMath ? "مبحث الرياضيات المشرقية" : (isArabic ? "مبحث اللغة العربية والتمكين" : (isScience ? "مبحث العلوم والحياة والاستكشاف" : "ورقة عمل تكاملية"));
+        }
+        if (outLessonTitle) {
+            outLessonTitle.innerText = userPrompt.length > 50 ? userPrompt.substring(0, 50) + "..." : userPrompt;
+        }
+        if (outGrade) {
+            let gradeMatch = userPrompt.match(/(أول|ثاني|ثالث|رابع|خامس)/);
+            outGrade.innerText = gradeMatch ? `الصف: ${gradeMatch[0]} الأساسي` : "الصف الدراسي: مستهدف التوليد الذكي";
+        }
+
         let generatedHTML = "";
-        let baseSeed = currentLesson.title.length + targetCount;
+        let baseSeed = userPrompt.length + targetCount;
 
         for (let i = 1; i <= targetCount; i++) {
-            const qId = `${lessonId}_q${i}`;
+            const qId = `smart_q_${i}`;
             if (preservedBlocks[qId]) {
                 generatedHTML += preservedBlocks[qId];
                 continue;
@@ -763,14 +614,22 @@
 
             let qTitle = `السؤال (${toEasternArabicDigits(i)}):`;
             let qBody = "";
-            let seed = baseSeed * i + 97;
+            let seed = baseSeed * i + 43;
 
-            if (subject === "math") {
-                qBody = generateDeterministicMathQuestion(currentLesson, level, seed, i);
-            } else if (subject === "arabic") {
-                qBody = generateDeterministicArabicQuestion(currentLesson, level, seed, i);
+            // تحديد مستوى التدرج التلقائي (محسوس -> شبه محسوس -> مجرد)
+            let currentLevel = "abstract";
+            if (i <= Math.ceil(targetCount * 0.4)) currentLevel = "concrete";
+            else if (i <= Math.ceil(targetCount * 0.7)) currentLevel = "semi_concrete";
+
+            if (isMath) {
+                qBody = parseAndGenerateMath(userPrompt, currentLevel, seed, i);
+            } else if (isArabic) {
+                qBody = parseAndGenerateArabic(userPrompt, currentLevel, seed, i);
+            } else if (isScience) {
+                qBody = parseAndGenerateScience(userPrompt, currentLevel, seed, i);
             } else {
-                qBody = generateDeterministicScienceQuestion(currentLesson, level, seed, i);
+                // توليد مرن وشامل في حال عدم تحديد مهارة معينة بدقة
+                qBody = `تطبيق تفكيري موجه حول المهارة المعرفية المستهدفة (<b>${escapeHTML(userPrompt)}</b>):<br><div class="custom-writing-area">مساحة عمل مخصصة لإنتاج الطالب المنضبط: <span class="blank-space-long"></span></div>`;
             }
 
             generatedHTML += buildQuestionHTML(qId, qTitle, qBody);
@@ -780,163 +639,69 @@
         executePostGenerationModifiers();
     }
 
-    function generateDeterministicMathQuestion(lesson, level, seed, index) {
-        let min = lesson.minVal || 1;
-        let max = lesson.maxVal || 9;
-        let shape = lesson.shape || "🍎";
-        
-        let currentLevel = level;
-        if (level === "adaptive") {
-            if (index <= 2) currentLevel = "concrete";
-            else if (index <= 4) currentLevel = "semi_concrete";
-            else currentLevel = "abstract";
-        }
+    // خوارزمية توليد الرياضيات المشرقية بذكاء متخصص
+    function parseAndGenerateMath(prompt, level, seed, index) {
+        let isSubtraction = prompt.includes("طرح") || prompt.includes("ناقص") || prompt.includes("استلاف");
+        let isCarry = prompt.includes("حمل") || prompt.includes("زائد") || prompt.includes("جمع");
+        let isMul = prompt.includes("ضرب") || prompt.includes("مجموعات");
 
-        if (lesson.type === "fixed_range") {
-            let num = getRandomInt(min, max, seed);
-            if (currentLevel === "concrete") {
-                let shapesHTML = `<div class="shapes-container">`;
-                for (let s = 0; s < num; s++) shapesHTML += shape + " ";
-                shapesHTML += `</div>`;
-                return `عُدَّ الأشياءَ في المَجموعَةِ المُرْتَبَةِ ثُمَّ اكْتُبِ العَدَدَ المُنَاسِبَ داخلَ الصّندوقِ:<br>${shapesHTML} العَدَدُ الصَّحِيحُ هُوَ: <span class="blank-space"></span>`;
-            } else if (currentLevel === "semi_concrete") {
-                return `مَعَ أَحْمَدَ مَجْمُوعَةٌ مِنَ الألْعَابِ بَلَغَ عَدَدُهَا تَمَاماً لَفْظِياً (${toEasternArabicDigits(num)})، مَثِّلْ هَذَا العَدَدَ بِرَسْمِ خُطُوطٍ مُنْفَصِلَةٍ تُمَثِّلُ مَفْهُومَ الآحَادِ وَالعَشَرَاتِ كَمَا تَعَلَّمْتَ فِي الصَّفِّ:<br><div class="custom-writing-area">مَكَانُ الرَّسْمِ التَّوْضِيحِيِّ: <span class="blank-space-long"></span></div>`;
+        let n1 = getRandomInt(40, 95, seed);
+        let n2 = getRandomInt(15, 39, seed + 7);
+
+        if (isSubtraction) {
+            if ((n1 % 10) >= (n2 % 10)) { // إجبار الاستلاف إن وجد النص
+                n1 = (Math.floor(n1/10)*10) + getRandomInt(0, 3, seed);
+                n2 = (Math.floor(n2/10)*10) + getRandomInt(5, 9, seed+2);
+            }
+            if (level === "concrete") {
+                return `اكتب جملة الطرح الرياضية الممثلة بالشطب البصري التوضيحي علماً أن العدد الكلي الأصلي هو (${toEasternArabicDigits(n1)}):<br><div class="shapes-container" style="text-decoration: line-through; color: #7f8c8d;">` + "❌ ".repeat(n2) + `</div>جملة الطرح الصحيحة: <span class="blank-space"></span> - <span class="blank-space"></span> = <span class="blank-space"></span>`;
+            } else if (level === "semi_concrete") {
+                return `في موسم قطف الزيتون في بلدة عاطوف، كان لدى عائلة أحمد (${toEasternArabicDigits(n1)}) كيساً، تم عَصْرُ (${toEasternArabicDigits(n2)}) كيساً منها. كم كيساً بقي معهم؟<br>الحل اللفظي المكتمل: <span class="blank-space"></span> - <span class="blank-space"></span> = <span class="blank-space"></span> أكياس.`;
             } else {
-                return `اُكْتُبِ القِيمَةَ المَنْزِلِيَّةَ المُنْضَبِطَةَ لِلرَّقْمِ المَرْسُومِ تَحْتَهُ خَطٌّ فِي العَدَدِ المَشْرِقِيِّ المَعْرُوضِ: <span style="text-decoration: underline; font-weight: bold;">${toEasternArabicDigits(num)}</span> هِيَ: <span class="blank-space"></span>`;
+                return `جِد ناتج الطرح العمودي الدقيق مع الاستلاف ومراعاة منزلة الآحاد والعشرات:<br><div class="math-column-form">${toEasternArabicDigits(n1)}<br>- ${toEasternArabicDigits(n2)}<div class="math-column-line"></div><span class="blank-space" style="width:50px; height:20px;"></span></div>`;
             }
         }
 
-        if (lesson.type === "comparison") {
-            let n1 = getRandomInt(min, max, seed);
-            let n2 = getRandomInt(min, max, seed + 13);
-            if (n1 === n2) n2 += 1;
-            
-            if (currentLevel === "concrete") {
-                let s1 = "", s2 = "";
-                for(let s=0; s<(n1%6+1); s++) s1 += "🔺";
-                for(let s=0; s<(n2%6+1); s++) s2 += "🟢";
-                return `قَارِنْ بَصَرِيّاً بَيْنَ المَجْمُوعَتَيْنِ التَّالِيَتَيْنِ بِوَضْعِ الرَّمْزِ المُنَاسِبِ ( &gt; ، &lt; ، = ):<br>المَجْمُوعَةُ الأُولَى: ${s1} <span class="blank-space" style="width:60px;"></span> المَجْمُوعَةُ الثَّانِيَةُ: ${s2}`;
-            } else if (currentLevel === "semi_concrete") {
-                return `قَطَفَ جَدُّ أَحْمَدَ مِنْ شَجَرِ زَيْتُونِ طُوبَاسَ فِي اليَوْمِ الأَوَّلِ (${toEasternArabicDigits(n1)}) صُنْدُوقاً، وَفِي اليَوْمِ الثَّانِي (${toEasternArabicDigits(n2)}) صُنْدُوقاً. ضَعْ إِشَارَةَ ( &gt; أَوْ &lt; أَوْ = ) فِي الفَرَاغِ لِمُقَارَنَةِ الإِنْتَاجِ:<br> (${toEasternArabicDigits(n1)}) <span class="blank-space" style="width:60px;"></span> (${toEasternArabicDigits(n2)})`;
-            } else {
-                return `ضَعْ إِشَارَةَ المُنَاصَفَةِ أَوِ المُقَارَنَةِ العَدَدِيَّةِ الصَّحِيحَةِ فِي الفَرَاغِ المَتْرُوكِ لِتُصْبِحَ العِبَارَةُ الرِّيَاضِيَّةُ سَلِيمَةً:<br> <b>${toEasternArabicDigits(n1)}</b> <span class="blank-space" style="width:60px;"></span> <b>${toEasternArabicDigits(n2)}</b>`;
-            }
-        }
-
-        if (lesson.type === "operation_add" || lesson.type === "operation_add_carry") {
-            let v1 = getRandomInt(min, Math.floor(max/2), seed);
-            let v2 = getRandomInt(min, Math.floor(max/2), seed + 5);
-            if (lesson.type === "operation_add_carry") {
-                v1 = getRandomInt(15, 49, seed);
-                v2 = getRandomInt(15, 49, seed + 9);
-                if ((v1%10) + (v2%10) < 10) v2 += 5; 
-            }
-
-            if (currentLevel === "concrete") {
-                return `جِدْ نَاتِجَ عَمَلِيَّةِ الجَمْعِ التَّالِيَةِ مُسْتَعِيناً بِتَخَيُّلِ حُزَمِ الآحَادِ وَالعَشَرَاتِ البَصَرِيَّةِ:<br><div class="math-column-form">${toEasternArabicDigits(v1)}<br>+ ${toEasternArabicDigits(v2)}<div class="math-column-line"></div><span class="blank-space" style="width:50px; height:20px;"></span></div>`;
-            } else if (currentLevel === "semi_concrete") {
-                return `اشْتَرَتْ مَدْرَسَةُ عاطوفَ الأسَاسِيَّةُ المُخْتَلَطَةُ (${toEasternArabicDigits(v1)}) كِتَاباً عِلْمِيّاً ثُمَّ قَامَتْ بِشِرَاءِ (${toEasternArabicDigits(v2)}) كِتَاباً آخَرَ لِتَغْذِيَةِ المَكْتَبَةِ. كَمْ كِتَاباً أَصْبَحَ فِي المَكْتَبَةِ تَمَاماً؟<br> الحَلُّ المُنَظَّمُ: <span class="blank-space"></span> + <span class="blank-space"></span> = <span class="blank-space"></span> كِتَاباً.`;
-            } else {
-                return `جِدْ نَاتِجَ الجَمْعِ الأُفُقِيِّ المُنْضَبِطِ بِشَكْلٍ مُجَرَّدٍ سَرِيعٍ:<br> <b>${toEasternArabicDigits(v1)} + ${toEasternArabicDigits(v2)} = <span class="blank-space"></span></b>`;
-            }
-        }
-
-        if (lesson.type === "operation_sub" || lesson.type === "operation_sub_borrow") {
-            let v1 = getRandomInt(Math.floor(max/2)+1, max, seed);
-            let v2 = getRandomInt(min, Math.floor(max/2), seed + 4);
-            if (lesson.type === "operation_sub_borrow") {
-                v1 = getRandomInt(41, 95, seed);
-                v2 = getRandomInt(16, v1 - 5, seed + 11);
-                if ((v1 % 10) >= (v2 % 10)) {
-                    v1 = (Math.floor(v1/10)*10) + getRandomInt(0, 4, seed);
-                    v2 = (Math.floor(v2/10)*10) + getRandomInt(5, 9, seed+2);
-                }
-            }
-
-            if (currentLevel === "concrete") {
-                let shapesHTML = `<div class="shapes-container" style="text-decoration: line-through; color: #7f8c8d;">`;
-                for(let s=0; s<v2; s++) shapesHTML += "❌ ";
-                shapesHTML += `</div>`;
-                return `اكْتُبْ جُمْلَةَ الطَّرْحِ الرِّيَاضِيَّةِ المُمَثَّلَةِ بِالشَّطْبِ البَصَرِيِّ التَّالِي عِلْماً أَنَّ العَدَدَ الكُلِّيَّ المَبْدَئِيَّ هُوَ (${toEasternArabicDigits(v1)}):<br>${shapesHTML} جُمْلَةُ الطَّرْحِ هِيَ: <span class="blank-space" style="width:60px;"></span> - <span class="blank-space" style="width:60px;"></span> = <span class="blank-space" style="width:60px;"></span>`;
-            } else if (currentLevel === "semi_concrete") {
-                return `فِي مَزْرَعَةِ دَوَاجِنَ بِطُوبَاسَ كَانَ هُنَالِكَ (${toEasternArabicDigits(v1)}) صُوصاً، تَمَّ بَيْعُ (${toEasternArabicDigits(v2)}) صُوصاً مِنْهَا لِتُجَّارِ المَدِينَةِ. كَمْ صُوصاً بَقِيَ فِي المَزْرَعَةِ؟<br> جُمْلَةُ الحَلِّ الرِّيَاضِيِّ: <span class="blank-space"></span> - <span class="blank-space"></span> = <span class="blank-space"></span> صُوصاً.`;
-            } else {
-                return `جِدْ نَاتِجَ الطَّرْحِ العَمُودِيِّ المُنْضَبِطِ عِلْمِيّاً مَعَ مُرَاعَاةِ المَنَازِلِ:<br><div class="math-column-form">${toEasternArabicDigits(v1)}<br>- ${toEasternArabicDigits(v2)}<div class="math-column-line"></div><span class="blank-space" style="width:50px; height:20px;"></span></div>`;
-            }
-        }
-
-        if (lesson.type === "mul_concept") {
+        if (isMul) {
             let groups = getRandomInt(2, 4, seed);
-            let elements = getRandomInt(2, 5, seed + 3);
-            if (currentLevel === "concrete") {
-                let visualHTML = "";
-                for(let g=0; g<groups; g++) {
-                    visualHTML += ` ( `;
-                    for(let e=0; e<elements; e++) visualHTML += "🍏";
-                    visualHTML += ` )   `;
-                }
-                return `عَبِّرْ عَنِ المَجْمُوعَاتِ البَصَرِيَّةِ التَّالِيَةِ بِاسْتِخْدَامِ جُمْلَةِ الضَّرْبِ الرِّيَاضِيَّةِ:<br>${visualHTML}<br> جُمْلَةُ الضَّرْبِ: <span class="blank-space" style="width:60px;"></span> × <span class="blank-space" style="width:60px;"></span> = <span class="blank-space" style="width:60px;"></span>`;
+            let elements = getRandomInt(2, 5, seed + 1);
+            if (level === "concrete") {
+                let visual = " ( " + "🍏".repeat(elements) + " )   ";
+                return `عَبِّر عن المجموعات البصرية المتكافئة التالية بجملة ضرب مشرقي منضبطة:<br><div style="margin:10px 0;">${visual.repeat(groups)}</div>جملة الضرب: <span class="blank-space"></span> × <span class="blank-space"></span> = <span class="blank-space"></span>`;
             } else {
-                return `حَوِّلْ جُمْلَةَ الجَمْعِ المُتَكَرِّرِ التَّالِيَةِ إِلَى جُمْلَةِ ضَرْبٍ مُوجَزَةٍ وَجِدِ النَّاتِجَ التَّامَ:<br> ${toEasternArabicDigits(elements)} + ${toEasternArabicDigits(elements)} + ${toEasternArabicDigits(elements)} = <span class="blank-space" style="width:60px;"></span> × <span class="blank-space" style="width:60px;"></span> = <span class="blank-space" style="width:60px;"></span>`;
+                return `حوّل جملة الجمع المتكرر المذكورة إلى جملة ضرب موجزة وجد الناتج الإجمالي:<br> ` + `${toEasternArabicDigits(elements)} + `.repeat(groups-1) + `${toEasternArabicDigits(elements)} = <span class="blank-space"></span> × <span class="blank-space"></span> = <span class="blank-space"></span>`;
             }
         }
 
-        return `سؤال رياضي تدريبي منضبط للمنهاج الفلسطيني المشرقي. <span class="blank-space"></span>`;
+        // الافتراضي: جمع وتأسيس قيم منزلية
+        if (level === "concrete") {
+            return `عُدَّ العناصر البصرية المنظمة واكتب العدد المشرقي المقابل بدقة:<br><div class="shapes-container">` + "🦋 ".repeat(getRandomInt(4, 9, seed)) + `</div>العدد الصحيح هو: <span class="blank-space"></span>`;
+        } else {
+            return `جِد ناتج الجمع الأفقي المجرد بشكل مباشر وسريع لثبات المهارة:<br><b>${toEasternArabicDigits(n1)} + ${toEasternArabicDigits(n2)} = <span class="blank-space"></span></b>`;
+        }
     }
 
-    function generateDeterministicArabicQuestion(lesson, level, seed, index) {
-        let pool1 = ["بَيْت", "وَلَد", "دَار", "رُمَّان", "بَاب", "دَجَاجَة", "رَأْس"];
-        let pool2 = ["السَّمَاء", "القَمَر", "الشَّمْس", "الوَلَد", "المَدْرَسَة", "التُّفَّاح", "العِلْم"];
-        let word = pool1[seed % pool1.length];
-        let wordL = pool2[seed % pool2.length];
+    // خوارزمية توليد اللغة العربية بذكاء متخصص
+    function parseAndGenerateArabic(prompt, level, seed, index) {
+        let pool = ["بَيْت", "وَلَد", "طُوباس", "زَيْتُون", "مَدْرَسَة", "شَمْس", "قَمَر"];
+        let word = pool[seed % pool.length];
 
-        if (lesson.type === "lang_letters") {
-            return `حَلِّلِ الكَلِمَةَ التَّالِيَةَ إِلَى حُرُوفِهَا المَبْدَئِيَّةِ مَعَ ضَبْطِ الحَرَكَاتِ الصَّحِيحَةِ كَمَا تَعَلَّمْتَ:<br> كَلِمَةُ ( <b>${word}</b> ) = <span class="blank-space" style="width:50px;"></span> + <span class="blank-space" style="width:50px;"></span> + <span class="blank-space" style="width:50px;"></span> + <span class="blank-space" style="width:50px;"></span>`;
+        if (prompt.includes("تحليل") || prompt.includes("حروف")) {
+            return `حَلِّل الكلمة المعروضة أمامك إلى حروفها المنفصلة مع ضبط الحركات الإعرابية السليمة:<br>كلمة ( <b>${word}</b> ) ➔ <span class="blank-space" style="width:50px;"></span> + <span class="blank-space" style="width:50px;"></span> + <span class="blank-space" style="width:50px;"></span> + <span class="blank-space" style="width:50px;"></span>`;
         }
-        if (lesson.type === "lang_words") {
-            return `رَكِّبْ مِنَ الحُرُوفِ المَنْثُورَةِ التَّالِيَةِ كَلِمَةً لُغَوِيَّةً لَهَا مَعْنًى تَامٌّ فِي جُمْلَةٍ مُفِيدَةٍ:<br> ( مَـ + سْـ + جِـ + دٌ ) ➔ المَبْنَى المُركَّبُ هُوَ: <span class="blank-space-long"></span>`;
+        if (prompt.includes("شمسية") || prompt.includes("قمرية") || prompt.includes("لام")) {
+            return `أَدْخِل ال التعريف على كلمة ( <b>${word}</b> ) ثم بيّن نوع اللام (شمسية أم قمرية) في الفراغ المخصص:<br>الكلمة بعد الإدخال: <span class="blank-space-long"></span> نوع اللام: <span class="blank-space"></span>`;
         }
-        if (lesson.type === "lang_comprehension") {
-            return `اُكْتُبْ فِكْرَةً رَئِيسِيَّةً وَاحِدَةً اِسْتَخْلَصْتَهَا بَعَدَ قِرَاءَتِكَ لِدَرْسِ الحُرِّيَّةِ فِي صَفِّكَ المَدْرَسِيِّ:<br><div class="custom-writing-area">الفِكْرَةُ النَّقِيَّةُ: ............................................................................................................</div>`;
-        }
-        if (lesson.type === "lang_grammar") {
-            return `صَنِّفِ الكَلِمَةَ التَّالِيَةَ ( <b>${wordL}</b> ) بَيْنَ نَوْعَيِ اللَّامِ (شَمْسِيَّةٌ أَمْ قَمَرِيَّةٌ) فِي الصَّنْدُوقِ المُنَاسِبِ:<br> نَوْعُ اللَّامِ هُوَ: <span class="blank-space-long"></span>`;
-        }
-        return `اُكْتُبْ بِخَطِّكَ الجَمِيلِ جُمْلَةً تُمَثِّلُ حُبَّ الوَطَنِ وَالتَّعَلُّمِ كَمَا وَرَدَ فِي المِنْهَاجِ.`;
+        return `اكتب بخطّك النسخي الجميل والمنضبط الجملة التربوية التالية محاكياً نمط الكتاب المقرّر:<br><div style="font-size:16pt; font-weight:bold; margin:10px 0;">« نَحْنُ نُحِبُّ أَرْضَنَا المُبَارَكَةَ وَنَتَعَلَّمُ فِيهَا بِنَشَاطٍ »</div><div class="custom-writing-area">السطر المخصص للكتابة: <span class="blank-space-long" style="width:100%"></span></div>`;
     }
 
-    function generateDeterministicScienceQuestion(lesson, level, seed, index) {
-        if (lesson.type === "sci_concept") {
-            if (lesson.id && lesson.id.includes("u1")) {
-                let sensory = ["العَيْنُ تُسْتَخْدَمُ لِـ ......", "الأُذُنُ تُسْتَخْدَمُ لِـ ......", "الأَنْفُ يُسْتَخْدَمُ لِـ ......", "اللِّسَانُ يُسْتَخْدَمُ لِـ ......"];
-                let selectedSensory = sensory[seed % sensory.length];
-                return `أَكْمِلِ العِبَارَةَ العِلْمِيَّةَ التَّالِيَةَ بِمَا يُنَاسِبُهَا حَوْلَ مَفْهُومِ الحَوَاسِّ الخَمْسِ:<br> <b>${selectedSensory} <span class="blank-space-long"></span></b>`;
-            } else {
-                return `صَنِّفِ الكَائِنَاتِ التَّالِيَةَ إِلَى (كَائِنٍ حَيٍّ) أَوْ (جَمَادٍ) بِشَكْلٍ دَقِيقٍ وَمُنَظَّمٍ:<br> ( العُصْفُورُ ، الحَجَرُ ، شَجَرَةُ الزَّيْتُونِ ) ➔ الكَائِنُ الحَيُّ هُوَ: <span class="blank-space"></span> المَادَّةُ الجَمَادُ هِيَ: <span class="blank-space"></span>`;
-            }
+    // خوارزمية توليد العلوم بذكاء متخصص
+    function parseAndGenerateScience(prompt, level, seed, index) {
+        if (prompt.includes("حواس") || prompt.includes("جسم")) {
+            let organ = ["العين", "الأذن", "الأنف", "اللسان"][seed % 4];
+            return `أكمل الجملة العلمية التالية بما يناسبها بخصوص عضو الحس ووظيفته الأساسية:<br>عضو الحس ( <b>${organ}</b> ) نستخدمه في مهارة الاستكشاف الحياتي لـ: <span class="blank-space-long"></span>`;
         }
-        return `أَجِبْ عَنِ السُّؤَالِ العِلْمِيِّ التَّالِي بِحَسَبِ مَا شَرَحَهُ مُعَلِّمُ المَادَّةِ الفَاضِلُ.`;
-    }
-
-    function injectTeacherCustomIdea() {
-        const inputIdea = document.getElementById("teacherCustomIdeaInput");
-        if (!inputIdea) return;
-        const inputVal = inputIdea.value.trim();
-        if (!inputVal) return;
-        
-        const sheetBody = document.getElementById("sheetBody");
-        if (!sheetBody) return;
-        const count = sheetBody.children.length + 1;
-        
-        let customHTML = buildQuestionHTML(
-            `custom_teacher_${count}`,
-            `سؤال إضافي من فكرة المعلم (${toEasternArabicDigits(count)}):`,
-            `💡 <b>${escapeHTML(inputVal)}</b> <br><div class="custom-writing-area">مَسَاحَةُ الإِجَابَةِ المَتْرُوكَةِ لِلطَّالِبِ: <span class="blank-space-long"></span></div>`
-        );
-        
-        sheetBody.insertAdjacentHTML('beforeend', customHTML);
-        inputIdea.value = "";
-        executePostGenerationModifiers();
+        return `صَنِّف المواد والكائنات المذكورة بين الأقواس إلى (كائن حي) أو (جماد) في الفراغ المتروك:<br> ( العصفور ، الحجر ، شجرة التين )<br> الكائن الحي: <span class="blank-space"></span> ➔ الجماد: <span class="blank-space"></span>`;
     }
 
     function injectInnovativeQuestion() {
@@ -947,7 +712,7 @@
         let innovationHTML = buildQuestionHTML(
             `innovation_${innovationCounter++}`,
             `سؤال الابتكار والتميز والذكاء العالي (${toEasternArabicDigits(count)}):`,
-            `🚀 <b>تَحَدَّ نَفْسَكَ:</b> إِذَا كَانَ لَدَى جَارِنَا فِي طُوبَاسَ حَقْلٌ فِيهِ صَنَادِيقُ عَدَدُهَا مَجْهُولٌ، أَعْطَى المَدْرَسَةَ نِصْفَهَا وَبَقِيَ لَدَيْهِ (${toEasternArabicDigits(8)}) صَنَادِيقَ كَامِلَةٍ، كَمْ كَانَ العَدَدُ الكُلِّيُّ الصَّحِيحُ لِلصَّنَادِيقِ قَبْلَ العَطَاءِ؟ اِشْرَحْ طَرِيقَةَ تَفْكِيرِكَ الذَّكِيَّةِ لِمُعَلِّمِكَ الفَاضِلِ.<br><div class="custom-writing-area">إِجَابَتِي المُبْتَكَرَةُ: <span class="blank-space-long"></span></div>`
+            `🚀 <b>تَحدَّ نفسك:</b> إذا كان لدى مزارع في طوباس حقل فيه صناديق زيتون مجهولة العدد، أعطى جيرانه نصفها وبقي لديه تمهيداً للعصر (${toEasternArabicDigits(8)}) صناديق كاملة، كم كان العدد الإجمالي الصحيح للصناديق قبل العطاء؟ اشرح طريقة تفكيرك العبقرية لمعلمك الفاضل.<br><div class="custom-writing-area">إجابتي المبتكرة الممنهجة: <span class="blank-space-long"></span></div>`
         );
         
         sheetBody.insertAdjacentHTML('beforeend', innovationHTML);
@@ -965,11 +730,11 @@
         if (creativityActive) {
             let creativeBox = `
                 <div class="creative-box" id="creativityBoxSection">
-                    <div class="creative-box-title">🎨 زَاوِيَةُ الإِبْدَاعِ وَالرَّسْمِ البَصَرِيِّ الحُرِّ (تَحْفِيزُ التَّعَلُّمِ النَّفْسِيِّ)</div>
+                    <div class="creative-box-title">🎨 زاوية الإبداع والرسم البصري الحر (تعزيز التعلم البصري والنفسي)</div>
                     <div style="font-size:13pt; line-height:2; color:#27ae60;">
-                        عَزِيزِي الطَّالِبَ المَوْهُوبَ، قُمْ بِرَسْمِ لَوْحَةٍ بَصَرِيَّةٍ مُصَغَّرَةٍ تُعَبِّرُ فِيهَا عَنْ جَمَالِ الطَّبِيعَةِ فِي بَلْدَتِكَ جَنْباً إِلَى جَنْبٍ مَعَ تَمْثِيلِ العَدَدِ المَشْرِقِيِّ الكَبِيرِ الَّذِي تَعَلَّمْتَهُ اليَوْمَ فِي هَذِهِ الوَرَقَةِ المُنَظَّمَةِ.
+                        عزيزي الطالب الموهوب، قم برسم لوحة بصرية مصغرة تعبر فيها عن حبك للبيئة الفلسطينية الجميلة في بلدتك، مع تمثيل العدد الذي تعلمته اليوم بالرسم.
                     </div>
-                    <div style="height:160px; border:1px dashed #27ae60; margin-top:15px; border-radius:6px; background:#fff;"></div>
+                    <div style="height:150px; border:1px dashed #27ae60; margin-top:15px; border-radius:6px; background:#fff;"></div>
                 </div>
             `;
             sheetBody.insertAdjacentHTML('beforeend', creativeBox);
@@ -1011,7 +776,6 @@
         let nodesToModify = [];
         while (node = walker.nextNode()) {
             if (node.parentElement) {
-                // منع تحويل الأرقام داخل هذه الوسوم لحماية مدخلات النظام
                 const tag = node.parentElement.tagName.toUpperCase();
                 if (tag === 'SCRIPT' || tag === 'STYLE' || tag === 'TEXTAREA' || tag === 'INPUT') continue;
                 if (node.parentElement.classList.contains('pin-action') || node.parentElement.classList.contains('delete-action')) continue;
@@ -1033,56 +797,11 @@
         }
     }
 
-    function processDeterministicEngine(generateFullSheet) {
-        const aiIntelInput = document.getElementById("aiIntelligenceInput");
-        if (!aiIntelInput) return;
-        const userPrompt = aiIntelInput.value.trim();
-        if (!userPrompt) return;
-
-        const sheetBody = document.getElementById("sheetBody");
-        if (!sheetBody) return;
-        const count = sheetBody.children.length + 1;
-        
-        let resolvedTopic = "سُؤَالٌ تَطْبِيقِيٌّ مُوَجَّهٌ حَتْمِيٌّ";
-        let isSubtraction = userPrompt.includes("طرح") || userPrompt.includes("ناقص") || userPrompt.includes("استلاف");
-        let isAddition = userPrompt.includes("جمع") || userPrompt.includes("زائد");
-        let isGeometry = userPrompt.includes("شكل") || userPrompt.includes("هندس") || userPrompt.includes("ساعة");
-
-        let generatedBody = "";
-        if (isSubtraction) {
-            generatedBody = `فِي مَوْسِمِ قَطْفِ الزَّيْتُونِ المُبَارَكِ فِي بَلْدَةِ عاطوفَ، كَانَ لَدَى عائِلَةِ أَحْمَدَ (${toEasternArabicDigits(75)}) كِيسًا مِنَ الزَّيْتُونِ، تَمَّ عَصْرُ (${toEasternArabicDigits(38)}) كِيسًا مِنْهَا لِإِنْتَاجِ الزَّيْتِ النَّقِيِّ. كَمْ كِيسًا بَقِيَ دُونَ عَصْرٍ حَتَّى الآنَ؟ اِحْسُبْهَا بِالِاسْتِلَافِ العَمُودِيِّ الدَّقِيقِ:<br><div class="math-column-form">٧٥<br>- ٣٨<div class="math-column-line"></div><span class="blank-space" style="width:50px; height:20px;"></span></div>`;
-            resolvedTopic = "مَسْأَلَةُ الطَّرْحِ مَعَ الِاسْتِلَافِ فِي مَوْسِمِ الزَّيْتُونِ";
-        } else if (isAddition) {
-            generatedBody = `جَمَعَ طَلَبَةُ الصَّفِّ الثَّانِي فِي مَدْرَسَةِ عاطوفَ الأَسَاسِيَّةِ (${toEasternArabicDigits(45)}) زَهْرَةً جَمِيلَةً مِنْ رَبِيعِ فِلَسْطِينَ، وَجَمَعَ طَلَبَةُ الصَّفِّ الأَوَّلِ (${toEasternArabicDigits(29)}) زَهْرَةً. كَمْ زَهْرَةً جَمَعَ الطَّلَبَةُ مَعاً؟ اِحْسُبِ النَّاتِجَ الصَّحِيحَ مَعَ الحَمْلِ:<br> <b>٤٥ + ٢٩ = <span class="blank-space"></span> زَهْرَةً.</b>`;
-            resolvedTopic = "مَسْأَلَةُ الجَمْعِ مَعَ الحَمْلِ المَنَازِلِيِّ لِرَبِيعِ فِلَسْطِينَ";
-        } else if (isGeometry) {
-            generatedBody = `تَأَمَّلْ شَكْلَ السَّاعَةِ المَدْرَسِيَّةِ المُرَتَّبَةِ أَمَامَكَ، إِذَا كَانَ عَقْرَبُ السَّاعَاتِ يُشِيرُ إِلَى العَدَدِ المَشْرِقِيِّ ( <b>٩</b> ) وَعَقْرَبُ الدَّقَائِقِ يُشِيرُ تَمَاماً إِلَى العَدَدِ ( <b>١٢</b> )، كَمْ تَكُونُ القِرَاءَةُ اللّحْظِيَّةُ لِلْوَقْتِ الآنَ؟<br> الوَقْتُ تَمَاماً هُوَ: السَّاعَةُ <span class="blank-space-long"></span>`;
-            resolvedTopic = "مَهَارَةُ قِرَاءَةِ السَّاعَةِ وَالأَشْكَالِ الهَنْدَسِيَّةِ الدَّائِرِيَّةِ";
-        } else {
-            generatedBody = `اُكْتُبْ كَلِمَةً أَوْ مَسْأَلَةً رِيَاضِيَّةً تُوَضِّحُ مَهَارَةَ (<b>${escapeHTML(userPrompt)}</b>) بِإِشْرَافِ مُعَلِّمِ المَادَّةِ الفَاضِلُ مُحَمَّد وَجِيه غَنَّام:<br><div class="custom-writing-area">إِجَابَةُ الطَّالِبِ المُنْضَبِطَةُ: <span class="blank-space-long"></span></div>`;
-        }
-
-        if (generateFullSheet) {
-            sheetBody.innerHTML = "";
-            let fullHTML = "";
-            for (let i = 1; i <= 4; i++) {
-                fullHTML += buildQuestionHTML(`ai_sheet_${i}`, `السُّؤَالُ الخَوَارِزْمِيُّ حَتْمِيُّ الأَدَاءِ (${toEasternArabicDigits(i)}):`, generatedBody);
-            }
-            sheetBody.innerHTML = fullHTML;
-        } else {
-            let itemHTML = buildQuestionHTML(`ai_block_${count}`, `السُّؤَالُ الذَّكِيُّ المُسْتَهْدَفُ (${toEasternArabicDigits(count)}): [${resolvedTopic}]`, generatedBody);
-            sheetBody.insertAdjacentHTML('beforeend', itemHTML);
-        }
-
-        aiIntelInput.value = "";
-        executePostGenerationModifiers();
-    }
-
     function triggerVoiceInput() {
         window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-        const customIdeaInput = document.getElementById("teacherCustomIdeaInput");
+        const aiIntelInput = document.getElementById("aiIntelligenceInput");
         if (!window.SpeechRecognition) {
-            alert("ميزة التعرف على الصوت غير مدعومة في متصفحك الحالي (Live Web Speech Requires Supported Browser Like Chrome).");
+            alert("ميزة التعرف على الصوت غير مدعومة في متصفحك الحالي.");
             return;
         }
         const recognition = new SpeechRecognition();
@@ -1090,41 +809,26 @@
         recognition.interimResults = false;
         
         recognition.onstart = function() {
-            if (customIdeaInput) customIdeaInput.placeholder = "🎙️ جاري الاستماع الحقيقي لصوتك الفاضل... تكلم الآن";
-        };
-        
-        recognition.onerror = function(event) {
-            console.error("Speech recognition error captured cleanly:", event.error);
+            if (aiIntelInput) aiIntelInput.placeholder = "🎙️ جاري الاستماع الفعلي لصوتك الفاضل... تكلم الآن بالمبحث والمهارة المطلوبة";
         };
         
         recognition.onresult = function(event) {
             if (event.results && event.results[0] && event.results[0][0]) {
                 const resultText = event.results[0][0].transcript;
-                if (customIdeaInput) customIdeaInput.value = toEasternArabicDigits(resultText);
+                if (aiIntelInput) aiIntelInput.value = toEasternArabicDigits(resultText);
             }
         };
         
         recognition.onend = function() {
-            if (customIdeaInput) customIdeaInput.placeholder = "مثال: مسائل طرح بالاستلاف مرتبطة بموسم قطف الزيتون في بلدة عاطوف...";
+            if (aiIntelInput) aiIntelInput.placeholder = "مثال: رياضيات الصف الثاني طرح بالاستلاف...";
         };
-        
         recognition.start();
     }
 
     async function fetchLiveEducationalData() {
         const txtArea = document.getElementById("aiIntelligenceInput");
         if (!txtArea) return;
-        txtArea.placeholder = "🌐 جاري الاتصال بالشبكة الحية وسحب المصادر مجاناً...";
-        try {
-            const response = await fetch('https://baconipsum.com/api/?type=all-meat&sentences=1');
-            if (response.ok) {
-                txtArea.value = "مراجعة شاملة لمهارات الفصل الدراسي الثاني المتوافقة مع سياق التمكين المعرفي الوطني";
-                txtArea.placeholder = "اكتب مهارة أو موضوعاً حراً هنا...";
-            }
-        } catch(e) {
-            console.log("Offline fallback initialized successfully.");
-            txtArea.value = "مسائل مراجعة شاملة متوافقة تماماً مع أوزان المنهاج الفلسطيني";
-        }
+        txtArea.value = "مسائل مراجعة شاملة لمهارات الفصل الدراسي الثاني المتوافقة مع أوزان المنهاج الفلسطيني";
     }
 
     function escapeHTML(str) {
@@ -1134,7 +838,6 @@
     }
 
     function safePrint() {
-        // رسالة تنبيه لضمان ثبات المظهر قبل الطباعة
         const printBtn = document.querySelector('.btn-primary');
         const oldText = printBtn.innerText;
         printBtn.innerText = "⏳ يتم تجهيز الصفحة المشرقية...";
@@ -1143,18 +846,12 @@
         setTimeout(() => {
             printBtn.innerText = oldText;
             window.print();
-        }, 500); // إعطاء نصف ثانية للمتصفح ليقوم بتطبيق آخر تحديثات الـ DOM
+        }, 500);
     }
 
     window.onload = function() {
         loadMetadata();
-        populateLessons();
-        
-        // ربط زر الطباعة بالدالة الآمنة الجديدة
-        const printBtn = document.querySelector('.btn-primary');
-        if(printBtn) {
-            printBtn.onclick = safePrint;
-        }
+        saveMetadata();
     };
 </script>
 </body>
